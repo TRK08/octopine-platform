@@ -15,13 +15,12 @@ import VCalendar from 'v-calendar';
 import 'swiper/css/swiper.css'
 
 Vue.use(VueTyperPlugin)
-Vue.use(VueRouter) 
+Vue.use(VueRouter)
 Vue.use(Vuelidate)
 Vue.use(require('vue-cookies'))
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueScrollTo)
 Vue.use(VueTheMask)
-
 Vue.use(VCalendar)
 
 // Vue.use(VueLazyload, {

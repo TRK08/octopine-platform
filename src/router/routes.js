@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router'
 import Home from '../pages/Home.vue'
 import News from '../pages/News.vue'
+import SingleNews from '../pages/SingleNews.vue'
 import Tournaments from '../pages/Tournaments.vue'
 import Cabinet from '../pages/Cabinet.vue'
 import Auth from '../pages/Auth.vue'
@@ -17,6 +18,7 @@ const routes = [
 	},
 	{
 		path: '/news/:id',
+		component: SingleNews,
 		props: true,
 	},
 	{
