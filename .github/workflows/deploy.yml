@@ -27,4 +27,4 @@ jobs:
         username: j08274295_dk
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./dist/
-        server-dir: /domains/octopine.pro/dist
+        server-dir: /domains/octopine.pro/dist/
