@@ -1,6 +1,7 @@
 <template>
   <div>
     <pre> {{ id }} </pre>
+    <h2>{{ id }}</h2>
   </div>
 </template>
 
