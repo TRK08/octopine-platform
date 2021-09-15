@@ -23,7 +23,7 @@ jobs:
       with:
         server: j08274295.myjino.ru
         port: 21
-        protocol: ftp
+        protocol: ftps-legacy
         username: j08274295_dk
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./dist/
