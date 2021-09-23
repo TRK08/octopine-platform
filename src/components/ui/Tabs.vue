@@ -36,7 +36,7 @@ export default {
 
 <style scoped>
 .tabs {
-  height: 500px;
+  height: 100%;
 }
 
 .tabs__items {

@@ -29,7 +29,7 @@ export default {
       showedNews: 3,
       bannerInfo: {
         title: "Новости",
-        text: "Будь в курсе самых свежих новостей из мира DOTA 2 ",
+        descr: "Будь в курсе самых свежих новостей из мира DOTA 2 ",
         img: require("../assets/img/news-banner.png"),
       },
     };

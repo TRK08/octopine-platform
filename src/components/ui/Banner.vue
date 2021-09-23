@@ -8,8 +8,12 @@
       }"
     >
       <div class="container">
-        <h2 class="banner-title">{{ bannerInfo.title }}</h2>
-        <p class="banner-text">{{ bannerInfo.text }}</p>
+        <h2 class="banner-title" v-if="bannerInfo.title">
+          {{ bannerInfo.title }}
+        </h2>
+        <p class="banner-text" v-if="bannerInfo.descr">
+          {{ bannerInfo.descr }}
+        </p>
       </div>
     </div>
   </div>
@@ -31,7 +35,7 @@ export default {
 .banner-img {
   width: 100%;
   height: 400px;
-
+  background-position: center center !important;
   filter: drop-shadow(0px 15px 15px rgba(0, 0, 0, 0.3));
   box-shadow: inset 0px 4px 0px 500px rgba(0, 0, 0, 0.5);
 }
@@ -55,5 +59,6 @@ export default {
   font-size: 32px;
   line-height: 40px;
   font-weight: 400;
+  text-align: center;
 }
 </style>

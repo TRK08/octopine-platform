@@ -10,7 +10,7 @@
       <div class="swiper-pagination"></div>
       <swiper ref="mySwiper" :options="swiperOptions">
         <swiper-slide v-for="item in tournaments" :key="item.id">
-          <TournamentBlock :tournament="item" />
+          <TournamentItem :tournament="item" />
         </swiper-slide>
       </swiper>
     </div>
@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import TournamentBlock from "../ui/TournamentBlock.vue";
+import TournamentItem from "../tournaments/TournamentItem.vue";
 import { mapGetters } from "vuex";
 
 export default {
-  components: { TournamentBlock },
-  name: "Tournaments",
+  components: { TournamentItem },
+  name: "TournamentsSlider",
   computed: {
     ...mapGetters({
       tournaments: "tournaments/getTournaments",

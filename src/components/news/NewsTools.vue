@@ -9,13 +9,6 @@
             @input="displayToKey"
           />
         </div>
-        <div class="tools-item tools-item__sort">
-          <CustomSelect
-            :options="['По дате', 'По алфавиту']"
-            :default="'По дате'"
-            @input="displayToKey"
-          />
-        </div>
         <input class="tools-item tools-item__search" placeholder="Поиск" />
       </div>
     </div>

@@ -97,7 +97,7 @@ export default {
   background-image: url("../../assets/img/arrow.svg");
   top: 35%;
   transform: rotate(90deg);
-  right: 20%;
+  right: 30px;
   background-size: 20px 20px;
   height: 20px;
   width: 20px;

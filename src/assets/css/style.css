@@ -109,10 +109,19 @@ a, a:hover, a:visited, a:focus, a:active {
   fill: var(--white);
 }
 
+.red-arrow {
+  fill: var(--red);
+  transform: scale(-1);
+}
+
 .nextBtn,
 .prevBtn {
   display: flex;
   align-items: center;
+}
+
+.router-link-active {
+  cursor: pointer;
 }
 
 

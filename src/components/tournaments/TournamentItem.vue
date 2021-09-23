@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  name: "TournamentBlock",
+  name: "TournamentItem",
   props: {
     tournament: {
       type: Object,

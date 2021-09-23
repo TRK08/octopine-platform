@@ -1,0 +1,64 @@
+<template>
+  <div class="discussion">
+    <div class="discussion__wrap" v-for="i in 5" :key="i">
+      <div class="discussion-info">
+        <div class="discussion-img">
+          <img src="" alt="" />
+        </div>
+        <div class="discussion-text">
+          <router-link tag="h3" to="">Новая тема для форума</router-link>
+          <span>24.04.2022</span>
+        </div>
+      </div>
+
+      <div class="discussion-answers">Ответы: 228</div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "ForumDiscussion",
+};
+</script>
+
+<style scoped>
+.discussion__wrap {
+  width: 100%;
+  background-color: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding: 15px 30px;
+  border-radius: 30px;
+}
+
+.discussion-info {
+  display: flex;
+  align-items: center;
+}
+
+.discussion-img {
+  border-radius: 100%;
+  width: 80px;
+  height: 80px;
+  background-color: var(--bg);
+  margin-right: 30px;
+}
+
+.discussion-text h3 {
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.discussion-text span {
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--grey);
+}
+
+.discussion-answers {
+  margin-left: 30px;
+}
+</style>

@@ -18,20 +18,20 @@
             Регистрация
           </button>
         </div>
-        <div class="auth-form__body auth-form__body-reg" v-if="enter">
+        <form class="auth-form__body auth-form__body-reg" v-if="enter">
           <input placeholder="Email" type="text" />
           <input placeholder="Пароль" type="text" />
-          <button>Войти</button>
+          <button type="submit">Войти</button>
           <a href="">Забыли пароль?</a>
-        </div>
-        <div class="auth-form__body auth-form__body-log" v-else>
+        </form>
+        <form class="auth-form__body auth-form__body-log" v-else>
           <input placeholder="Никнейм" type="text" />
           <input placeholder="Email" type="text" />
           <input placeholder="Пароль" type="text" />
           <input placeholder="Повторите пароль" type="text" />
           <Checkbox :options="options" @checked="isChecked" />
-          <button>Зарегистрироваться</button>
-        </div>
+          <button type="submit">Зарегистрироваться</button>
+        </form>
       </div>
     </div>
   </div>
