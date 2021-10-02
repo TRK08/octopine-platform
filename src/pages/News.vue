@@ -45,6 +45,9 @@ export default {
       news: "news/getNews",
     }),
   },
+  created() {
+    this.$store.dispatch("news/loadNews");
+  },
 };
 </script>
 

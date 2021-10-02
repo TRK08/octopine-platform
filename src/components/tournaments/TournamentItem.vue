@@ -1,43 +1,85 @@
 <template>
-  <div class="tournament-block">
-    <div class="tournament-block__header">
+  <div class="tournament-block__wrap">
+    <div class="tournament-block" v-show="grid">
+      <div class="tournament-block__header">
+        <div
+          class="tournament-block__header-item"
+          v-for="item in tournament.format"
+          :key="item"
+        >
+          {{ item }}
+          <div class="tournament-block__header-separator"></div>
+        </div>
+      </div>
       <div
-        class="tournament-block__header-item"
-        v-for="item in tournament.format"
-        :key="item"
+        class="tournament-block__img"
+        :style="{
+          background:
+            'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' +
+            tournament.img +
+            ') no-repeat ',
+          'background-size': 'cover',
+        }"
       >
-        {{ item }}
-        <div class="tournament-block__header-separator"></div>
+        <div class="tournament-block__img--hover">
+          <router-link tag="button" :to="`/tournaments/${tournament.slug}`">
+            <svg class="blue-arrow arrow">
+              <use xlink:href="../../assets/img/sprite.svg#arrow"></use>
+            </svg>
+          </router-link>
+        </div>
+      </div>
+      <div class="tournament-block__body">
+        <h3>{{ tournament.name }}</h3>
+        <div class="tournament-block__body-item">
+          <img src="../../assets/img/clock.svg" alt="" />
+          <span> {{ tournament.time }} </span>
+        </div>
+        <div class="tournament-block__body-item">
+          <img src="../../assets/img/calendar.svg" alt="" />
+          <span> {{ tournament.date }} </span>
+        </div>
       </div>
     </div>
-    <div
-      class="tournament-block__img"
-      :style="{
-        background:
-          'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' +
-          tournament.img +
-          ') no-repeat ',
-        'background-size': 'cover',
-      }"
-    >
-      <div class="tournament-block__img--hover">
-        <router-link tag="button" to="">
-          <svg class="blue-arrow arrow">
-            <use xlink:href="../../assets/img/sprite.svg#arrow"></use>
-          </svg>
-        </router-link>
+    <div class="tournament-block grid" v-show="!grid">
+      <div
+        class="tournament-block__img"
+        :style="{
+          background:
+            'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' +
+            tournament.img +
+            ') no-repeat ',
+          'background-size': 'cover',
+        }"
+      ></div>
+      <div class="tournament-block__body">
+        <h3>{{ tournament.name }}</h3>
+        <div class="tournament-block__body-date">
+          <div class="tournament-block__body-item">
+            <img src="../../assets/img/clock.svg" alt="" />
+            <span> {{ tournament.time }} </span>
+          </div>
+          <div class="tournament-block__body-item">
+            <img src="../../assets/img/calendar.svg" alt="" />
+            <span> {{ tournament.date }} </span>
+          </div>
+        </div>
+        <div class="tournaments-block__body-info">
+          <div
+            class="tournament-block__header-item"
+            v-for="item in tournament.format"
+            :key="item"
+          >
+            {{ item }}
+            <div class="tournament-block__header-separator"></div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="tournament-block__body">
-      <h3>{{ tournament.name }}</h3>
-      <div class="tournament-block__body-item">
-        <img src="../../assets/img/clock.svg" alt="" />
-        <span> {{ tournament.time }} </span>
-      </div>
-      <div class="tournament-block__body-item">
-        <img src="../../assets/img/calendar.svg" alt="" />
-        <span> {{ tournament.date }} </span>
-      </div>
+      <router-link tag="button" :to="`/tournaments/${tournament.slug}`">
+        <svg class="blue-arrow arrow">
+          <use xlink:href="../../assets/img/sprite.svg#arrow"></use>
+        </svg>
+      </router-link>
     </div>
   </div>
 </template>
@@ -50,6 +92,11 @@ export default {
       type: Object,
       required: true,
     },
+    grid: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   data() {
     return {};
@@ -58,4 +105,44 @@ export default {
 </script>
 
 <style scoped>
+.tournament-block.grid {
+  max-width: unset;
+  overflow: hidden;
+  align-items: center;
+  display: grid;
+  grid-template-columns: 2fr 3fr 1fr;
+}
+
+.tournament-block.grid .tournament-block__img {
+  width: 100%;
+  height: 160px;
+}
+
+.tournament-block.grid
+  .tournament-block__body-date
+  .tournament-block__body-item:first-child {
+  margin-right: 15px;
+}
+
+.tournament-block.grid .tournament-block__body-date {
+  display: flex;
+  margin: 10px 0 20px;
+}
+
+.tournament-block.grid .tournaments-block__body-info {
+  display: flex;
+}
+
+.tournament-block.grid .tournament-block__body h3 {
+  max-width: 550px;
+}
+
+.tournament-block.grid button {
+  padding: 0;
+  background-color: transparent;
+}
+
+.tournament-block.grid button:hover .blue-arrow {
+  transform: translateX(10px) scale(-1);
+}
 </style>

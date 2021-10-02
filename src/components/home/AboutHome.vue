@@ -3,31 +3,9 @@
     <div class="container">
       <div class="about-home__wrap">
         <Tabs :tabs="tabs" @selectTab="selectTab">
-          <p slot="tabs__body" v-if="activeTab === 0">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Consequuntur minima ea modi exercitationem eligendi quibusdam
-            placeat neque optio autem consequatur? Delectus, deleniti,
-            exercitationem officia nihil nostrum quo nulla voluptas ipsum odit
-            possimus quidem iste? Amet, vitae itaque odio, earum esse eaque nisi
-            neque veniam, repudiandae odit voluptates dicta placeat in? Lorem
-            ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur
-            minima ea modi exercitationem eligendi quibusdam placeat neque optio
-            autem consequatur? Delectus, deleniti, exercitationem officia nihil
-            nostrum quo nulla voluptas ipsum odit possimus quidem iste? Amet,
-            vitae itaque odio, earum esse eaque nisi neque veniam, repudiandae
-            odit voluptates dicta placeat in? Lorem ipsum, dolor sit amet
-            consectetur adipisicing elit. Consequuntur minima ea modi
-            exercitationem eligendi quibusdam placeat neque optio autem
-            consequatur? Delectus, deleniti, exercitationem officia nihil
-            nostrum quo nulla voluptas ipsum odit possimus quidem iste? Amet,
-            vitae itaque odio, earum esse eaque nisi neque veniam, repudiandae
-            odit voluptates dicta placeat in?
-          </p>
-          <p slot="tabs__body" v-if="activeTab === 1">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Consequuntur minima ea modi exercitationem eligendi quibusdam
-            placeat neque optio autem consequatur? Delectus, deleniti
-          </p>
+          <div slot="tabs__body" v-for="(item, i) in mainTexts" :key="i">
+            <p v-if="activeTab === i" v-html="item.text"></p>
+          </div>
         </Tabs>
       </div>
     </div>
@@ -35,6 +13,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Tabs from "../ui/Tabs.vue";
 export default {
   components: { Tabs },
@@ -56,7 +35,7 @@ export default {
           active: false,
         },
         {
-          title: "О нас",
+          title: "О на",
           active: false,
         },
       ],
@@ -69,6 +48,14 @@ export default {
         this.activeTab = i;
       });
     },
+  },
+  computed: {
+    ...mapGetters({
+      mainTexts: "info/getMainTexts",
+    }),
+  },
+  created() {
+    this.$store.dispatch("info/loadMainTexts");
   },
 };
 </script>

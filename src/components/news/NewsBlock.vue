@@ -5,7 +5,7 @@
       <div
         class="news-block__bg"
         :style="{
-          background: 'url(' + singleNews.img + ') no-repeat ',
+          background: 'url(' + singleNews.image + ') no-repeat ',
           'background-size': 'cover',
         }"
       ></div>
