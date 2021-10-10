@@ -18,17 +18,61 @@
             Регистрация
           </button>
         </div>
-        <form class="auth-form__body auth-form__body-reg" v-if="enter">
+        <form
+          class="auth-form__body auth-form__body-log"
+          v-if="enter"
+          @submit.prevent="addNotify({ text: Date.now().toLocaleString() })"
+        >
           <input placeholder="Email" type="text" />
           <input placeholder="Пароль" type="text" />
           <button type="submit">Войти</button>
           <a href="">Забыли пароль?</a>
         </form>
-        <form class="auth-form__body auth-form__body-log" v-else>
-          <input placeholder="Никнейм" type="text" />
-          <input placeholder="Email" type="text" />
-          <input placeholder="Пароль" type="text" />
-          <input placeholder="Повторите пароль" type="text" />
+        <form
+          class="auth-form__body auth-form__body-reg"
+          @submit.prevent="registration"
+          v-else
+        >
+          <div
+            class="form-group"
+            :class="{ 'form-group--error': $v.nameReg.$error }"
+          >
+            <input
+              v-model.trim="$v.nameReg.$model"
+              placeholder="Никнейм"
+              type="text"
+            />
+          </div>
+          <div
+            class="form-group"
+            :class="{ 'form-group--error': $v.emailReg.$error }"
+          >
+            <input
+              v-model.trim="$v.emailReg.$model"
+              placeholder="Email"
+              type="text"
+            />
+          </div>
+          <div
+            class="form-group"
+            :class="{ 'form-group--error': $v.passwordReg.$error }"
+          >
+            <input
+              v-model.trim="$v.passwordReg.$model"
+              placeholder="Пароль"
+              type="password"
+            />
+          </div>
+          <div
+            class="form-group"
+            :class="{ 'form-group--error': $v.passwordRegConfirm.$error }"
+          >
+            <input
+              v-model.trim="$v.passwordRegConfirm.$model"
+              placeholder="Повторите пароль"
+              type="password"
+            />
+          </div>
           <Checkbox :options="options" @checked="isChecked" />
           <button type="submit">Зарегистрироваться</button>
         </form>
@@ -38,30 +82,76 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import Checkbox from "../components/ui/Checkbox.vue";
+import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
 export default {
   components: { Checkbox },
   name: "Auth",
   data() {
     return {
       enter: true,
+      nameReg: "",
+      emailReg: "",
+      passwordReg: "",
+      passwordRegConfirm: "",
+
       options: [
         {
           type: "rules",
           checked: false,
           text: "Соглашаюсь с пользовательским соглашением",
         },
-        // {
-        //   type: "test",
-        //   checked: false,
-        //   text: "Правила",
-        // },
       ],
     };
   },
+  validations: {
+    nameReg: {
+      required,
+      minLength: minLength(3),
+    },
+    // surname: {
+    //   required,
+    //   minLength: minLength(3),
+    // },
+    emailReg: {
+      required,
+      email,
+    },
+    passwordReg: {
+      required,
+      minLength: minLength(6),
+    },
+    passwordRegConfirm: {
+      required,
+      minLength: minLength(6),
+      sameAsPassword: sameAs("passwordReg"),
+    },
+  },
   methods: {
+    ...mapActions({
+      REGISTR: "auth/REGISTR",
+      addNotify: "notify/ADD_NOTIFICATIONS",
+    }),
     isChecked(arr) {
       console.log(arr);
+    },
+    registration() {
+      let form = {
+        name: this.nameReg,
+        // surname: this.surname,
+        email: this.emailReg,
+        password: this.passwordReg,
+      };
+
+      this.REGISTR(form)
+        .then(() => {
+          this.addNotify({ text: Date.now().toLocaleString() });
+        })
+        .catch((err) => {
+          console.log(err);
+          this.addNotify("err");
+        });
     },
   },
 };
@@ -69,7 +159,7 @@ export default {
 
 <style scoped>
 .auth {
-  min-height: 100vh;
+  min-height: 110vh;
   padding: 100px 0;
   width: 100%;
   background-image: url("../assets/img/auth-bg.png");
@@ -134,5 +224,13 @@ export default {
   text-align: center;
   margin-top: 15px;
   font-weight: 300;
+}
+
+.auth-form__body-reg input {
+  border: 3px solid transparent;
+}
+
+.form-group--error input {
+  border: 3px solid var(--red);
 }
 </style>
