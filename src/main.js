@@ -9,6 +9,7 @@ import Vuelidate from 'vuelidate'
 import VueScrollTo from 'vue-scrollto'
 import VueTyperPlugin from 'vue-typer'
 import VCalendar from 'v-calendar';
+import VueMasonry from 'vue-masonry-css'
 // import VueLazyload from 'vue-lazyload'
 
 
@@ -22,6 +23,7 @@ Vue.use(VueAwesomeSwiper)
 Vue.use(VueScrollTo)
 Vue.use(VueTheMask)
 Vue.use(VCalendar)
+Vue.use(VueMasonry);
 
 // Vue.use(VueLazyload, {
 //   preLoad: 1.3,

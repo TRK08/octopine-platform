@@ -1,30 +1,24 @@
 <template>
   <div class="profile">
-    <div class="profile-info__wrap">
-      <div class="profile-avatar"></div>
-      <div class="profile-info">
-        <h3>Nicename</h3>
-        <span>Санкт-Петербург, 25 лет</span>
-      </div>
-    </div>
-    <div class="profile-teams__wrap">
-      <h3>Команды</h3>
-      <div class="profile-teams">
-        <div class="profile-team">
-          <div class="profile-team__img"></div>
-          <span>Название команды</span>
-        </div>
-        <div class="profile-team">
-          <div class="profile-team__img"></div>
-          <span>Название команды</span>
+    <masonry :gutter="30" :cols="{ default: 2, 991: 1 }">
+      <div class="profile-info__wrap">
+        <div class="profile-avatar"></div>
+        <div class="profile-info">
+          <h3>Nicename</h3>
+          <span>Санкт-Петербург, 25 лет</span>
         </div>
       </div>
-    </div>
+      <UserFriends />
+      <UserTeams />
+    </masonry>
   </div>
 </template>
 
 <script>
+import UserFriends from "../user/UserFriends.vue";
+import UserTeams from "../user/UserTeams.vue";
 export default {
+  components: { UserFriends, UserTeams },
   name: "CabinetProfile",
 };
 </script>
@@ -32,9 +26,6 @@ export default {
 <style scoped>
 .profile {
   border-radius: 30px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 15px;
 }
 
 .separator {
@@ -53,6 +44,7 @@ export default {
   background-color: var(--dark);
   border-radius: 30px;
   height: fit-content;
+  margin-bottom: 30px;
 }
 
 .profile-avatar {
@@ -85,29 +77,5 @@ export default {
   height: 100%;
   background-color: var(--dark);
   border-radius: 30px;
-}
-
-.profile-teams {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.profile-team {
-  padding: 15px 30px;
-  margin-top: 30px;
-  background-color: var(--bg);
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.profile-team__img {
-  background-color: var(--grey);
-  width: 100px;
-  height: 100px;
-  border-radius: 100%;
-  margin-right: 30px;
 }
 </style>

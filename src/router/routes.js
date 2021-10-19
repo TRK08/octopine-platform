@@ -7,6 +7,8 @@ import SingleTournament from '../pages/SingleTournament.vue'
 import Cabinet from '../pages/Cabinet.vue'
 import Auth from '../pages/Auth.vue'
 import Forum from '../pages/Forum.vue'
+import SingleForum from '../pages/SingleForum'
+import User from '../pages/User'
 
 const routes = [
 	{
@@ -42,6 +44,16 @@ const routes = [
 	{
 		path: '/forum',
 		component: Forum
+	},
+	{
+		path: '/forum/:id',
+		component: SingleForum,
+		props: true
+	},
+	{
+		path: '/user/:id',
+		component: User,
+		props: true
 	}
 	// {
 	// 	path: '*',

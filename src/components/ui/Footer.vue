@@ -22,12 +22,12 @@
         <div class="footer__contacts">
           <h2>Контакты</h2>
           <div class="footer__contacts-block">
-            <a href="tel:+79166910385" class="footer__contacts-phone"
-              >+7(916)-691-03-85</a
-            >
-            <a href="mailto:Andrewyn97@gmail.com" class="footer__contacts-email"
-              >Andrewyn97@gmail.com</a
-            >
+            <a :href="`tel:${contacts.phone}`" class="footer__contacts-phone">{{
+              contacts.phone
+            }}</a>
+            <a :href="`mailto:${contacts.email}`" class="footer__contacts-email"
+              >{{ contacts.email }}
+            </a>
             <div class="footer__contacts-social">
               <a href=""><img src="../../assets/img/instagram.svg" alt="" /></a>
               <a href=""><img src="../../assets/img/vk.svg" alt="" /></a>
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "Footer",
   data() {
@@ -83,6 +84,14 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    ...mapGetters({
+      contacts: "info/getContacts",
+    }),
+  },
+  created() {
+    this.$store.dispatch("info/loadContacts");
   },
 };
 </script>

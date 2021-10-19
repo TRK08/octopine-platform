@@ -176,15 +176,6 @@ a, a:hover, a:visited, a:focus, a:active {
   margin-right: 10px;
 }
 
-/* HOME SLIDER */
-
-.home-slider {
-  height: 500px;
-  background: linear-gradient(to right, var(--bg) 65%, var(--blue) 35%);
-  position: relative;
-  margin-bottom: 100px;
-}
-
 /* TOURNAMENT BLOCK */
 
 .tournament-block__wrap {

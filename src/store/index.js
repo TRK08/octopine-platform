@@ -8,6 +8,7 @@ import news from '../store/news'
 import info from '../store/info'
 import auth from '../store/auth'
 import notify from '../store/nofitications'
+import forum from '../store/forum'
 
 export default new Vuex.Store({
 	modules: {
@@ -15,6 +16,7 @@ export default new Vuex.Store({
 		news,
 		info,
 		auth,
-		notify
+		notify,
+		forum
 	}
 })

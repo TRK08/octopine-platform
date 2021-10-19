@@ -1,17 +1,19 @@
 <template>
   <div class="discussion">
-    <div class="discussion__wrap" v-for="i in 5" :key="i">
+    <div class="discussion__wrap" v-for="theme in themes" :key="theme.id">
       <div class="discussion-info">
         <div class="discussion-img">
           <img src="" alt="" />
         </div>
         <div class="discussion-text">
-          <router-link tag="h3" to="">Новая тема для форума</router-link>
-          <span>24.04.2022</span>
+          <router-link tag="h3" :to="`/forum/${theme.slug}`"
+            >{{ theme.name }}
+          </router-link>
+          <span>{{ theme.date }} </span>
         </div>
       </div>
 
-      <div class="discussion-answers">Ответы: 228</div>
+      <div class="discussion-answers">Ответы: {{ theme.answers }}</div>
     </div>
   </div>
 </template>
@@ -19,6 +21,12 @@
 <script>
 export default {
   name: "ForumDiscussion",
+  props: {
+    themes: {
+      type: Array,
+      required: true,
+    },
+  },
 };
 </script>
 
@@ -50,6 +58,7 @@ export default {
 .discussion-text h3 {
   font-size: 24px;
   line-height: 29px;
+  cursor: pointer;
 }
 
 .discussion-text span {

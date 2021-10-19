@@ -5,8 +5,16 @@
       <div class="row forum__wrap">
         <div class="forum-tabs">
           <Tabs class="col-md-8" :tabs="tabs" @selectTab="selectTab">
-            <ForumDiscussion slot="tabs__body" v-if="activeTab === 0" />
-            <Accordion slot="tabs__body" v-if="activeTab === 1" />
+            <ForumDiscussion
+              :themes="themes"
+              slot="tabs__body"
+              v-if="activeTab === 0 && themes"
+            />
+            <Accordion
+              :questions="questions"
+              slot="tabs__body"
+              v-if="activeTab === 1"
+            />
           </Tabs>
         </div>
         <ForumChat class="col-md-4" />
@@ -21,6 +29,7 @@ import ForumDiscussion from "../components/forum/ForumDiscussion.vue";
 import Accordion from "../components/ui/Accordion.vue";
 import Banner from "../components/ui/Banner.vue";
 import Tabs from "../components/ui/Tabs.vue";
+import { mapGetters } from "vuex";
 export default {
   components: { ForumChat, Banner, Tabs, ForumDiscussion, Accordion },
   name: "Forum",
@@ -51,6 +60,15 @@ export default {
         this.activeTab = i;
       });
     },
+  },
+  computed: {
+    ...mapGetters({
+      questions: "forum/getQuestions",
+      themes: "forum/getThemes",
+    }),
+  },
+  created() {
+    this.$store.dispatch("forum/loadInfo");
   },
 };
 </script>

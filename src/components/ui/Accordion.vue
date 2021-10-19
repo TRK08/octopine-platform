@@ -1,29 +1,21 @@
 <template>
   <div class="accordion">
-    <div class="accordion__wrap" v-for="i in 2" :key="i">
+    <div
+      class="accordion__wrap"
+      v-for="(question, i) in questions"
+      :key="question.title"
+    >
       <div
         class="accordion__item"
-        :class="{ open: open }"
+        :class="{ open: question.open }"
         @click="openAccordion(i)"
       >
         <div class="accordion__item-header">
-          <h3>Как можно принять участие в турнире?</h3>
+          <h3>{{ question.title }}</h3>
           <img src="../../assets/img/plus.svg" alt="" />
         </div>
         <div class="accordion__item-body">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-            purus sit amet luctus venenatis, lectus magna fringilla urna,
-            porttitor rhoncus dolor purus non enim praesent elementum facilisis
-            leo, vel fringilla est ullamcorper eget nulla facilisi etiam
-            dignissim diam quis enim lobortis scelerisque fermentum dui faucibus
-            in ornare quam viverra orci sagittis eu volutpat odio facilisis
-            mauris sit amet massa vitae tortor condimentum lacinia quis vel eros
-            donec ac odio tempor orci dapibus ultrices in iaculis nunc sed augue
-            lacus, viverra vitae congue eu, consequat ac felis donec et odio
-            pellentesque diam volutpat commodo sed egestas egestas fringilla
-            phasellus faucibus
-          </p>
+          <p v-html="question.text"></p>
         </div>
       </div>
     </div>
@@ -33,14 +25,20 @@
 <script>
 export default {
   name: "Accordion",
+  props: {
+    questions: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
-      open: false,
+      // open: false,
     };
   },
   methods: {
-    openAccordion() {
-      this.open = !this.open;
+    openAccordion(i) {
+      this.questions[i].open = !this.questions[i].open;
     },
   },
 };

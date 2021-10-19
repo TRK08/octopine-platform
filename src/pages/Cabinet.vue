@@ -13,7 +13,6 @@
       <div class="cabinet-body">
         <Tabs :tabs="tabs" @selectTab="selectTab">
           <CabinetProfile slot="tabs__body" v-if="activeTab === 0" />
-          <CabinetFriends slot="tabs__body" v-if="activeTab === 1" />
         </Tabs>
       </div>
     </div>
@@ -21,7 +20,6 @@
 </template>
 
 <script>
-import CabinetFriends from "../components/cabinet/CabinetFriends.vue";
 import CabinetProfile from "../components/cabinet/CabinetProfile.vue";
 import Tabs from "../components/ui/Tabs.vue";
 export default {
@@ -29,7 +27,6 @@ export default {
   components: {
     Tabs,
     CabinetProfile,
-    CabinetFriends,
   },
   data() {
     return {
@@ -38,14 +35,6 @@ export default {
         {
           title: "Профиль",
           active: true,
-        },
-        {
-          title: "Друзья",
-          active: false,
-        },
-        {
-          title: "Статистика",
-          active: false,
         },
         {
           title: "Настройки",

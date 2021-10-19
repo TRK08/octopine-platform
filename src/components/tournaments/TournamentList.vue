@@ -67,7 +67,6 @@ export default {
       });
     },
     loadMore() {
-      console.log(this.showedshowedTournaments);
       this.showedTournaments += 3;
     },
   },

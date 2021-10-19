@@ -14,7 +14,7 @@
               :key="index"
             >
               <div
-                class="slide-box slide-box-right-slider"
+                class="slide-box slide-box-left-slider"
                 :style="{
                   background:
                     'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' +
@@ -23,10 +23,26 @@
                   'background-size': 'cover',
                 }"
               >
-                <h2 data-swiper-parallax="-700" v-html="slide.header"></h2>
+                <h2 data-swiper-parallax="-700" v-html="slide.title"></h2>
+                <p v-html="slide.text"></p>
+                <button>
+                  {{ slide.button.text }}
+                  <svg class="white-arrow arrow">
+                    <use xlink:href="../../assets/img/sprite.svg#arrow"></use>
+                  </svg>
+                </button>
+                <div class="slider__social-block">
+                  <a href=""
+                    ><img src="../../assets/img/instagram.svg" alt=""
+                  /></a>
+                  <a href=""><img src="../../assets/img/vk.svg" alt="" /></a>
+                  <a href=""
+                    ><img src="../../assets/img/instagram.svg" alt=""
+                  /></a>
+                  <a href=""><img src="../../assets/img/vk.svg" alt="" /></a>
+                </div>
               </div>
             </swiper-slide>
-            <!-- <div class="swiper-pagination" slot="pagination"></div> -->
           </swiper>
         </div>
 
@@ -37,11 +53,11 @@
             ref="swiperRight"
           >
             <swiper-slide
-              class="swiper-slide1"
+              class="swiper-slider-right"
               v-for="(slide, i) in slides"
               :key="i"
             >
-              <h2 v-html="slide.header"></h2>
+              <h2 v-html="slide.title"></h2>
             </swiper-slide>
           </swiper>
         </div>
@@ -63,21 +79,22 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "HomeSlider",
   data() {
     return {
       swiperOptionTop: {
         slidesPerView: 1,
-        loopedSlides: 25,
-        loop: true,
+        // loopedSlides: 25,
+        // loop: true,
 
         allowTouchMove: false,
       },
       swiperOptionRight: {
         slideToClickedSlide: true,
-        loopedSlides: 25,
-        loop: true,
+        // loopedSlides: 25,
+        // loop: true,
         spaceBetween: 15,
         navigation: {
           nextEl: ".nextBtn",
@@ -92,25 +109,30 @@ export default {
           },
         },
       },
-      slides: [
-        {
-          image: require("../../assets/img/home-slider-1.png"),
-          header: "TEST",
-        },
-        {
-          image: require("../../assets/img/home-slider-1.png"),
-          header: "TEST",
-        },
-        {
-          image: require("../../assets/img/home-slider-1.png"),
-          header: "TEST",
-        },
-        {
-          image: require("../../assets/img/home-slider-1.png"),
-          header: "TEST",
-        },
-      ],
+      // slides: [
+      //   {
+      //     image: require("../../assets/img/home-slider-1.png"),
+      //     header: "TEST",
+      //   },
+      //   {
+      //     image: require("../../assets/img/home-slider-1.png"),
+      //     header: "TEST",
+      //   },
+      //   {
+      //     image: require("../../assets/img/home-slider-1.png"),
+      //     header: "TEST",
+      //   },
+      //   {
+      //     image: require("../../assets/img/home-slider-1.png"),
+      //     header: "TEST",
+      //   },
+      // ],
     };
+  },
+  computed: {
+    ...mapGetters({
+      slides: "info/getMainSlides",
+    }),
   },
   mounted() {
     this.$nextTick(() => {
@@ -120,10 +142,20 @@ export default {
       swiperRight.controller.control = swiperTop;
     });
   },
+  created() {
+    this.$store.dispatch("info/loadMainSlides");
+  },
 };
 </script>
 
 <style scoped>
+.home-slider {
+  height: 500px;
+  background: linear-gradient(to right, var(--bg) 65%, var(--blue) 35%);
+  position: relative;
+  margin-bottom: 100px;
+}
+
 .slides {
   height: 500px;
 }
@@ -132,15 +164,46 @@ export default {
   padding: 0;
 }
 
-.swiper-slide1 {
+.swiper-slider-right {
   background-color: var(--blue);
   height: 500px;
   box-shadow: -10px 0px 8px 0px rgba(34, 60, 80, 0.2) inset;
+  position: relative;
+}
+
+.swiper-slider-right h2 {
+  transform: skewX(25deg) rotate(-65deg);
+  white-space: nowrap;
+  width: 100%;
+  position: absolute;
+  top: 65%;
 }
 
 .slide-box {
   height: 500px;
   background-position: center;
+  padding: 30px 180px 0 30px;
+}
+
+.slide-box h2 {
+  margin-bottom: 30px;
+}
+
+.slide-box p {
+  margin-bottom: 30px;
+}
+
+.slide-box button {
+  max-width: 300px;
+  background-color: var(--dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+
+.slide-box button .arrow {
+  transform: scale(-1);
 }
 
 .col-md-4 {
@@ -168,5 +231,18 @@ export default {
 
 .nextBtn .white-arrow {
   transform: scale(-1);
+}
+
+.slider__social-block {
+  padding: 15px 30px;
+  background-color: var(--dark);
+  max-width: 230px;
+  width: 100%;
+  border-radius: 0 30px 0 0;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 </style>
