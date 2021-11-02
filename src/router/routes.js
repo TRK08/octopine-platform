@@ -1,4 +1,5 @@
 import VueRouter from 'vue-router'
+
 import Home from '../pages/Home.vue'
 import News from '../pages/News.vue'
 import SingleNews from '../pages/SingleNews.vue'
@@ -9,6 +10,8 @@ import Auth from '../pages/Auth.vue'
 import Forum from '../pages/Forum.vue'
 import SingleForum from '../pages/SingleForum'
 import User from '../pages/User'
+
+import store from '../store'
 
 const routes = [
 	{
@@ -35,11 +38,37 @@ const routes = [
 	},
 	{
 		path: '/cabinet',
-		component: Cabinet
+		component: Cabinet,
+		beforeEnter: (to, from, next) => {
+			if (store.getters["auth/getUser"]) {
+				next()
+			}
+			else {
+				if (to.path != "/auth") {
+					next("/auth")
+				}
+				else {
+					next()
+				}
+			}
+		}
 	},
 	{
 		path: '/auth',
-		component: Auth
+		component: Auth,
+		beforeEnter: (to, from, next) => {
+			if (!store.getters["auth/getUser"]) {
+				next()
+			}
+			else {
+				if (to.path != "/cabinet") {
+					next("/cabinet")
+				}
+				else {
+					next()
+				}
+			}
+		}
 	},
 	{
 		path: '/forum',

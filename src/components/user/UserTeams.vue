@@ -1,11 +1,17 @@
 <template>
   <section class="user-teams">
-    <h2>Друзья</h2>
+    <h2>Команды</h2>
     <div class="user-teams__items">
       <div class="user-teams__item" v-for="item in teams" :key="item.nickname">
-        <div class="user-teams__avatar">
-          <img src="" alt="" />
-        </div>
+        <div
+          v-if="item.logo"
+          class="user-teams__avatar"
+          :style="{
+            background: 'url(' + item.logo + ') no-repeat ',
+            'background-size': 'contain',
+          }"
+        ></div>
+        <div v-else class="user-teams__avatar empty"></div>
         <div class="user-teams__nickname">{{ item.name }}</div>
       </div>
     </div>
@@ -16,18 +22,24 @@
 <script>
 export default {
   name: "UserTeams",
+  props: {
+    teams: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
-      teams: [
-        {
-          img: "",
-          name: "team1",
-        },
-        {
-          img: "",
-          name: "team2",
-        },
-      ],
+      // teams: [
+      //   {
+      //     img: "",
+      //     name: "team1",
+      //   },
+      //   {
+      //     img: "",
+      //     name: "team2",
+      //   },
+      // ],
     };
   },
 };
@@ -68,9 +80,13 @@ export default {
 .user-teams__avatar {
   width: 75px;
   height: 75px;
+  margin-right: 30%;
+  background-position: center center;
+}
+
+.user-teams__avatar.empty {
   border-radius: 100%;
   background-color: var(--grey);
-  margin-right: 30%;
 }
 
 .user-teams__item:not(:last-child) {
@@ -78,6 +94,13 @@ export default {
 }
 
 .user-teams__show-all {
-  margin-top: 15px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.user-teams__show-all:hover {
+  color: var(--blue);
+  transition: all 0.5s ease;
 }
 </style>

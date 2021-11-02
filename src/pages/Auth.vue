@@ -21,10 +21,10 @@
         <form
           class="auth-form__body auth-form__body-log"
           v-if="enter"
-          @submit.prevent="addNotify({ text: Date.now().toLocaleString() })"
+          @submit.prevent="login"
         >
-          <input placeholder="Email" type="text" />
-          <input placeholder="Пароль" type="text" />
+          <input placeholder="Email" v-model="emailLog" type="text" />
+          <input placeholder="Пароль" v-model="passwordLog" type="password" />
           <button type="submit">Войти</button>
           <a href="">Забыли пароль?</a>
         </form>
@@ -95,6 +95,8 @@ export default {
       emailReg: "",
       passwordReg: "",
       passwordRegConfirm: "",
+      emailLog: "",
+      passwordLog: "",
 
       options: [
         {
@@ -110,10 +112,6 @@ export default {
       required,
       minLength: minLength(3),
     },
-    // surname: {
-    //   required,
-    //   minLength: minLength(3),
-    // },
     emailReg: {
       required,
       email,
@@ -131,6 +129,7 @@ export default {
   methods: {
     ...mapActions({
       REGISTR: "auth/REGISTR",
+      LOGIN: "auth/AUTH_REQUEST",
       addNotify: "notify/ADD_NOTIFICATIONS",
     }),
     isChecked(arr) {
@@ -138,20 +137,29 @@ export default {
     },
     registration() {
       let form = {
-        name: this.nameReg,
-        // surname: this.surname,
+        nickname: this.nameReg,
         email: this.emailReg,
         password: this.passwordReg,
       };
 
-      this.REGISTR(form)
-        .then(() => {
-          this.addNotify({ text: Date.now().toLocaleString() });
-        })
-        .catch((err) => {
-          console.log(err);
-          this.addNotify("err");
-        });
+      this.REGISTR(form).then(() => {
+        (this.nameReg = ""),
+          (this.emailReg = ""),
+          (this.passwordReg = ""),
+          (this.passwordRegConfirm = "");
+      });
+    },
+    login() {
+      let form = {
+        username: this.emailLog,
+        password: this.passwordLog,
+      };
+
+      this.LOGIN(form).then(() => {
+        setTimeout(() => {
+          this.$router.push("/cabinet");
+        }, 1000);
+      });
     },
   },
 };

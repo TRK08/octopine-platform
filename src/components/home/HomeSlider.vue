@@ -1,5 +1,5 @@
 <template>
-  <section class="home-slider">
+  <section class="home-slider" v-if="slides">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-8">
@@ -109,24 +109,6 @@ export default {
           },
         },
       },
-      // slides: [
-      //   {
-      //     image: require("../../assets/img/home-slider-1.png"),
-      //     header: "TEST",
-      //   },
-      //   {
-      //     image: require("../../assets/img/home-slider-1.png"),
-      //     header: "TEST",
-      //   },
-      //   {
-      //     image: require("../../assets/img/home-slider-1.png"),
-      //     header: "TEST",
-      //   },
-      //   {
-      //     image: require("../../assets/img/home-slider-1.png"),
-      //     header: "TEST",
-      //   },
-      // ],
     };
   },
   computed: {

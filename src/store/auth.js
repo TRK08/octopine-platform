@@ -5,7 +5,7 @@ const auth = {
   state: {
     token: null,
     user: null,
-    error: null,
+    userInfo: null
   },
   mutations: {
     SET_USER(state, user) {
@@ -14,25 +14,32 @@ const auth = {
     SET_TOKEN(state, token) {
       state.token = token;
     },
-    SET_ERROR(state, err) {
-      state.error = err
-    },
+    SET_USER_INFO(state, user) {
+      state.userInfo = user
+    }
   },
   actions: {
-    async REGISTR({ commit }, user) {
+    async REGISTR({ commit, dispatch }, user) {
       try {
         let requestParams = {
-          name: user.name,
-          // surname: user.surname,
+          nickname: user.nickname,
           email: user.email,
           password: user.password,
         }
 
         await axios
-          .post(`http://octopine.pro/oc/v1/registration`, user, { params: requestParams })
+          .post(`https://octopine.pro/wp-json/oc/v1/registration`, user, { params: requestParams })
           .then(res => {
             console.log(res);
-            // commit('REGISTR_STATUS', res.data)
+            if (res.data.code == 500) {
+              dispatch('notify/ADD_NOTIFICATIONS', { text: res.data.msg }, { root: true })
+            } else {
+              dispatch('notify/ADD_NOTIFICATIONS', { text: 'Вы зарегистрировались' }, { root: true })
+            }
+
+
+          }).catch(err => {
+            console.log(err, 'REGISTR ERROR');
           })
       }
       catch (err) {
@@ -42,22 +49,13 @@ const auth = {
     async AUTH_REQUEST({ commit, dispatch }, payload) {
       try {
         const { data } = await axios.post(`https://octopine.pro/wp-json/jwt-auth/v1/token`, payload)
-        let error = false
-        commit('SET_ERROR', error)
         return dispatch('VALIDATE', data)
       }
       catch (err) {
-        if (err.message.slice(-3) === '403') {
-          let error = true
-          commit('SET_ERROR', error)
-        }
-        else {
-          alert('Что-то пошло не так')
-        }
-
+        console.log(err, 'AUTH REQUEST ERROR');
       }
     },
-    async VALIDATE({ commit, state }, user) {
+    async VALIDATE({ commit, state, dispatch }, user) {
       if (user) {
         commit("SET_TOKEN", user.token);
         commit("SET_USER", user);
@@ -73,12 +71,14 @@ const auth = {
             'Authorization': `Bearer ${user.token}`
           }
         });
-        let error = false
-        commit('SET_ERROR', error)
+        if (!state.user) {
+          dispatch('notify/ADD_NOTIFICATIONS', { text: 'Успешный вход' }, { root: true })
+        }
+        dispatch('LOAD_USER_INFO', user.id)
         localStorage.setItem("user", JSON.stringify(user));
-        console.log(user);
         commit("SET_TOKEN", user.token);
         commit("SET_USER", user);
+
       }
       catch (err) {
         localStorage.removeItem("user");
@@ -86,15 +86,26 @@ const auth = {
         commit("SET_USER", null);
       }
     },
-    async SIGN_OUT({ commit }) {
+    async SIGN_OUT({ commit, dispatch }) {
+      dispatch('notify/ADD_NOTIFICATIONS', { text: 'Успешный выход' }, { root: true })
       localStorage.removeItem("user");
       commit("SET_TOKEN", null);
       commit("SET_USER", null);
+
     },
+    LOAD_USER_INFO({ commit }, payload) {
+      axios.get(`https://octopine.pro/wp-json/oc/v1/get/user?user_id=4`).then(res => {
+        console.log(res.data, 'MY INFO');
+        commit('SET_USER_INFO', res.data)
+      })
+    }
   },
   getters: {
     getUser(state) {
       return state.user
+    },
+    getUserInfo(state) {
+      return state.userInfo
     }
   },
 }

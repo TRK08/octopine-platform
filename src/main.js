@@ -33,6 +33,9 @@ Vue.use(VueMasonry);
 //   listenEvents: [ 'scroll' ]
 // })
 
+const user = JSON.parse(localStorage.getItem("user"))
+store.dispatch("auth/VALIDATE", user);
+
 
 
 new Vue({

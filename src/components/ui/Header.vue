@@ -24,7 +24,8 @@
           </div>
           <router-link tag="button" to="/auth" class="header-login">
             <img src="../../assets/img/cabinet.svg" alt="" />
-            <span>Вход</span>
+            <span v-if="!user">Вход</span>
+            <span v-else> {{ user.user_nicename }} </span>
           </router-link>
         </div>
       </div>
@@ -34,6 +35,7 @@
 
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -60,6 +62,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    ...mapGetters({
+      user: "auth/getUser",
+    }),
   },
 };
 </script>	

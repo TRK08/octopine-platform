@@ -1,25 +1,39 @@
 <template>
-  <div class="profile">
+  <div class="profile" v-if="user">
     <masonry :gutter="30" :cols="{ default: 2, 991: 1 }">
       <div class="profile-info__wrap">
-        <div class="profile-avatar"></div>
+        <div
+          v-if="user.user.avatar"
+          class="profile-avatar"
+          :style="{
+            background: 'url(' + user.user.avatar + ') no-repeat ',
+            'background-size': 'contain',
+          }"
+        ></div>
+        <div v-else class="profile-avatar empty"></div>
         <div class="profile-info">
-          <h3>Nicename</h3>
+          <h3>{{ user.user.nickname }}</h3>
           <span>Санкт-Петербург, 25 лет</span>
         </div>
       </div>
-      <UserFriends />
-      <UserTeams />
+      <UserFriends :friends="user.friends" />
+      <UserTeams :teams="user.teams" />
     </masonry>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import UserFriends from "../user/UserFriends.vue";
 import UserTeams from "../user/UserTeams.vue";
 export default {
   components: { UserFriends, UserTeams },
   name: "CabinetProfile",
+  computed: {
+    ...mapGetters({
+      user: "auth/getUserInfo",
+    }),
+  },
 };
 </script>
 
@@ -50,9 +64,12 @@ export default {
 .profile-avatar {
   width: 150px;
   height: 150px;
+  margin-bottom: 30px;
+}
+
+.profile-avatar.empty {
   background-color: var(--grey);
   border-radius: 100%;
-  margin-bottom: 30px;
 }
 
 .profile-info h3 {

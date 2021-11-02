@@ -4,7 +4,7 @@
       <div class="cabinet-header">
         <h2>Личный кабинет</h2>
         <div class="cabinet-exit">
-          <span>Выйти</span>
+          <span @click="signOut">Выйти</span>
           <svg class="red-arrow arrow">
             <use xlink:href="../assets/img/sprite.svg#arrow"></use>
           </svg>
@@ -16,17 +16,20 @@
         </Tabs>
       </div>
     </div>
+    <MainPopup />
   </div>
 </template>
 
 <script>
 import CabinetProfile from "../components/cabinet/CabinetProfile.vue";
+import MainPopup from "../components/popup/mainPopup.vue";
 import Tabs from "../components/ui/Tabs.vue";
 export default {
   name: "Cabinet",
   components: {
     Tabs,
     CabinetProfile,
+    MainPopup,
   },
   data() {
     return {
@@ -49,6 +52,12 @@ export default {
         tab.active = tab === this.tabs[i];
         this.activeTab = i;
       });
+    },
+    signOut() {
+      this.$store.dispatch("auth/SIGN_OUT");
+      setTimeout(() => {
+        this.$router.push("/");
+      }, 1000);
     },
   },
 };

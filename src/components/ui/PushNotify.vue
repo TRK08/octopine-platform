@@ -27,19 +27,7 @@ export default {
       addNotify: "notify/ADD_NOTIFICATIONS",
       removeNotify: "notify/REMOVE_NOTIFICATION",
     }),
-    // hideNotification() {
-    //   let vm = this;
-    //   if (this.notify.length) {
-    //     vm.
-    //   }
-    // },
   },
-  // watch: {
-  //   notify(data) {
-  //     console.log(data);
-  //     this.removeNotify();
-  //   },
-  // },
   created() {},
 };
 </script>
@@ -54,10 +42,11 @@ export default {
 
 .notify__wrap {
   background-color: var(--blue);
-  width: 300px;
-  height: 50px;
-
+  width: fit-content;
+  max-width: 400px;
+  min-height: 50px;
   border-radius: 30px;
+  padding: 5px;
   text-align: center;
   margin-bottom: 20px;
 }

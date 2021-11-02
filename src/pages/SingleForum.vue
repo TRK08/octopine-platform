@@ -20,10 +20,51 @@
             <span class="single-forum__answer-nickname">
               {{ item.user_name }}
             </span>
-            <span class="single-forum__answer-date"> {{ item.date }} </span>
+            <span class="single-forum__answer-date">
+              {{ item.date }}
+            </span>
           </div>
           <div class="single-forum__answer-text">
-            <p>{{ item.comment }}</p>
+            <!-- <p>{{ item.comment }}</p> -->
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint
+              repellat a eveniet dolorum velit, minima totam odit consequatur
+              adipisci id vel tempore facere magnam placeat error voluptates
+              earum, incidunt iusto? Dolor consequatur cumque perspiciatis
+              exercitationem provident ipsam ipsa repellendus vel nobis minus
+              dolorum sapiente quibusdam, sed accusamus repudiandae et unde
+              fugiat sit laboriosam? Adipisci rem error voluptas quia odio nemo?
+              Voluptatibus debitis illum, quod dolorem aut fugit possimus
+              explicabo itaque voluptatum distinctio. Maiores praesentium odit
+              omnis nisi similique exercitationem consequuntur, inventore rerum
+              soluta repudiandae atque perferendis possimus eaque quos dolores?
+              Molestiae ipsum fugit, cumque, earum magni distinctio, laborum
+              enim harum alias praesentium nulla cum. Et sint beatae placeat,
+              odio porro, nisi accusantium, sunt itaque voluptates blanditiis
+              dolorum id maiores dolor. Nemo corrupti natus ea accusamus
+              similique, at eaque sunt deserunt molestiae consectetur voluptate
+              sit illo, tempora possimus rem unde aliquid tempore voluptatem
+              repellendus exercitationem quaerat? Distinctio labore molestiae
+              veritatis molestias? Sint pariatur inventore quae corrupti
+              voluptate natus ab, sit saepe sed, eligendi, placeat atque
+              consectetur beatae laboriosam ad. Aspernatur, nesciunt magni quos
+              repellat corrupti nostrum perferendis. Beatae totam eius dolores.
+              Porro, maiores natus molestias enim nostrum adipisci eligendi
+              distinctio itaque! Perspiciatis enim, aliquam commodi sit quaerat
+              nobis deleniti ex quia nam ullam amet totam quo deserunt
+              consequuntur assumenda, temporibus inventore? Minima voluptate
+              perferendis perspiciatis tenetur voluptates nulla, nemo maxime
+              veritatis accusantium! Saepe maxime ea temporibus id velit
+              molestias dignissimos quod necessitatibus laborum nesciunt
+              mollitia sapiente adipisci, harum optio aliquam est. Aliquam a
+              illo, odit optio neque quidem nobis, quasi eius tenetur asperiores
+              quaerat modi! Iure quae itaque et quaerat distinctio aut ab
+              nostrum harum suscipit tempore. Quam deserunt dicta ullam? Error
+              inventore saepe ipsum blanditiis suscipit unde deleniti, rerum
+              praesentium dignissimos pariatur cupiditate amet ullam quaerat
+              voluptatum id voluptate expedita maxime deserunt molestias!
+              Incidunt temporibus, velit tempore reprehenderit dolores sapiente?
+            </p>
           </div>
         </div>
       </div>
@@ -96,6 +137,8 @@ export default {
   font-weight: 400;
   border-right: 3px solid var(--bg);
   padding: 15px 30px;
+  min-width: 190px;
+  text-align: center;
 }
 
 .single-forum__answer-avatar {
@@ -117,6 +160,8 @@ export default {
 
 .single-forum__answer-text {
   padding: 15px 30px;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .single-forum__comment {

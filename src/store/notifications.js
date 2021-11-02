@@ -13,23 +13,19 @@ const notify = {
       let notify = state.notifications
       if (notify.length) {
         notify.splice(notify.length - 1, 1)
-        console.log('delete');
       }
     }
   },
   actions: {
     ADD_NOTIFICATIONS({ commit }, payload) {
-      payload.id = Date.now().toLocaleString()
-      commit('SET_NOTIFICATIONS', payload)
-      setTimeout(() => {
-        commit('DELETE_NOTIFICATION')
-      }, 3000)
+      if (payload) {
+        payload.id = Date.now().toLocaleString()
+        commit('SET_NOTIFICATIONS', payload)
+        setTimeout(() => {
+          commit('DELETE_NOTIFICATION')
+        }, 3000)
+      }
     },
-    // REMOVE_NOTIFICATION({ commit }) {
-    //   console.log('remove');
-
-
-    // }
   },
   getters: {
     getNotifications(state) {

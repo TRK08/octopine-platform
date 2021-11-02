@@ -121,6 +121,22 @@ export default {
   align-items: center;
 }
 
+.footer-logo img {
+  animation: logoMotion 3s infinite;
+}
+
+@keyframes logoMotion {
+  from {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
+
 .footer__body {
   position: relative;
   height: 380px;

@@ -7,44 +7,45 @@
         v-for="item in friends"
         :key="item.nickname"
       >
-        <div class="user-friends__avatar">
-          <img src="" alt="" />
-        </div>
+        <div
+          v-if="item.avatar"
+          class="user-friends__avatar"
+          :style="{
+            background: 'url(' + item.avatar + ') no-repeat ',
+            'background-size': 'contain',
+          }"
+        ></div>
+        <div v-else class="user-friends__avatar empty"></div>
+
         <div class="user-friends__nickname">{{ item.nickname }}</div>
       </div>
     </div>
-    <div class="user-friends__show-all">Все друзья</div>
+    <div
+      class="user-friends__show-all"
+      @click="setPopup({ mode: 'friends', data: friends })"
+    >
+      Все друзья
+    </div>
   </section>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "UserFriends",
+  props: {
+    friends: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
-    return {
-      friends: [
-        {
-          img: "",
-          nickname: "user1",
-        },
-        {
-          img: "",
-          nickname: "user2",
-        },
-        {
-          img: "",
-          nickname: "user3",
-        },
-        {
-          img: "",
-          nickname: "user4",
-        },
-        {
-          img: "",
-          nickname: "user5",
-        },
-      ],
-    };
+    return {};
+  },
+  methods: {
+    ...mapActions({
+      setPopup: "popup/GET_POPUP_MODE",
+    }),
   },
 };
 </script>
@@ -84,9 +85,12 @@ export default {
 .user-friends__avatar {
   width: 75px;
   height: 75px;
+  margin-right: 30%;
+}
+
+.user-friends__avatar.empty {
   border-radius: 100%;
   background-color: var(--grey);
-  margin-right: 30%;
 }
 
 .user-friends__item:not(:last-child) {
@@ -94,6 +98,13 @@ export default {
 }
 
 .user-friends__show-all {
-  margin-top: 15px;
+  margin-top: 30px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.user-friends__show-all:hover {
+  color: var(--blue);
+  transition: all 0.5s ease;
 }
 </style>

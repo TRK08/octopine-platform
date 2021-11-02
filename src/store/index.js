@@ -7,8 +7,9 @@ import tournaments from '../store/tournaments'
 import news from '../store/news'
 import info from '../store/info'
 import auth from '../store/auth'
-import notify from '../store/nofitications'
+import notify from '../store/notifications'
 import forum from '../store/forum'
+import popup from '../store/popup'
 
 export default new Vuex.Store({
 	modules: {
@@ -17,6 +18,7 @@ export default new Vuex.Store({
 		info,
 		auth,
 		notify,
-		forum
+		forum,
+		popup
 	}
 })

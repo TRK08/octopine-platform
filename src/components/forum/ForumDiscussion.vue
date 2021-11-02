@@ -1,5 +1,5 @@
 <template>
-  <div class="discussion">
+  <div class="discussion" v-if="themes">
     <div class="discussion__wrap" v-for="theme in themes" :key="theme.id">
       <div class="discussion-info">
         <div class="discussion-img">
