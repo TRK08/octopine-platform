@@ -7,7 +7,7 @@
           <use xlink:href="../../assets/img/sprite.svg#arrow"></use>
         </svg>
       </router-link>
-      <div class="news-home__grid">
+      <div class="news-home__grid" v-if="news">
         <NewsBlock
           v-for="item in news.slice(0, 3)"
           :key="item.title"
@@ -29,6 +29,9 @@ export default {
     ...mapGetters({
       news: "news/getNews",
     }),
+  },
+  created() {
+    this.$store.dispatch("news/loadNews");
   },
 };
 </script>

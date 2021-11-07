@@ -1,5 +1,5 @@
 <template>
-  <section class="tournament-list">
+  <section class="tournament-list" v-if="tournaments">
     <div class="container">
       <div class="tournament-list__header">
         <h2>Турниры</h2>

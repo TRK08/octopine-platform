@@ -74,7 +74,7 @@ const auth = {
         if (!state.user) {
           dispatch('notify/ADD_NOTIFICATIONS', { text: 'Успешный вход' }, { root: true })
         }
-        dispatch('LOAD_USER_INFO', user.id)
+        dispatch('LOAD_USER_INFO', user.user_id)
         localStorage.setItem("user", JSON.stringify(user));
         commit("SET_TOKEN", user.token);
         commit("SET_USER", user);
@@ -93,12 +93,11 @@ const auth = {
       commit("SET_USER", null);
 
     },
-    LOAD_USER_INFO({ commit }, payload) {
+    LOAD_USER_INFO({ commit }, id) {
       axios.get(`https://octopine.pro/wp-json/oc/v1/get/user?user_id=4`).then(res => {
-        console.log(res.data, 'MY INFO');
         commit('SET_USER_INFO', res.data)
       })
-    }
+    },
   },
   getters: {
     getUser(state) {

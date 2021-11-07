@@ -16,20 +16,17 @@
         </Tabs>
       </div>
     </div>
-    <MainPopup />
   </div>
 </template>
 
 <script>
 import CabinetProfile from "../components/cabinet/CabinetProfile.vue";
-import MainPopup from "../components/popup/mainPopup.vue";
 import Tabs from "../components/ui/Tabs.vue";
 export default {
   name: "Cabinet",
   components: {
     Tabs,
     CabinetProfile,
-    MainPopup,
   },
   data() {
     return {

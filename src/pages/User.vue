@@ -1,10 +1,10 @@
 <template>
-  <div class="user">
+  <div class="user" v-if="user">
     <div class="container">
       <masonry :gutter="30" :cols="{ default: 2, 991: 1 }">
-        <UserProfile />
-        <UserFriends />
-        <UserTeams />
+        <UserProfile :user="user.user" />
+        <UserFriends :friends="user.friends" />
+        <UserTeams :teams="user.teams" />
       </masonry>
     </div>
   </div>
@@ -14,9 +14,19 @@
 import UserFriends from "../components/user/UserFriends.vue";
 import UserProfile from "../components/user/UserProfile.vue";
 import UserTeams from "../components/user/UserTeams.vue";
+import { mapGetters } from "vuex";
 export default {
   components: { UserProfile, UserFriends, UserTeams },
   name: "User",
+  props: ["id"],
+  computed: {
+    ...mapGetters({
+      user: "usersAndTeams/getUser",
+    }),
+  },
+  created() {
+    this.$store.dispatch("usersAndTeams/LOAD_USER_BY_NICK", this.id);
+  },
 };
 </script>
 

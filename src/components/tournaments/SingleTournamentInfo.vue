@@ -1,5 +1,5 @@
 <template>
-  <section class="tournaments-info">
+  <section class="tournaments-info" v-if="tournament">
     <div class="container">
       <div class="tournaments-info__wrap">
         <div class="tournament-info__header">
@@ -13,7 +13,16 @@
         </div>
         <div class="tournament-info__body">
           <Tabs :tabs="tabs" @selectTab="selectTab">
-            <TournamentAbout slot="tabs__body" v-if="activeTab === 0" />
+            <TournamentAbout
+              :tournament="tournament"
+              slot="tabs__body"
+              v-if="activeTab === 0"
+            />
+            <TournamentBracket
+              :tournament="tournament"
+              slot="tabs__body"
+              v-if="activeTab === 1"
+            />
             <TournamentMatches slot="tabs__body" v-if="activeTab === 2" />
             <TournamentRules slot="tabs__body" v-if="activeTab === 4" />
           </Tabs>
@@ -26,10 +35,17 @@
 <script>
 import Tabs from "../ui/Tabs.vue";
 import TournamentAbout from "./TournamentAbout.vue";
+import TournamentBracket from "./TournamentBracket.vue";
 import TournamentMatches from "./TournamentMatches.vue";
 import TournamentRules from "./TournamentRules.vue";
 export default {
-  components: { Tabs, TournamentAbout, TournamentMatches, TournamentRules },
+  components: {
+    Tabs,
+    TournamentAbout,
+    TournamentMatches,
+    TournamentRules,
+    TournamentBracket,
+  },
   name: "SingleTournamentInfo",
   props: {
     tournament: {

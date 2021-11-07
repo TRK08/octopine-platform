@@ -10,6 +10,7 @@ import auth from '../store/auth'
 import notify from '../store/notifications'
 import forum from '../store/forum'
 import popup from '../store/popup'
+import usersAndTeams from '../store/usersAndTeams'
 
 export default new Vuex.Store({
 	modules: {
@@ -19,6 +20,7 @@ export default new Vuex.Store({
 		auth,
 		notify,
 		forum,
-		popup
+		popup,
+		usersAndTeams
 	}
 })

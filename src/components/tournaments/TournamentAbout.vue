@@ -1,13 +1,23 @@
 <template>
-  <div class="tournament-about">
+  <div class="tournament-about" v-if="tournament">
     <div class="tournament-about__block format">
       <h3>Формат</h3>
       <div class="tournament-about__format-items">
-        <div
-          class="tournament-about__format-item"
-          v-for="item in 4"
-          :key="item"
-        >
+        <div class="tournament-about__format-item">
+          <img src="../../assets/img/peoples.svg" alt="" />
+          <span> {{ tournament.type }} </span>
+        </div>
+        <div class="tournament-about__format-item">
+          <img src="../../assets/img/peoples.svg" alt="" />
+          <span>{{ tournament.prize_sum }}Р</span>
+        </div>
+        <div class="tournament-about__format-item">
+          <img src="../../assets/img/peoples.svg" alt="" />
+          <span>
+            {{ tournament.teams.length }} / {{ tournament.max_players }}
+          </span>
+        </div>
+        <div class="tournament-about__format-item">
           <img src="../../assets/img/peoples.svg" alt="" />
           <span>5 vs 5</span>
         </div>
@@ -16,11 +26,7 @@
     <div class="tournament-about__block descr">
       <h3>Описание</h3>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-        purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor
-        rhoncus dolor purus non enim praesent elementum facilisis leo, vel
-        fringilla est ullamcorper eget nulla facilisi etiam dignissim diam quis
-        enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra
+        {{ tournament.description }}
       </p>
     </div>
   </div>
@@ -29,6 +35,12 @@
 <script>
 export default {
   name: "ToruanamentAbout",
+  props: {
+    tournament: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>
 

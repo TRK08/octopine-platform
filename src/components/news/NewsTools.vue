@@ -4,8 +4,9 @@
       <div class="tools__wrap">
         <div class="tools-item tools-select">
           <CustomSelect
-            :options="['Все рубрики', 'Важное', 'Интересное']"
-            :default="'Все рубрики'"
+            v-if="setCategories.length"
+            :options="setCategories"
+            :default="setCategories[0]"
             @input="displayToKey"
           />
         </div>
@@ -16,13 +17,29 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import CustomSelect from "../ui/CustomSelect.vue";
 export default {
   components: { CustomSelect },
   name: "NewsTools",
   methods: {
     displayToKey(e) {
-      console.log(e);
+      let cat = this.categories.find((item) => item.title === e);
+      this.$store.dispatch("news/setCategoryId", cat.id);
+    },
+  },
+  computed: {
+    ...mapGetters({
+      categories: "news/getCategories",
+    }),
+    setCategories() {
+      if (this.categories) {
+        let res = [];
+        this.categories.forEach((item) => {
+          res.push(item.title);
+        });
+        return res;
+      }
     },
   },
 };

@@ -1,24 +1,50 @@
 <template>
   <section class="user-profile">
     <div class="user-profile__avatar"></div>
-    <div class="user-profile__status">
+    <!-- <div class="user-profile__status">
       <span class="user-profile__status-text">Онлайн</span>
       <span class="user-profile__status-circle"></span>
-    </div>
-    <div class="user-profile__nickname">Nickname</div>
-    <div class="user-profile__info">Санкт-Петербург, 25 лет</div>
-    <button class="custom-btn user-profile__add-friend">
+    </div> -->
+    <div class="user-profile__nickname">{{ user.nickname }}</div>
+    <!-- <div class="user-profile__info">Санкт-Петербург, 25 лет</div> -->
+    <button
+      @click="addFriend(user.ID)"
+      class="custom-btn user-profile__add-friend"
+    >
       Добавить в друзья
     </button>
-    <button class="custom-btn user-profile__new-message">
+    <!-- <button class="custom-btn user-profile__new-message">
       Отправить сообщение
-    </button>
+    </button> -->
   </section>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "UserProfile",
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    ...mapGetters({
+      myProfile: "auth/getUserInfo",
+    }),
+  },
+  methods: {
+    ...mapActions({
+      setNotify: "notify/ADD_NOTIFICATIONS",
+    }),
+    addFriend(id) {
+      this.$store.dispatch("usersAndTeams/ADD_FRIEND", {
+        myID: this.myProfile.user.ID,
+        userID: id,
+      });
+    },
+  },
 };
 </script>
 

@@ -67,9 +67,6 @@ export default {
       themes: "forum/getThemes",
     }),
   },
-  created() {
-    this.$store.dispatch("forum/loadInfo");
-  },
 };
 </script>
 

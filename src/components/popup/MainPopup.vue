@@ -2,7 +2,10 @@
   <div class="popup" v-if="mode" @click="closePopup">
     <div class="popup__wrap" @click.stop>
       <div class="popup__content">
-        <FriendsPopup />
+        <FriendsPopup v-if="mode === 'friends'" />
+        <TeamsPopup v-if="mode === 'teams'" />
+        <SearchFriendsPopup v-if="mode === 'searchFriends'" />
+        <CreateTeamPopup v-if="mode === 'createTeam'" />
       </div>
     </div>
   </div>
@@ -10,10 +13,13 @@
 
 <script>
 import { mapGetters } from "vuex";
+import CreateTeamPopup from "./CreateTeamPopup.vue";
 import FriendsPopup from "./FriendsPopup.vue";
+import SearchFriendsPopup from "./SearchFriendsPopup.vue";
+import TeamsPopup from "./TeamsPopup.vue";
 export default {
   name: "MainPopUp",
-  components: { FriendsPopup },
+  components: { FriendsPopup, TeamsPopup, SearchFriendsPopup, CreateTeamPopup },
   methods: {
     closePopup() {
       this.$store.dispatch("popup/GET_POPUP_MODE", { mode: null });
@@ -65,8 +71,9 @@ export default {
 }
 
 .popup__content {
+  max-height: calc(80vh - 60px);
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .popup__content::-webkit-scrollbar {

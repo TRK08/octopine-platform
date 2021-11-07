@@ -25,21 +25,36 @@ const forum = {
   actions: {
     loadInfo({ commit, dispatch }, slug) {
       axios.get('https://octopine.pro/wp-json/oc/v1/get/forum').then(res => {
-        res.data.faq.forEach(item => {
-          item.open = false
-        })
-        commit('SET_QUESTIONS', res.data.faq)
-        commit('SET_THEMES', res.data.themes)
         if (slug) {
           let singleTheme = res.data.themes.find(item => item.slug === slug)
           commit('SET_SINGLE_THEME', singleTheme)
-          dispatch('loadComments', singleTheme.id)
+          return dispatch('loadComments', singleTheme.id)
+        } else {
+          res.data.faq.forEach(item => {
+            item.open = false
+          })
+          commit('SET_QUESTIONS', res.data.faq)
+          commit('SET_THEMES', res.data.themes)
         }
+
       })
     },
     loadComments({ commit }, id) {
       axios.get(`https://octopine.pro/wp-json/oc/v1/get/comments?id=${id}`).then(res => {
         commit('SET_COMMENTS', res.data)
+      })
+    },
+    sendNewComment({ commit }, payload) {
+      console.log(payload);
+      axios.post('https://octopine.pro/wp-json/oc/v1/post/comment', payload, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => {
+        commit('SET_NEW_COMMENT', res.data)
+        console.log(res);
+      }).catch(err => {
+        console.log(err, 'NEW COMMENT REQUEST ERROR');
       })
     }
   },

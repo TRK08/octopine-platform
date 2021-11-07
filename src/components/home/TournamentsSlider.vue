@@ -1,5 +1,5 @@
 <template>
-  <section class="tournaments-slider">
+  <section class="tournaments-slider" v-if="tournaments">
     <div class="container">
       <router-link tag="div" to="/tournaments" class="home-title">
         <h2>Турниры</h2>

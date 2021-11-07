@@ -4,68 +4,20 @@ import axios from 'axios'
 const tournaments = {
 	namespaced: true,
 	state: {
-		tournaments: [
-			{
-				id: 1,
-				format: ["5 vs 5", "BO3", '16 / 32', '₽ 500'],
-				img: require("../assets/img/tournament.png"),
-				name: "Турнир по Dota 2 #1 Самый первый турнир",
-				time: "17:00",
-				date: "22 октября 2022",
-				slug: 'Turnir-1'
-			},
-			{
-				id: 2,
-				format: ["5 vs 5", "BO3", '10 / 64', '₽ 11500'],
-				img: require("../assets/img/tournament.png"),
-				name: "Турнир по Dota 2 #1 Самый первый турнир",
-				time: "17:00",
-				date: "22 октября 2022",
-			},
-			{
-				id: 3,
-				format: ["5 vs 5", "BO3", '10 / 64', '₽ 11500'],
-				img: require("../assets/img/tournament.png"),
-				name: "Турнир по Dota 2 #1 Самый первый турнир",
-				time: "17:00",
-				date: "22 октября 2022",
-			},
-			{
-				id: 4,
-				format: ["5 vs 5", "BO3", '10 / 64', '₽ 11500'],
-				img: require("../assets/img/tournament.png"),
-				name: "Турнир по Dota 2 #1 Самый первый турнир",
-				time: "17:00",
-				date: "22 октября 2022",
-			},
-			{
-				id: 5,
-				format: ["5 vs 5", "BO3", '10 / 64', '₽ 11500'],
-				img: require("../assets/img/tournament.png"),
-				name: "Турнир по Dota 2 #1 Самый первый турнир",
-				time: "17:00",
-				date: "22 октября 2022",
-			},
-			{
-				id: 6,
-				format: ["5 vs 5", "BO3", '10 / 64', '₽ 11500'],
-				img: require("../assets/img/tournament.png"),
-				name: "Турнир по Dota 2 #1 Самый первый турнир",
-				time: "17:00",
-				date: "22 октября 2022",
-			},
-			{
-				id: 7,
-				format: ["5 vs 5", "BO3", '10 / 64', '₽ 11500'],
-				img: require("../assets/img/tournament.png"),
-				name: "Турнир по Dota 2 #1 Самый первый турнир",
-				time: "17:00",
-				date: "22 октября 2022",
-			},
-		]
+		tournaments: null
 	},
-	mutations: {},
-	actions: {},
+	mutations: {
+		SET_TOURNAMENTS(state, payload) {
+			state.tournaments = payload
+		}
+	},
+	actions: {
+		LOAD_TOURNAMENTS({ commit }) {
+			axios.get('https://octopine.pro/wp-json/oc/v1/match/get/all').then(res => {
+				commit('SET_TOURNAMENTS', res.data)
+			})
+		}
+	},
 	getters: {
 		getTournaments(state) {
 			return state.tournaments

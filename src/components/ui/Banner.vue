@@ -1,5 +1,5 @@
 <template>
-  <div class="banner">
+  <div class="banner" v-if="bannerInfo">
     <div
       class="banner-img"
       :style="{

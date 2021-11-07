@@ -1,10 +1,12 @@
 <template>
-  <section class="user-friends">
+  <section class="user-friends" v-if="friends">
     <h2>Друзья</h2>
-    <div class="user-friends__items">
-      <div
+    <div class="user-friends__items" v-if="friends.accepted">
+      <router-link
+        tag="div"
+        :to="`/user/${item.nickname}`"
         class="user-friends__item"
-        v-for="item in friends"
+        v-for="item in friends.accepted"
         :key="item.nickname"
       >
         <div
@@ -18,14 +20,22 @@
         <div v-else class="user-friends__avatar empty"></div>
 
         <div class="user-friends__nickname">{{ item.nickname }}</div>
-      </div>
+      </router-link>
     </div>
     <div
+      v-if="friends.length > 3"
       class="user-friends__show-all"
-      @click="setPopup({ mode: 'friends', data: friends })"
+      @click="setPopup({ mode: 'friends', data: friends.accepted })"
     >
       Все друзья
     </div>
+    <button
+      v-if="this.$route.path === '/cabinet'"
+      @click="searchFriends"
+      class="user-friends__add-friend"
+    >
+      Добавить друзей
+    </button>
   </section>
 </template>
 
@@ -35,7 +45,7 @@ export default {
   name: "UserFriends",
   props: {
     friends: {
-      type: Array,
+      type: Object,
       required: true,
     },
   },
@@ -46,7 +56,11 @@ export default {
     ...mapActions({
       setPopup: "popup/GET_POPUP_MODE",
     }),
+    searchFriends() {
+      this.setPopup({ mode: "searchFriends" });
+    },
   },
+  computed: {},
 };
 </script>
 
@@ -85,7 +99,7 @@ export default {
 .user-friends__avatar {
   width: 75px;
   height: 75px;
-  margin-right: 30%;
+  margin-right: 50px;
 }
 
 .user-friends__avatar.empty {
@@ -106,5 +120,10 @@ export default {
 .user-friends__show-all:hover {
   color: var(--blue);
   transition: all 0.5s ease;
+}
+
+.user-friends__add-friend {
+  margin-top: 30px;
+  background-color: var(--blue);
 }
 </style>

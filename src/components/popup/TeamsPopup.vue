@@ -1,12 +1,8 @@
 <template>
-  <section class="user-teams" v-if="teams">
+  <div class="teams-popup">
     <h2>Команды</h2>
-    <div class="user-teams__items">
-      <div
-        class="user-teams__item"
-        v-for="item in teams.slice(0, 3)"
-        :key="item.nickname"
-      >
+    <div class="teams-popup__wrap">
+      <div class="user-teams__item" v-for="item in info" :key="item.nickname">
         <div
           v-if="item.logo"
           class="user-teams__avatar"
@@ -19,56 +15,24 @@
         <div class="user-teams__nickname">{{ item.name }}</div>
       </div>
     </div>
-    <div
-      v-if="teams.length > 3"
-      class="user-teams__show-all"
-      @click="setPopup({ mode: 'teams', data: teams })"
-    >
-      Все команды
-    </div>
-    <button
-      @click="setPopup({ mode: 'createTeam' })"
-      v-if="this.$route.path === '/cabinet'"
-      class="user-teams__create-team"
-    >
-      Создать команду
-    </button>
-  </section>
+  </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 export default {
-  name: "UserTeams",
-  props: {
-    teams: {
-      type: Array,
-      required: true,
-    },
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    ...mapActions({
-      setPopup: "popup/GET_POPUP_MODE",
+  name: "TeamsPopup",
+  computed: {
+    ...mapGetters({
+      info: "popup/getPopupInfo",
     }),
   },
 };
 </script>
 
 <style scoped>
-.user-teams {
-  border-radius: 30px;
-  background-color: var(--dark);
-  padding: 30px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-bottom: 30px;
-}
-
-.user-teams h2 {
+.teams-popup h2 {
+  text-align: center;
   margin-bottom: 30px;
 }
 
@@ -93,7 +57,7 @@ export default {
   width: 75px;
   height: 75px;
   margin-right: 50px;
-  background-position: center center !important;
+  background-position: center center;
 }
 
 .user-teams__avatar.empty {
@@ -114,10 +78,5 @@ export default {
 .user-teams__show-all:hover {
   color: var(--blue);
   transition: all 0.5s ease;
-}
-
-.user-teams__create-team {
-  background-color: var(--blue);
-  margin-top: 30px;
 }
 </style>

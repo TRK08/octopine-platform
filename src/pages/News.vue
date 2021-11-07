@@ -1,16 +1,16 @@
 <template>
-  <div class="news">
+  <div class="news" v-if="news && setNews">
     <Banner :bannerInfo="bannerInfo" />
     <div class="container">
       <NewsTools />
-      <transition-group name="fade" class="news__wrap">
+      <div class="news__wrap">
         <NewsBlock
-          v-for="item in news.slice(0, showedNews)"
-          :key="item.title"
+          v-for="item in setNews"
+          :key="item.slug"
           :singleNews="item"
         />
-      </transition-group>
-      <LoadMore @click="loadMore" v-if="showedNews <= news.length" />
+      </div>
+      <LoadMore @click="loadMore" v-if="news && showedNews <= setNews.length" />
     </div>
   </div>
 </template>
@@ -43,7 +43,23 @@ export default {
   computed: {
     ...mapGetters({
       news: "news/getNews",
+      categoryId: "news/getCategoryId",
     }),
+    setNews() {
+      if (this.news) {
+        let news = [];
+        if (this.categoryId) {
+          this.news.map((item) => {
+            if (item.category.indexOf(this.categoryId) !== -1) {
+              news.push(item);
+            }
+          });
+        } else {
+          news = this.news;
+        }
+        return news;
+      }
+    },
   },
   created() {
     this.$store.dispatch("news/loadNews");

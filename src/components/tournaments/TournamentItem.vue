@@ -1,13 +1,17 @@
 <template>
-  <div class="tournament-block__wrap">
+  <div class="tournament-block__wrap" v-if="tournament">
     <div class="tournament-block" v-show="grid">
       <div class="tournament-block__header">
-        <div
-          class="tournament-block__header-item"
-          v-for="item in tournament.format"
-          :key="item"
-        >
-          {{ item }}
+        <div class="tournament-block__header-item">
+          {{ tournament.type }}
+          <div class="tournament-block__header-separator"></div>
+        </div>
+        <div class="tournament-block__header-item">
+          {{ tournament.teams.length }} / {{ tournament.max_players }}
+          <div class="tournament-block__header-separator"></div>
+        </div>
+        <div class="tournament-block__header-item">
+          {{ tournament.prize_sum }}
           <div class="tournament-block__header-separator"></div>
         </div>
       </div>
@@ -16,7 +20,7 @@
         :style="{
           background:
             'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' +
-            tournament.img +
+            tournament.image +
             ') no-repeat ',
           'background-size': 'cover',
         }"
@@ -33,11 +37,11 @@
         <h3>{{ tournament.name }}</h3>
         <div class="tournament-block__body-item">
           <img src="../../assets/img/clock.svg" alt="" />
-          <span> {{ tournament.time }} </span>
+          <span> {{ time }} </span>
         </div>
         <div class="tournament-block__body-item">
           <img src="../../assets/img/calendar.svg" alt="" />
-          <span> {{ tournament.date }} </span>
+          <span> {{ date }} </span>
         </div>
       </div>
     </div>
@@ -57,20 +61,24 @@
         <div class="tournament-block__body-date">
           <div class="tournament-block__body-item">
             <img src="../../assets/img/clock.svg" alt="" />
-            <span> {{ tournament.time }} </span>
+            <span> {{ time }} </span>
           </div>
           <div class="tournament-block__body-item">
             <img src="../../assets/img/calendar.svg" alt="" />
-            <span> {{ tournament.date }} </span>
+            <span> {{ date }} </span>
           </div>
         </div>
         <div class="tournaments-block__body-info">
-          <div
-            class="tournament-block__header-item"
-            v-for="item in tournament.format"
-            :key="item"
-          >
-            {{ item }}
+          <div class="tournament-block__header-item">
+            {{ tournament.type }}
+            <div class="tournament-block__header-separator"></div>
+          </div>
+          <div class="tournament-block__header-item">
+            {{ tournament.teams.length }} / {{ tournament.max_players }}
+            <div class="tournament-block__header-separator"></div>
+          </div>
+          <div class="tournament-block__header-item">
+            {{ tournament.prize_sum }}
             <div class="tournament-block__header-separator"></div>
           </div>
         </div>
@@ -99,7 +107,20 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      time: "",
+      date: "",
+    };
+  },
+  methods: {
+    setTime() {
+      let time = this.tournament.date.split(" ");
+      this.time = time[1];
+      this.date = time[0];
+    },
+  },
+  created() {
+    this.setTime();
   },
 };
 </script>

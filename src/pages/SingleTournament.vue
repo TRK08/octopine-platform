@@ -1,6 +1,6 @@
 <template>
-  <div class="single-tournament">
-    <Banner :bannerInfo="tournament" />
+  <div class="single-tournament" v-if="tournament">
+    <Banner :bannerInfo="bannerInfo" />
     <SingleTournamentInfo :tournament="tournament" />
   </div>
 </template>
@@ -14,18 +14,25 @@ export default {
   props: ["id"],
   components: { Banner, SingleTournamentInfo },
   data() {
-    return {
-      tournament: [],
-    };
+    return {};
   },
   computed: {
     ...mapGetters({
       singleTournament: "tournaments/getSingleTournament",
+      tournaments: "tournaments/getTournaments",
     }),
+    bannerInfo() {
+      return {
+        img: this.tournament.image,
+      };
+    },
+    tournament() {
+      if (this.tournaments) {
+        return this.singleTournament(this.id);
+      }
+    },
   },
-  created() {
-    this.tournament = this.singleTournament(this.id);
-  },
+  created() {},
 };
 </script>
 

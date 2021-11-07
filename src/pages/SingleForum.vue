@@ -25,50 +25,24 @@
             </span>
           </div>
           <div class="single-forum__answer-text">
-            <!-- <p>{{ item.comment }}</p> -->
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint
-              repellat a eveniet dolorum velit, minima totam odit consequatur
-              adipisci id vel tempore facere magnam placeat error voluptates
-              earum, incidunt iusto? Dolor consequatur cumque perspiciatis
-              exercitationem provident ipsam ipsa repellendus vel nobis minus
-              dolorum sapiente quibusdam, sed accusamus repudiandae et unde
-              fugiat sit laboriosam? Adipisci rem error voluptas quia odio nemo?
-              Voluptatibus debitis illum, quod dolorem aut fugit possimus
-              explicabo itaque voluptatum distinctio. Maiores praesentium odit
-              omnis nisi similique exercitationem consequuntur, inventore rerum
-              soluta repudiandae atque perferendis possimus eaque quos dolores?
-              Molestiae ipsum fugit, cumque, earum magni distinctio, laborum
-              enim harum alias praesentium nulla cum. Et sint beatae placeat,
-              odio porro, nisi accusantium, sunt itaque voluptates blanditiis
-              dolorum id maiores dolor. Nemo corrupti natus ea accusamus
-              similique, at eaque sunt deserunt molestiae consectetur voluptate
-              sit illo, tempora possimus rem unde aliquid tempore voluptatem
-              repellendus exercitationem quaerat? Distinctio labore molestiae
-              veritatis molestias? Sint pariatur inventore quae corrupti
-              voluptate natus ab, sit saepe sed, eligendi, placeat atque
-              consectetur beatae laboriosam ad. Aspernatur, nesciunt magni quos
-              repellat corrupti nostrum perferendis. Beatae totam eius dolores.
-              Porro, maiores natus molestias enim nostrum adipisci eligendi
-              distinctio itaque! Perspiciatis enim, aliquam commodi sit quaerat
-              nobis deleniti ex quia nam ullam amet totam quo deserunt
-              consequuntur assumenda, temporibus inventore? Minima voluptate
-              perferendis perspiciatis tenetur voluptates nulla, nemo maxime
-              veritatis accusantium! Saepe maxime ea temporibus id velit
-              molestias dignissimos quod necessitatibus laborum nesciunt
-              mollitia sapiente adipisci, harum optio aliquam est. Aliquam a
-              illo, odit optio neque quidem nobis, quasi eius tenetur asperiores
-              quaerat modi! Iure quae itaque et quaerat distinctio aut ab
-              nostrum harum suscipit tempore. Quam deserunt dicta ullam? Error
-              inventore saepe ipsum blanditiis suscipit unde deleniti, rerum
-              praesentium dignissimos pariatur cupiditate amet ullam quaerat
-              voluptatum id voluptate expedita maxime deserunt molestias!
-              Incidunt temporibus, velit tempore reprehenderit dolores sapiente?
-            </p>
+            <p>{{ item.comment }}</p>
           </div>
         </div>
       </div>
-      <div class="single-forum__comment"></div>
+      <div class="single-forum__comment">
+        <h3>Новый коментарий</h3>
+        <textarea
+          v-model="commentText"
+          class="single-forum-textarea"
+        ></textarea>
+        <button
+          @click="sendNewComment"
+          :disabled="!commentText"
+          class="custom-btn"
+        >
+          Отправить
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -79,13 +53,40 @@ export default {
   name: "SingleForum",
   props: ["id"],
   data() {
-    return {};
+    return {
+      commentText: "",
+    };
   },
-  methods: {},
+  methods: {
+    sendNewComment() {
+      const data = {
+        post_id: this.singleTheme.id,
+        user_id: this.user.user_id,
+        text: this.commentText,
+      };
+
+      if (this.commentText) {
+        this.$store
+          .dispatch("forum/sendNewComment", data)
+          .then(() => {
+            this.commentText = "";
+            this.$store.dispatch("notify/ADD_NOTIFICATIONS", {
+              text: "Комментарий отправлен",
+            });
+          })
+          .cath(() => {
+            this.$store.dispatch("notify/ADD_NOTIFICATIONS", {
+              text: "Комментарий не отправлен",
+            });
+          });
+      }
+    },
+  },
   computed: {
     ...mapGetters({
       comments: "forum/getComments",
       singleTheme: "forum/getSingleTheme",
+      user: "auth/getUser",
     }),
   },
   created() {
@@ -97,6 +98,7 @@ export default {
 <style scoped>
 .single-forum {
   padding: 100px 0;
+  min-height: 100vh;
 }
 
 .single-forum__theme {
@@ -137,6 +139,8 @@ export default {
   font-weight: 400;
   border-right: 3px solid var(--bg);
   padding: 15px 30px;
+  width: 190px;
+  /* max-width: 190px; */
   min-width: 190px;
   text-align: center;
 }
@@ -165,9 +169,34 @@ export default {
 }
 
 .single-forum__comment {
-  border: 3px solid var(--dark);
   width: 100%;
-  height: 50px;
+  max-width: 700px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.single-forum__comment h3 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.single-forum-textarea {
+  padding: 15px;
+  background-color: var(--bg);
+  border: 3px solid var(--dark);
   border-radius: 30px;
+  width: 100%;
+  height: 200px;
+  resize: none;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.single-forum__comment button {
+  width: 300px;
+  background-color: var(--blue);
+  display: block;
+  margin: 15px auto 0;
 }
 </style>

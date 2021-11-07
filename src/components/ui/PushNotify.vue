@@ -37,7 +37,7 @@ export default {
   position: fixed;
   right: 30px;
   top: 50px;
-  z-index: 10;
+  z-index: 1000;
 }
 
 .notify__wrap {
@@ -46,7 +46,7 @@ export default {
   max-width: 400px;
   min-height: 50px;
   border-radius: 30px;
-  padding: 5px;
+  padding: 15px;
   text-align: center;
   margin-bottom: 20px;
 }

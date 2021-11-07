@@ -1,9 +1,9 @@
 <template>
-  <div class="single-news">
-    <Banner :bannerInfo="news[0]" />
+  <div class="single-news" v-if="news(id)">
+    <Banner :bannerInfo="{ img: news(id).image, title: news(id).title }" />
     <div class="container">
       <div class="single-news__wrap">
-        <div class="single-news-text" v-html="news[0].text"></div>
+        <div class="single-news-text" v-html="news(id).text"></div>
         <router-link tag="button" to="/news" class="single-news-back">
           <svg class="white-arrow arrow">
             <use xlink:href="../assets/img/sprite.svg#arrow"></use>
@@ -22,14 +22,15 @@ export default {
   name: "SingleNews",
   components: { Banner },
   props: ["id"],
+  data() {
+    return {};
+  },
   computed: {
     ...mapGetters({
       news: "news/getSingleNews",
     }),
   },
-  created() {
-    this.$store.dispatch("news/loadSingleNews", this.id);
-  },
+  created() {},
 };
 </script>
 

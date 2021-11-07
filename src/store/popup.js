@@ -9,7 +9,9 @@ const popup = {
   mutations: {
     SET_POPUP_MODE(state, payload) {
       state.popupMode = payload.mode
-      state.popupInfo = payload.data
+      if (payload.data) {
+        state.popupInfo = payload.data
+      }
     }
   },
   actions: {
