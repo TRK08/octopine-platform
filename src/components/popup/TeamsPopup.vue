@@ -2,7 +2,12 @@
   <div class="teams-popup">
     <h2>Команды</h2>
     <div class="teams-popup__wrap">
-      <div class="user-teams__item" v-for="item in info" :key="item.nickname">
+      <div
+        class="user-teams__item"
+        v-for="item in info"
+        :key="item.nickname"
+        @click="loadTeam(item.id)"
+      >
         <div
           v-if="item.logo"
           class="user-teams__avatar"
@@ -19,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "TeamsPopup",
   computed: {
@@ -27,10 +32,18 @@ export default {
       info: "popup/getPopupInfo",
     }),
   },
+  methods: {
+    ...mapActions({
+      loadTeam: "usersAndTeams/LOAD_TEAM_INFO",
+    }),
+  },
 };
 </script>
 
 <style scoped>
+.teams-popup {
+  min-width: 500px;
+}
 .teams-popup h2 {
   text-align: center;
   margin-bottom: 30px;
@@ -51,6 +64,13 @@ export default {
   border-radius: 30px;
   display: flex;
   align-items: center;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.user-teams__item:hover {
+  background-color: var(--blue);
+  transition: all 0.5s ease;
 }
 
 .user-teams__avatar {

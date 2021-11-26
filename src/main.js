@@ -10,6 +10,7 @@ import VueScrollTo from 'vue-scrollto'
 import VueTyperPlugin from 'vue-typer'
 import VCalendar from 'v-calendar';
 import VueMasonry from 'vue-masonry-css'
+import VuePageTransition from 'vue-page-transition'
 // import VueLazyload from 'vue-lazyload'
 
 
@@ -23,7 +24,8 @@ Vue.use(VueAwesomeSwiper)
 Vue.use(VueScrollTo)
 Vue.use(VueTheMask)
 Vue.use(VCalendar)
-Vue.use(VueMasonry);
+Vue.use(VueMasonry)
+Vue.use(VuePageTransition)
 
 // Vue.use(VueLazyload, {
 //   preLoad: 1.3,
@@ -35,6 +37,17 @@ Vue.use(VueMasonry);
 
 const user = JSON.parse(localStorage.getItem("user"))
 store.dispatch("auth/VALIDATE", user);
+
+
+router.beforeEach((to, from, next) => {
+  store.dispatch('auth/SET_PRELOAD')
+  setTimeout(function () {
+    next()
+  }, 200);
+  setTimeout(function () {
+    store.dispatch('auth/SET_PRELOAD')
+  }, 2000);
+})
 
 
 

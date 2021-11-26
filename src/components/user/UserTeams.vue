@@ -6,6 +6,7 @@
         class="user-teams__item"
         v-for="item in teams.slice(0, 3)"
         :key="item.nickname"
+        @click="loadTeam(item.id)"
       >
         <div
           v-if="item.logo"
@@ -20,7 +21,7 @@
       </div>
     </div>
     <div
-      v-if="teams.length > 3"
+      v-if="teams.length > 2"
       class="user-teams__show-all"
       @click="setPopup({ mode: 'teams', data: teams })"
     >
@@ -52,6 +53,7 @@ export default {
   methods: {
     ...mapActions({
       setPopup: "popup/GET_POPUP_MODE",
+      loadTeam: "usersAndTeams/LOAD_TEAM_INFO",
     }),
   },
 };
@@ -87,6 +89,13 @@ export default {
   border-radius: 30px;
   display: flex;
   align-items: center;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.user-teams__item:hover {
+  background-color: var(--blue);
+  transition: all 0.5s ease;
 }
 
 .user-teams__avatar {

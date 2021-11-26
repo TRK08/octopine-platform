@@ -28,4 +28,28 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 1199px) {
+  .feedback-form {
+    padding: 50px;
+  }
+}
+
+@media (max-width: 991px) {
+  .feedback-zeus,
+  .feedback-lightning {
+    display: none;
+  }
+
+  .feedback-form {
+    margin: -50px auto 0;
+    max-width: 500px;
+    z-index: 4;
+  }
+}
+
+@media (max-width: 672px) {
+  .feedback {
+    margin-bottom: 200px;
+  }
+}
 </style>

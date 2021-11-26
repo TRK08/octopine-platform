@@ -25,22 +25,12 @@
               >
                 <h2 data-swiper-parallax="-700" v-html="slide.title"></h2>
                 <p v-html="slide.text"></p>
-                <button>
+                <router-link tag="button" :to="slide.button.link">
                   {{ slide.button.text }}
                   <svg class="white-arrow arrow">
                     <use xlink:href="../../assets/img/sprite.svg#arrow"></use>
                   </svg>
-                </button>
-                <div class="slider__social-block">
-                  <a href=""
-                    ><img src="../../assets/img/instagram.svg" alt=""
-                  /></a>
-                  <a href=""><img src="../../assets/img/vk.svg" alt="" /></a>
-                  <a href=""
-                    ><img src="../../assets/img/instagram.svg" alt=""
-                  /></a>
-                  <a href=""><img src="../../assets/img/vk.svg" alt="" /></a>
-                </div>
+                </router-link>
               </div>
             </swiper-slide>
           </swiper>
@@ -48,7 +38,7 @@
 
         <div class="col-md-4">
           <swiper
-            class="swiper gallery-Right hidden-xs"
+            class="swiper gallery-Right"
             :options="swiperOptionRight"
             ref="swiperRight"
           >
@@ -74,6 +64,12 @@
           </div>
         </div>
       </div>
+      <div class="slider__social-block">
+        <a href=""><img src="../../assets/img/whatsapp.svg" alt="" /></a>
+        <a href=""><img src="../../assets/img/telegram.svg" alt="" /></a>
+        <a href=""><img src="../../assets/img/instagram.svg" alt="" /></a>
+        <a href=""><img src="../../assets/img/vk.svg" alt="" /></a>
+      </div>
     </div>
   </section>
 </template>
@@ -86,28 +82,33 @@ export default {
     return {
       swiperOptionTop: {
         slidesPerView: 1,
-        // loopedSlides: 25,
-        // loop: true,
-
-        allowTouchMove: false,
+        loopedSlides: 25,
+        speed: 800,
+        loop: true,
+        autoplay: {
+          delay: 7000,
+        },
+        pauseOnMouseEnter: true,
+        // allowTouchMove: true,
+        breakpoint: {
+          991: {
+            allowTouchMove: false,
+            autoplay: false,
+          },
+        },
       },
       swiperOptionRight: {
         slideToClickedSlide: true,
-        // loopedSlides: 25,
-        // loop: true,
+        slidesPerView: 2,
+        loopedSlides: 25,
+        speed: 800,
+        loop: true,
         spaceBetween: 15,
         navigation: {
           nextEl: ".nextBtn",
           prevEl: ".prevBtn",
         },
-        breakpoints: {
-          768: {
-            slidesPerView: 2,
-          },
-          1199: {
-            slidesPerView: 2,
-          },
-        },
+        breakpoints: {},
       },
     };
   },
@@ -132,14 +133,15 @@ export default {
 
 <style scoped>
 .home-slider {
-  height: 500px;
+  height: 400px;
   background: linear-gradient(to right, var(--bg) 65%, var(--blue) 35%);
   position: relative;
   margin-bottom: 100px;
+  overflow: hidden;
 }
 
 .slides {
-  height: 500px;
+  height: 400px;
 }
 
 .home-slider .container-fluid {
@@ -148,23 +150,30 @@ export default {
 
 .swiper-slider-right {
   background-color: var(--blue);
-  height: 500px;
+  height: 400px;
   box-shadow: -10px 0px 8px 0px rgba(34, 60, 80, 0.2) inset;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .swiper-slider-right h2 {
   transform: skewX(25deg) rotate(-65deg);
   white-space: nowrap;
-  width: 100%;
-  position: absolute;
-  top: 65%;
+  font-size: 25px;
+  line-height: 30px;
+}
+
+.swiper-slider-right.swiper-slide-active {
+  cursor: initial;
 }
 
 .slide-box {
-  height: 500px;
+  height: 400px;
   background-position: center;
-  padding: 30px 180px 0 30px;
+  padding: 30px 30% 0 30px;
 }
 
 .slide-box h2 {
@@ -176,7 +185,7 @@ export default {
 }
 
 .slide-box button {
-  max-width: 300px;
+  width: fit-content;
   background-color: var(--dark);
   display: flex;
   justify-content: space-between;
@@ -186,6 +195,7 @@ export default {
 
 .slide-box button .arrow {
   transform: scale(-1);
+  margin-left: 30px;
 }
 
 .col-md-4 {
@@ -226,5 +236,36 @@ export default {
   position: absolute;
   left: 0;
   bottom: 0;
+  z-index: 3;
+}
+
+.slider__social-block a {
+  opacity: 0.5;
+  transition: all 0.5s ease;
+}
+
+.slider__social-block a:hover {
+  opacity: 1;
+  transition: all 0.5s ease;
+}
+
+@media (max-width: 1199px) {
+  .slider-nav {
+    right: 45px;
+  }
+}
+
+@media (max-width: 991px) {
+  .gallery-Right {
+    display: none;
+  }
+
+  .home-slider {
+    background: var(--bg);
+  }
+
+  .slider-nav {
+    display: none;
+  }
 }
 </style>

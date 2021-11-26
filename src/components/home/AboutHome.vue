@@ -22,21 +22,21 @@ export default {
     return {
       activeTab: 0,
       tabs: [
+        // {
+        //   title: "Компания",
+        //   active: true,
+        // },
+        // {
+        //   title: "Платформа",
+        //   active: false,
+        // },
+        // {
+        //   title: "Чем занимаемся",
+        //   active: false,
+        // },
         {
-          title: "Компания",
+          title: "О наc",
           active: true,
-        },
-        {
-          title: "Платформа",
-          active: false,
-        },
-        {
-          title: "Чем занимаемся",
-          active: false,
-        },
-        {
-          title: "О на",
-          active: false,
         },
       ],
     };
@@ -68,6 +68,10 @@ export default {
 .about-home__wrap {
   padding: 50px 30px;
   background-color: var(--dark);
+  border-radius: 30px;
+}
+
+.about-home__wrap::v-deep .tabs__item:last-child button {
   border-radius: 30px;
 }
 </style>

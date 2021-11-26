@@ -44,17 +44,25 @@ const forum = {
         commit('SET_COMMENTS', res.data)
       })
     },
-    sendNewComment({ commit }, payload) {
-      console.log(payload);
-      axios.post('https://octopine.pro/wp-json/oc/v1/post/comment', payload, {
+    async sendNewComment({ dispatch, commit }, payload) {
+      await axios.post('https://octopine.pro/wp-json/oc/v1/post/comment', payload, {
         headers: {
           'Content-Type': 'application/json'
         }
       }).then(res => {
-        commit('SET_NEW_COMMENT', res.data)
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Новый коментарий отправлен' }, { root: true })
         console.log(res);
       }).catch(err => {
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Ошибка отправки' }, { root: true })
         console.log(err, 'NEW COMMENT REQUEST ERROR');
+      })
+    },
+    async createNewTheme({ dispatch }, name) {
+      await axios.post(`https://octopine.pro/wp-json/oc/v1/post/forum?name=${name}`).then(res => {
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Тема успешно создана' }, { root: true })
+      }).catch(err => {
+        console.log(err, 'CREATE NEW FORUM THEME ERROR');
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Ошибка создания' }, { root: true })
       })
     }
   },

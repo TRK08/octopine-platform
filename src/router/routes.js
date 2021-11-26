@@ -10,6 +10,9 @@ import Auth from '../pages/Auth.vue'
 import Forum from '../pages/Forum.vue'
 import SingleForum from '../pages/SingleForum'
 import User from '../pages/User'
+import Contacts from '../pages/Contacts'
+import Search from '../pages/Search'
+import LostPassword from '../pages/LostPassword'
 
 import store from '../store'
 
@@ -34,7 +37,7 @@ const routes = [
 	{
 		path: '/tournaments/:id',
 		component: SingleTournament,
-		props: true
+		props: true,
 	},
 	{
 		path: '/cabinet',
@@ -82,12 +85,21 @@ const routes = [
 	{
 		path: '/user/:id',
 		component: User,
-		props: true
-	}
-	// {
-	// 	path: '*',
-	// 	component: Notfound
-	// },
+		props: true,
+	},
+	{
+		path: '/contacts',
+		component: Contacts,
+	},
+	{
+		path: '/search',
+		component: Search,
+	},
+	{
+		path: '/lost-password/*',
+		component: LostPassword,
+		props: true,
+	},
 ]
 
 export default routes;

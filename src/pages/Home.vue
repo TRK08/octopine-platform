@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="home-page">
     <HomeSlider />
     <TournamentsSlider />
     <NewsHome />
     <Feedback />
-    <AboutHome />
+    <!-- <AboutHome /> -->
   </div>
 </template>
 

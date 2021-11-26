@@ -2,7 +2,7 @@
   <div class="news" v-if="news && setNews">
     <Banner :bannerInfo="bannerInfo" />
     <div class="container">
-      <NewsTools />
+      <NewsTools @input="searchNews" />
       <div class="news__wrap">
         <NewsBlock
           v-for="item in setNews"
@@ -36,8 +36,15 @@ export default {
   },
   methods: {
     loadMore() {
-      console.log(this.showedNews);
       this.showedNews += 2;
+    },
+    searchNews(val) {
+      let arr = [];
+      this.dataNews = this.dataNews.map((item) => {
+        if (item.title.toLowerCase().includes(val)) {
+          return item;
+        }
+      });
     },
   },
   computed: {
@@ -46,23 +53,23 @@ export default {
       categoryId: "news/getCategoryId",
     }),
     setNews() {
-      if (this.news) {
-        let news = [];
-        if (this.categoryId) {
-          this.news.map((item) => {
-            if (item.category.indexOf(this.categoryId) !== -1) {
-              news.push(item);
-            }
-          });
-        } else {
-          news = this.news;
-        }
-        return news;
+      let news = [];
+      if (this.categoryId) {
+        this.news.map((item) => {
+          if (item.category.indexOf(this.categoryId) !== -1) {
+            news.push(item);
+          }
+        });
+      } else {
+        news = this.news;
       }
+      this.dataNews = news;
+      return this.dataNews;
     },
   },
   created() {
     this.$store.dispatch("news/loadNews");
+    this.dataNews = this.news;
   },
 };
 </script>
@@ -78,11 +85,28 @@ export default {
 
 .news__wrap {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
 }
 
 .news__wrap::v-deep .news-block {
   height: 400px;
+}
+
+@media (max-width: 991px) {
+  .news__wrap {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 991px) {
+  .news__wrap {
+    gap: 15px;
+  }
+}
+@media (max-width: 672px) {
+  .news__wrap {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

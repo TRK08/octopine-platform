@@ -24,6 +24,11 @@
         <div v-else class="search-friends__avatar empty"></div>
 
         <div class="search-friends__nickname">{{ item.nickname }}</div>
+        <div class="search-friends__add" @click.stop="addFriend(item.ID)">
+          <svg class="search-friends__add-icon" viewBox="0 -10 431 468">
+            <use xlink:href="../../assets/img/add-friend.svg#add-friend"></use>
+          </svg>
+        </div>
       </router-link>
     </div>
   </div>
@@ -41,11 +46,16 @@ export default {
   methods: {
     ...mapActions({
       sendSearch: "usersAndTeams/LOAD_SEARCH_RESULT",
+      addFriends: "usersAndTeams/ADD_FRIEND",
     }),
+    addFriend(id) {
+      this.addFriends({ myID: this.user.user_id, userID: id });
+    },
   },
   computed: {
     ...mapGetters({
       searchResult: "usersAndTeams/getSearchResult",
+      user: "auth/getUser",
     }),
   },
 };
@@ -54,6 +64,7 @@ export default {
 <style scoped>
 .search-friends {
   text-align: center;
+  min-width: 500px;
 }
 
 .search-friends__block {
@@ -71,12 +82,19 @@ export default {
   border-radius: 30px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.search-friends__item:hover {
+  background-color: var(--blue);
+  transition: all 0.5s ease;
 }
 
 .search-friends__avatar {
   width: 75px;
   height: 75px;
-  margin-right: 50px;
 }
 
 .search-friends__avatar.empty {
@@ -86,5 +104,23 @@ export default {
 
 .search-friends__item:not(:last-child) {
   margin-bottom: 30px;
+}
+
+.search-friends__add {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.search-friends__add-icon {
+  width: 40px;
+  height: 40px;
+  fill: var(--grey);
+  transition: all 0.5s ease;
+}
+
+.search-friends__add-icon:hover {
+  fill: var(--red);
+  transition: all 0.5s ease;
 }
 </style>

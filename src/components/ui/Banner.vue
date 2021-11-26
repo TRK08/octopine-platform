@@ -8,9 +8,9 @@
       }"
     >
       <div class="container">
-        <h2 class="banner-title" v-if="bannerInfo.title">
+        <!-- <h2 class="banner-title" v-if="bannerInfo.title">
           {{ bannerInfo.title }}
-        </h2>
+        </h2> -->
         <p class="banner-text" v-if="bannerInfo.descr">
           {{ bannerInfo.descr }}
         </p>
@@ -34,7 +34,7 @@ export default {
 <style scoped>
 .banner-img {
   width: 100%;
-  height: 400px;
+  height: 250px;
   background-position: center center !important;
   filter: drop-shadow(0px 15px 15px rgba(0, 0, 0, 0.3));
   box-shadow: inset 0px 4px 0px 500px rgba(0, 0, 0, 0.5);

@@ -2,10 +2,13 @@
   <div class="popup" v-if="mode" @click="closePopup">
     <div class="popup__wrap" @click.stop>
       <div class="popup__content">
-        <FriendsPopup v-if="mode === 'friends'" />
+        <FriendsPopup v-if="mode === 'friends' || mode === 'new-friends'" />
         <TeamsPopup v-if="mode === 'teams'" />
         <SearchFriendsPopup v-if="mode === 'searchFriends'" />
         <CreateTeamPopup v-if="mode === 'createTeam'" />
+        <SingleTeamPopup v-if="mode === 'singleTeam'" />
+        <RegistrTournament v-if="mode === 'registrTournament'" />
+        <ResetPass v-if="mode === 'reset-pass'" />
       </div>
     </div>
   </div>
@@ -15,14 +18,25 @@
 import { mapGetters } from "vuex";
 import CreateTeamPopup from "./CreateTeamPopup.vue";
 import FriendsPopup from "./FriendsPopup.vue";
+import RegistrTournament from "./RegistrTournament.vue";
+import ResetPass from "./ResetPass.vue";
 import SearchFriendsPopup from "./SearchFriendsPopup.vue";
+import SingleTeamPopup from "./SingleTeamPopup.vue";
 import TeamsPopup from "./TeamsPopup.vue";
 export default {
   name: "MainPopUp",
-  components: { FriendsPopup, TeamsPopup, SearchFriendsPopup, CreateTeamPopup },
+  components: {
+    FriendsPopup,
+    TeamsPopup,
+    SearchFriendsPopup,
+    CreateTeamPopup,
+    SingleTeamPopup,
+    RegistrTournament,
+    ResetPass,
+  },
   methods: {
     closePopup() {
-      this.$store.dispatch("popup/GET_POPUP_MODE", { mode: null });
+      this.$store.dispatch("popup/GET_POPUP_MODE", { mode: null, data: null });
     },
   },
   computed: {
@@ -62,6 +76,7 @@ export default {
 .popup__wrap {
   width: fit-content;
   min-width: 500px;
+  width: fit-content;
   max-width: 80vw;
   max-height: 80vh;
   background-color: var(--dark);

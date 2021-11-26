@@ -25,8 +25,11 @@
         >
           <input placeholder="Email" v-model="emailLog" type="text" />
           <input placeholder="Пароль" v-model="passwordLog" type="password" />
-          <button type="submit">Войти</button>
-          <a href="">Забыли пароль?</a>
+          <button type="submit">
+            <span class="load-spinner" v-if="isLoading"></span>
+            <span v-else>Войти</span>
+          </button>
+          <a href="" @click.prevent="resetPassword">Забыли пароль?</a>
         </form>
         <form
           class="auth-form__body auth-form__body-reg"
@@ -74,7 +77,13 @@
             />
           </div>
           <Checkbox :options="options" @checked="isChecked" />
-          <button type="submit">Зарегистрироваться</button>
+          <button
+            :disabled="!(!this.$v.$invalid && checkedRules)"
+            type="submit"
+          >
+            <span class="load-spinner" v-if="isLoadingReg"></span>
+            <span v-else>Зарегистрироваться</span>
+          </button>
         </form>
       </div>
     </div>
@@ -97,7 +106,9 @@ export default {
       passwordRegConfirm: "",
       emailLog: "",
       passwordLog: "",
-
+      checkedRules: "",
+      isLoadingReg: false,
+      isLoading: false,
       options: [
         {
           type: "rules",
@@ -131,11 +142,13 @@ export default {
       REGISTR: "auth/REGISTR",
       LOGIN: "auth/AUTH_REQUEST",
       addNotify: "notify/ADD_NOTIFICATIONS",
+      setPopup: "popup/GET_POPUP_MODE",
     }),
     isChecked(arr) {
-      console.log(arr);
+      this.checkedRules = arr[0].checked;
     },
     registration() {
+      this.isLoadingReg = true;
       let form = {
         nickname: this.nameReg,
         email: this.emailReg,
@@ -143,23 +156,29 @@ export default {
       };
 
       this.REGISTR(form).then(() => {
-        (this.nameReg = ""),
-          (this.emailReg = ""),
-          (this.passwordReg = ""),
-          (this.passwordRegConfirm = "");
+        this.nameReg = "";
+        this.emailReg = "";
+        this.passwordReg = "";
+        this.passwordRegConfirm = "";
+        this.isLoadingReg = false;
       });
     },
     login() {
+      this.isLoading = true;
       let form = {
         username: this.emailLog,
         password: this.passwordLog,
       };
 
       this.LOGIN(form).then(() => {
+        this.isLoading = false;
         setTimeout(() => {
           this.$router.push("/cabinet");
         }, 1000);
       });
+    },
+    resetPassword() {
+      this.setPopup({ mode: "reset-pass" });
     },
   },
 };
@@ -226,7 +245,7 @@ export default {
   padding: 12px 30px;
 }
 
-.auth-form__body-reg a {
+.auth-form__body-log a {
   display: block;
   color: var(--white);
   text-align: center;

@@ -6,11 +6,11 @@
         <span> {{ singleTheme.date }} </span>
       </div>
 
-      <div class="single-forum__answers">
+      <div class="single-forum__answers" v-if="comments">
         <h2>Ответы: {{ singleTheme.answers }}</h2>
         <div
           class="single-forum__answer"
-          v-for="item in comments"
+          v-for="item in reversedComments"
           :key="item.date"
         >
           <div class="single-forum__answer-info">
@@ -40,7 +40,8 @@
           :disabled="!commentText"
           class="custom-btn"
         >
-          Отправить
+          <span class="load-spinner" v-if="isLoading"></span>
+          <span v-else>Отправить</span>
         </button>
       </div>
     </div>
@@ -48,38 +49,32 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "SingleForum",
   props: ["id"],
   data() {
     return {
       commentText: "",
+      isLoading: "",
     };
   },
   methods: {
+    ...mapActions({
+      newComment: "forum/sendNewComment",
+    }),
     sendNewComment() {
+      this.isLoading = true;
       const data = {
         post_id: this.singleTheme.id,
         user_id: this.user.user_id,
         text: this.commentText,
       };
 
-      if (this.commentText) {
-        this.$store
-          .dispatch("forum/sendNewComment", data)
-          .then(() => {
-            this.commentText = "";
-            this.$store.dispatch("notify/ADD_NOTIFICATIONS", {
-              text: "Комментарий отправлен",
-            });
-          })
-          .cath(() => {
-            this.$store.dispatch("notify/ADD_NOTIFICATIONS", {
-              text: "Комментарий не отправлен",
-            });
-          });
-      }
+      this.newComment(data).then(() => {
+        this.commentText = "";
+        this.isLoading = false;
+      });
     },
   },
   computed: {
@@ -88,6 +83,9 @@ export default {
       singleTheme: "forum/getSingleTheme",
       user: "auth/getUser",
     }),
+    reversedComments() {
+      return this.comments.reverse();
+    },
   },
   created() {
     this.$store.dispatch("forum/loadInfo", this.id);

@@ -1,22 +1,20 @@
 <template>
-  <div>
-    <div class="custom-select" :tabindex="tabindex" @blur="open = false">
-      <div class="selected" :class="{ open: open }" @click="open = !open">
-        {{ selected }}
-      </div>
-      <div class="items" :class="{ selectHide: !open }">
-        <div
-          v-for="(option, i) of options"
-          :key="i"
-          @click="
-            selected = option;
-            open = false;
-            $emit('input', option);
-          "
-          :class="{ choose: selected === option }"
-        >
-          {{ option }}
-        </div>
+  <div class="custom-select" :tabindex="tabindex" @blur="open = false">
+    <div class="selected" :class="{ open: open }" @click="open = !open">
+      {{ selected }}
+    </div>
+    <div class="items" :class="{ selectHide: !open }">
+      <div
+        v-for="(option, i) of options"
+        :key="i"
+        @click="
+          selected = option;
+          open = false;
+          $emit('input', option);
+        "
+        :class="{ choose: selected === option }"
+      >
+        {{ option }}
       </div>
     </div>
   </div>
@@ -68,7 +66,7 @@ export default {
 }
 
 .custom-select .selected {
-  background-color: var(--dark);
+  /* background-color: var(--dark); */
   border-radius: 30px 0 0 30px;
   color: #fff;
   text-align: center;

@@ -3,11 +3,11 @@
     <h3>Создать команду</h3>
     <div class="create-team__wrap">
       <div class="create-team-item">
-        <small>Название</small>
+        <small>Введите название</small>
         <input type="text" placeholder="Название команды" v-model="teamName" />
       </div>
       <div class="create-team-item file">
-        <small>Логотип</small>
+        <small>Выберите логотип</small>
         <label v-if="file" class="custom-load-team-logo" for="load-logo-img">
           {{ file.name }}
         </label>
@@ -26,9 +26,12 @@
         />
       </div>
       <div class="create-team-item dropdown">
-        <small>Игроки</small>
-        <button @click="open = !open">Выбрать игроков</button>
-        <ul class="create-team-dropdown" v-if="open">
+        <small>Выберите игроков из списка друзей</small>
+        <button @click="open = !open">Выберите игроков</button>
+        <ul
+          class="create-team-dropdown"
+          v-if="open && user.friends.accepted.length"
+        >
           <li v-for="item in user.friends.accepted" :key="item.nickname">
             <input
               type="checkbox"
@@ -39,13 +42,21 @@
             <label :for="`user${item.user_id}`"> {{ item.nickname }} </label>
           </li>
         </ul>
+        <ul
+          class="create-team-dropdown empty"
+          v-else-if="
+            open && user.friends.accepted && !user.friends.accepted.length
+          "
+        >
+          <li>
+            <span>Список друзей пуст</span>
+          </li>
+        </ul>
       </div>
       <div class="create-team-item">
-        <button
-          :disabled="!teamUsers.length || !file || !teamName.length"
-          @click="createTeam"
-        >
-          Создать команду
+        <button :disabled="!file || !teamName.length" @click="createTeam">
+          <span class="load-spinner" v-if="isLoading"></span>
+          <span v-else>Создать команду</span>
         </button>
       </div>
     </div>
@@ -53,7 +64,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "CreateTeamPopup",
   data() {
@@ -62,13 +73,18 @@ export default {
       teamUsers: [],
       file: null,
       teamName: "",
+      isLoading: false,
     };
   },
   methods: {
+    ...mapActions({
+      newTeam: "usersAndTeams/CREATE_TEAM",
+    }),
     setLogo() {
       this.file = this.$refs.file.files[0];
     },
     createTeam() {
+      this.isLoading = true;
       let teamData = {
         admin: this.user.user.ID,
         name: this.teamName,
@@ -81,7 +97,9 @@ export default {
         form2.append(field, teamData[field]);
       }
 
-      this.$store.dispatch("usersAndTeams/CREATE_TEAM", form2);
+      this.newTeam(form2).then(() => {
+        this.isLoading = false;
+      });
     },
   },
   computed: {
@@ -93,6 +111,10 @@ export default {
 </script>
 
 <style scoped>
+.create-team {
+  min-width: 500px;
+}
+
 .create-team h3 {
   text-align: center;
   margin-bottom: 30px;
@@ -133,6 +155,10 @@ export default {
   background-color: var(--blue);
 }
 
+.create-team-item button:disabled {
+  opacity: 0.7;
+}
+
 .custom-load-team-logo {
   padding: 15px 30px;
   background-color: var(--white);
@@ -161,6 +187,10 @@ export default {
   color: var(--dark);
   overflow: auto;
   max-height: 200px;
+}
+
+.create-team-dropdown.empty li {
+  justify-content: center;
 }
 
 .create-team-dropdown li label {

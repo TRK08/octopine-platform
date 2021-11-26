@@ -36,6 +36,13 @@
     >
       Добавить друзей
     </button>
+    <button
+      v-if="this.$route.path === '/cabinet' && friends.not_accepted.length"
+      @click="setPopup({ mode: 'new-friends', data: friends.not_accepted })"
+      class="user-friends__not-accepted"
+    >
+      Заявки в друзья
+    </button>
   </section>
 </template>
 
@@ -94,6 +101,13 @@ export default {
   border-radius: 30px;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.user-friends__item:hover {
+  background-color: var(--blue);
+  transition: all 0.5s ease;
 }
 
 .user-friends__avatar {
@@ -125,5 +139,10 @@ export default {
 .user-friends__add-friend {
   margin-top: 30px;
   background-color: var(--blue);
+}
+
+.user-friends__not-accepted {
+  background-color: var(--red);
+  margin-top: 10px;
 }
 </style>

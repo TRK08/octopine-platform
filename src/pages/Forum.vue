@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row forum__wrap">
         <div class="forum-tabs">
-          <Tabs class="col-md-8" :tabs="tabs" @selectTab="selectTab">
+          <Tabs class="col-md-12" :tabs="tabs" @selectTab="selectTab">
             <ForumDiscussion
               :themes="themes"
               slot="tabs__body"
@@ -17,7 +17,7 @@
             />
           </Tabs>
         </div>
-        <ForumChat class="col-md-4" />
+        <!-- <ForumChat class="col-md-4" /> -->
       </div>
     </div>
   </div>

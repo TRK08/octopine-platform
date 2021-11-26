@@ -5,10 +5,18 @@
         <h2>Турниры</h2>
         <div class="tournament-list__buttons">
           <button @click="grid = true">
-            <img src="../../assets/img/grid.svg" alt="" />
+            <svg class="grid-icon" :class="{ active: grid }">
+              <use xlink:href="../../assets/img/grid.svg#grid"></use>
+            </svg>
           </button>
           <button @click="grid = false">
-            <img src="../../assets/img/list.svg" alt="" />
+            <svg
+              class="list-icon"
+              :class="{ active: !grid }"
+              viewBox="0 3 35 35"
+            >
+              <use xlink:href="../../assets/img/list.svg#list"></use>
+            </svg>
           </button>
         </div>
       </div>
@@ -17,10 +25,25 @@
         name="fade"
         class="tournament-items"
         :class="{ list: !grid }"
+        v-show="activeTab === 0"
       >
         <div
           class="tournament-item"
-          v-for="item in tournaments.slice(0, showedTournaments)"
+          v-for="item in oldTournaments.slice(0, showedTournaments)"
+          :key="item.id"
+        >
+          <TournamentItem :tournament="item" :grid="grid" />
+        </div>
+      </transition-group>
+      <transition-group
+        name="fade"
+        class="tournament-items"
+        :class="{ list: !grid }"
+        v-show="activeTab === 1"
+      >
+        <div
+          class="tournament-item"
+          v-for="item in currentTournaments.slice(0, showedTournaments)"
           :key="item.id"
         >
           <TournamentItem :tournament="item" :grid="grid" />
@@ -73,14 +96,19 @@ export default {
   computed: {
     ...mapGetters({
       tournaments: "tournaments/getTournaments",
+      oldTournaments: "tournaments/getOldTournaments",
+      currentTournaments: "tournaments/getCurrentTournaments",
     }),
+  },
+  created() {
+    // this.sortTournaments();
   },
 };
 </script>
 
 <style scoped>
 .tournament-list {
-  padding-bottom: 100px;
+  padding: 100px 0 100px;
 }
 
 .tournament-list__header {
@@ -95,12 +123,33 @@ export default {
   align-items: center;
 }
 
+.grid-icon,
+.list-icon {
+  width: 35px;
+  height: 35px;
+  fill: var(--grey);
+  transition: all 0.5s ease;
+}
+
+.list-icon svg {
+  width: 35px;
+  height: 35px;
+}
+
+.grid-icon:hover,
+.grid-icon.active,
+.list-icon:hover,
+.list-icon.active {
+  fill: var(--blue);
+  transition: all 0.5s ease;
+}
+
 .tournament-list__buttons button {
   border-radius: 0;
   background-color: transparent;
   padding: 0;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
 }
 
 .tournament-list__buttons button:first-child {

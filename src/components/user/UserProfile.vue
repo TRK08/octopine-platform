@@ -1,6 +1,14 @@
 <template>
-  <section class="user-profile">
-    <div class="user-profile__avatar"></div>
+  <section class="user-profile" v-if="user">
+    <div
+      v-if="user.avatar"
+      class="user-profile-avatar"
+      :style="{
+        background: 'url(' + user.avatar + ') no-repeat ',
+        'background-size': 'contain',
+      }"
+    ></div>
+    <div v-else class="user-profile-avatar empty"></div>
     <!-- <div class="user-profile__status">
       <span class="user-profile__status-text">Онлайн</span>
       <span class="user-profile__status-circle"></span>
@@ -8,6 +16,7 @@
     <div class="user-profile__nickname">{{ user.nickname }}</div>
     <!-- <div class="user-profile__info">Санкт-Петербург, 25 лет</div> -->
     <button
+      v-if="myProfile"
       @click="addFriend(user.ID)"
       class="custom-btn user-profile__add-friend"
     >
@@ -59,9 +68,14 @@ export default {
   margin-bottom: 30px;
 }
 
-.user-profile__avatar {
+.user-profile-avatar {
   width: 150px;
   height: 150px;
+  margin-bottom: 30px;
+  background-size: contain !important;
+}
+
+.user-profile-avatar.empty {
   background-color: var(--grey);
   border-radius: 100%;
 }

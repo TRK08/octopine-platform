@@ -28,9 +28,12 @@ const news = {
       })
     },
     setCategoryId({ commit }, id) {
-      console.log(id);
       commit('SET_CATEGORY_ID', id)
-    }
+    },
+    // filterNews({state, commit}, text) {
+    //   state.news.forEach()
+    //   commit('SET_NEWS',)
+    // }
   },
   getters: {
     getNews(state) {

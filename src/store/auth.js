@@ -3,11 +3,15 @@ import axios from 'axios'
 const auth = {
   namespaced: true,
   state: {
+    preload: true,
     token: null,
     user: null,
     userInfo: null
   },
   mutations: {
+    PRELOADER(state) {
+      state.preload = !state.preload
+    },
     SET_USER(state, user) {
       state.user = user
     },
@@ -19,6 +23,12 @@ const auth = {
     }
   },
   actions: {
+    SET_PRELOAD({ commit }) {
+      document.addEventListener('DOMContentLoaded', () => {
+        commit('PRELOADER')
+      })
+      commit('PRELOADER')
+    },
     async REGISTR({ commit, dispatch }, user) {
       try {
         let requestParams = {
@@ -49,9 +59,11 @@ const auth = {
     async AUTH_REQUEST({ commit, dispatch }, payload) {
       try {
         const { data } = await axios.post(`https://octopine.pro/wp-json/jwt-auth/v1/token`, payload)
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Успешный вход' }, { root: true })
         return dispatch('VALIDATE', data)
       }
       catch (err) {
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Проверьте правильность введенных данных' }, { root: true })
         console.log(err, 'AUTH REQUEST ERROR');
       }
     },
@@ -70,10 +82,7 @@ const auth = {
           headers: {
             'Authorization': `Bearer ${user.token}`
           }
-        });
-        if (!state.user) {
-          dispatch('notify/ADD_NOTIFICATIONS', { text: 'Успешный вход' }, { root: true })
-        }
+        })
         dispatch('LOAD_USER_INFO', user.user_id)
         localStorage.setItem("user", JSON.stringify(user));
         commit("SET_TOKEN", user.token);
@@ -87,17 +96,68 @@ const auth = {
       }
     },
     async SIGN_OUT({ commit, dispatch }) {
-      dispatch('notify/ADD_NOTIFICATIONS', { text: 'Успешный выход' }, { root: true })
+      dispatch('notify/ADD_NOTIFICATIONS', { text: 'Успешный выход, сейчас будете перенаправлены на главную страницу' }, { root: true })
       localStorage.removeItem("user");
       commit("SET_TOKEN", null);
       commit("SET_USER", null);
-
     },
     LOAD_USER_INFO({ commit }, id) {
-      axios.get(`https://octopine.pro/wp-json/oc/v1/get/user?user_id=4`).then(res => {
+      axios.get(`https://octopine.pro/wp-json/oc/v1/get/user?user_id=${id}`).then(res => {
         commit('SET_USER_INFO', res.data)
       })
     },
+    async CHANGE_CABINET_PASSWORD({ state, dispatch }, pass) {
+      const data = {
+        "user_id": state.user.user_id,
+        "password": pass
+      }
+      await axios.post('https://octopine.pro/wp-json/oc/v1/user/update/password', data).then(res => {
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Пароль успешно изменен' }, { root: true })
+      }).catch(err => {
+        console.log(err, 'CHANGE CABINET PASSWORD ERROR');
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'При изменении пароля произошла ошибка' }, { root: true })
+      })
+    },
+    async SEND_FORM_MESSAGE({ dispatch }, info) {
+      await axios.post('https://octopine.pro/wp-json/contact-form-7/v1/contact-forms/17/feedback', info).then(res => {
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Письмо успешно отправлено' }, { root: true })
+      }).catch(err => {
+        console.log(err, 'SEND FORM MESSAGE ERROR');
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'При отправке произошла ошибка' }, { root: true })
+      })
+    },
+    async CHANGE_AVATAR({ dispatch }, data) {
+      await axios.post("https://octopine.pro/wp-json/oc/v1/set/avatar", data).then(res => {
+        console.log(res.data);
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Аватар успешно изменен' }, { root: true })
+      }).catch(err => {
+        console.log(err, 'CHANGE AVATAR ERROR');
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'При изменении логотипа произошла ошибка' }, { root: true })
+      })
+    },
+    async RESET_PASSWORD({ dispatch }, mail) {
+      console.log(mail);
+      await axios.post(`https://octopine.pro/wp-json/oc/v1/user/resetp?login=${mail}`).then(res => {
+        console.log(res.data);
+        if (res.data.code === '404') {
+          dispatch('notify/ADD_NOTIFICATIONS', { text: 'Такой пользователь не найден' }, { root: true })
+        } else {
+          dispatch("popup/GET_POPUP_MODE", { mode: null }, { root: true })
+          dispatch('notify/ADD_NOTIFICATIONS', { text: 'Ссылка отправлена на почту' }, { root: true })
+        }
+      }).catch(err => {
+        console.log(err, 'RESET PASS ERROR');
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Произошла ошибка' }, { root: true })
+      })
+    },
+    async SET_NEW_PASSWORD({ dispatch }, data) {
+      await axios.post(`https://octopine.pro/wp-json/oc/v1/user/updatep?${data.key}&password=${data.pass}&id=${data.id}`).then(res => {
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Пароль успешно изменен' }, { root: true })
+      }).catch(err => {
+        console.log(err, 'SET NEW PASSWORD ERROR');
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Произошла ошибка' }, { root: true })
+      })
+    }
   },
   getters: {
     getUser(state) {

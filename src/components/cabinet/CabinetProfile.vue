@@ -13,7 +13,7 @@
         <div v-else class="profile-avatar empty"></div>
         <div class="profile-info">
           <h3>{{ user.user.nickname }}</h3>
-          <span>Санкт-Петербург, 25 лет</span>
+          <span> {{ user.user.description }} </span>
         </div>
       </div>
       <UserFriends :friends="user.friends" />
@@ -65,6 +65,7 @@ export default {
   width: 150px;
   height: 150px;
   margin-bottom: 30px;
+  background-position: center center !important;
 }
 
 .profile-avatar.empty {

@@ -1,6 +1,6 @@
 <template>
   <div class="tournament-block__wrap" v-if="tournament">
-    <div class="tournament-block" v-show="grid">
+    <div class="tournament-block list" v-show="grid">
       <div class="tournament-block__header">
         <div class="tournament-block__header-item">
           {{ tournament.type }}
@@ -126,6 +126,11 @@ export default {
 </script>
 
 <style scoped>
+.tournament-block.list .tournament-block__body {
+  background-image: url("../../assets/img/molekule.svg");
+  background-repeat: repeat-x;
+  background-position: center;
+}
 .tournament-block.grid {
   max-width: unset;
   overflow: hidden;

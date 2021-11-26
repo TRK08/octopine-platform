@@ -24,6 +24,11 @@ export default {
       user: "usersAndTeams/getUser",
     }),
   },
+  watch: {
+    id() {
+      this.$store.dispatch("usersAndTeams/LOAD_USER_BY_NICK", this.id);
+    },
+  },
   created() {
     this.$store.dispatch("usersAndTeams/LOAD_USER_BY_NICK", this.id);
   },

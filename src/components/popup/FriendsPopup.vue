@@ -1,6 +1,7 @@
 <template>
   <div class="friends-popup">
-    <h2>Друзья</h2>
+    <h2 v-if="mode === 'friends'">Друзья</h2>
+    <h2 v-if="mode === 'new-friends'">Заявки в друзья</h2>
     <div class="friends-popup__wrap">
       <div class="user-friends__item" v-for="item in info" :key="item.nickname">
         <div
@@ -12,26 +13,63 @@
           }"
         ></div>
         <div v-else class="user-friends__avatar empty"></div>
-
         <div class="user-friends__nickname">{{ item.nickname }}</div>
+        <div class="new-friends__add" v-if="mode === 'new-friends'">
+          <svg
+            @click.stop="acceptFriend(item.user_id, true)"
+            class="new-friends__add-icon"
+            viewBox="0 0 122 122"
+          >
+            <use
+              xlink:href="../../assets/img/add-friend.svg#accept-friend"
+            ></use>
+          </svg>
+          <svg
+            @click.stop="acceptFriend(item.user_id, false)"
+            class="new-friends__add-icon"
+            viewBox="0 0 512 512"
+          >
+            <use
+              xlink:href="../../assets/img/add-friend.svg#decline-friend"
+            ></use>
+          </svg>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "FriendPopup",
+  methods: {
+    ...mapActions({
+      acceptedFriend: "usersAndTeams/ACCEPTED_FRIEND",
+    }),
+    acceptFriend(id, status) {
+      let data = {
+        user: this.user.user_id,
+        user_to_add: id,
+        result: status,
+      };
+      this.acceptedFriend(data);
+    },
+  },
   computed: {
     ...mapGetters({
       info: "popup/getPopupInfo",
+      mode: "popup/getPopupMode",
+      user: "auth/getUser",
     }),
   },
 };
 </script>
 
 <style scoped>
+.friends-popup {
+  min-width: 500px;
+}
 .friends-popup h2 {
   text-align: center;
   margin-bottom: 30px;
@@ -44,12 +82,19 @@ export default {
   border-radius: 30px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.user-friends__item:hover {
+  background-color: var(--blue);
+  transition: all 0.5s ease;
 }
 
 .user-friends__avatar {
   width: 75px;
   height: 75px;
-  margin-right: 30%;
 }
 
 .user-friends__avatar.empty {
@@ -59,5 +104,26 @@ export default {
 
 .user-friends__item:not(:last-child) {
   margin-bottom: 30px;
+}
+
+.new-friends__add {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.new-friends__add-icon {
+  min-width: 25px;
+  min-height: 25px;
+  width: 25px;
+  height: 25px;
+  fill: var(--white);
+  margin-right: 5px;
+}
+
+.new-friends__add-icon:hover {
+  fill: var(--red);
 }
 </style>

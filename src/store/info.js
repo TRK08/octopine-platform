@@ -5,7 +5,8 @@ const info = {
   state: {
     mainTexts: null,
     contacts: {},
-    slides: []
+    slides: [],
+    searchInfo: null
   },
   mutations: {
     SET_MAIN_TEXTS(state, payload) {
@@ -16,6 +17,9 @@ const info = {
     },
     SET_MAIN_SLIDER(state, payload) {
       state.slides = payload
+    },
+    SET_SEARCH_INFO(state, payload) {
+      state.searchInfo = payload
     }
   },
   actions: {
@@ -33,6 +37,13 @@ const info = {
       axios.get('https://octopine.pro/wp-json/oc/v1/get/main/slider').then(res => {
         commit('SET_MAIN_SLIDER', res.data)
       })
+    },
+    async searchAllInfo({ commit }, value) {
+      await axios.get(`https://octopine.pro/wp-json/oc/v1/search?search=${value}`).then(res => {
+        commit('SET_SEARCH_INFO', res.data)
+      }).catch(err => {
+        console.log(err, 'search error');
+      })
     }
   },
   getters: {
@@ -44,6 +55,9 @@ const info = {
     },
     getMainSlides(state) {
       return state.slides
+    },
+    getSearchInfo(state) {
+      return state.searchInfo
     }
   },
 }

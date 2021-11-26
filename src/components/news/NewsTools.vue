@@ -10,7 +10,12 @@
             @input="displayToKey"
           />
         </div>
-        <input class="tools-item tools-item__search" placeholder="Поиск" />
+        <!-- <input
+          @input="$emit('input', searchValue)"
+          class="tools-item tools-item__search"
+          placeholder="Поиск"
+          v-model="searchValue"
+        /> -->
       </div>
     </div>
   </div>
@@ -22,10 +27,18 @@ import CustomSelect from "../ui/CustomSelect.vue";
 export default {
   components: { CustomSelect },
   name: "NewsTools",
+  data() {
+    return {
+      searchValue: "",
+    };
+  },
   methods: {
     displayToKey(e) {
       let cat = this.categories.find((item) => item.title === e);
       this.$store.dispatch("news/setCategoryId", cat.id);
+    },
+    test() {
+      console.log(123);
     },
   },
   computed: {
@@ -61,7 +74,7 @@ export default {
   text-align: center;
   width: 100%;
   background-color: var(--dark);
-  border-radius: 30px 0 0 30px;
+  border-radius: 30px;
 }
 
 .tools-item:nth-child(2) {
@@ -81,6 +94,19 @@ export default {
   transition: all 0.5s ease;
 }
 
+.tools-item__search:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+.tools-item__search:focus:-moz-placeholder {
+  color: transparent;
+} /* FF 4-18 */
+.tools-item__search:focus::-moz-placeholder {
+  color: transparent;
+} /* FF 19+ */
+.tools-item__search:focus:-ms-input-placeholder {
+  color: transparent;
+} /* IE 10+ */
+
 .tools-item__search:focus,
 .tools-item__search:hover {
   background-color: var(--blue);
@@ -89,5 +115,29 @@ export default {
 
 .tools-item__search::placeholder {
   color: var(--white);
+}
+
+.tools-select::v-deep .selected,
+.tools-select::v-deep .selected.open {
+  border-radius: 30px;
+}
+
+@media (max-width: 767px) {
+  .tools__wrap {
+    flex-direction: column-reverse;
+  }
+
+  .tools-select {
+    margin-top: 4px;
+  }
+
+  .tools-item,
+  .tools-select::v-deep .custom-select .selected {
+    border-radius: 30px;
+  }
+
+  /* .tools-item__search {
+    border-radius: 30px 30px 0 0;
+  } */
 }
 </style>

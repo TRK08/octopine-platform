@@ -13,9 +13,7 @@
             :class="{ winner: item.teams.id_1 == item.teams.win }"
             v-if="item"
           >
-            {{
-              tournament.teams.find((team) => team.id === item.teams.id_1).name
-            }}
+            {{ nameTeam_1(item) }}
           </li>
           <li class="game game-spacer">&nbsp;</li>
           <li
@@ -23,9 +21,7 @@
             :class="{ winner: item.teams.id_2 == item.teams.win }"
             v-if="item"
           >
-            {{
-              tournament.teams.find((team) => team.id === item.teams.id_2).name
-            }}
+            {{ nameTeam_2(item) }}
           </li>
           <li class="spacer">&nbsp;</li>
         </div>
@@ -48,6 +44,35 @@ export default {
       localTournament: this.tournament,
     };
   },
+  methods: {
+    nameTeam_1(item) {
+      let teams = this.tournament.teams.find((team) => {
+        if (team.id === item.teams.id_1) {
+          return team;
+        }
+      });
+      if (teams) {
+        return teams.name;
+      } else {
+        return "";
+      }
+    },
+    nameTeam_2(item) {
+      let teams = this.tournament.teams.find((team) => {
+        if (team.id === item.teams.id_2) {
+          return team;
+        }
+      });
+      if (teams) {
+        return teams.name;
+      } else {
+        return "";
+      }
+    },
+  },
+  computed: {
+    team_1() {},
+  },
 };
 </script>
 
@@ -55,7 +80,13 @@ export default {
 main {
   display: flex;
   flex-direction: row;
+  width: fit-content;
 }
+
+.bracket {
+  overflow-x: scroll;
+}
+
 .round {
   display: flex;
   flex-direction: column;

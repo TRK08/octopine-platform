@@ -9,7 +9,7 @@
       </router-link>
       <div class="swiper-pagination"></div>
       <swiper ref="mySwiper" :options="swiperOptions">
-        <swiper-slide v-for="item in tournaments" :key="item.id">
+        <swiper-slide v-for="item in currentTournaments" :key="item.id">
           <TournamentItem :tournament="item" />
         </swiper-slide>
       </swiper>
@@ -24,14 +24,6 @@ import { mapGetters } from "vuex";
 export default {
   components: { TournamentItem },
   name: "TournamentsSlider",
-  computed: {
-    ...mapGetters({
-      tournaments: "tournaments/getTournaments",
-    }),
-    swiper() {
-      return this.$refs.mySwiper.$swiper;
-    },
-  },
   data() {
     return {
       swiperOptions: {
@@ -52,16 +44,20 @@ export default {
             threshold: 10,
             touchRatio: 1,
           },
+          512: {
+            slidesPerView: 1.3,
+          },
+          672: {
+            slidesPerView: 1.7,
+          },
           768: {
-            slidesPerView: 1,
+            slidesPerView: 1.9,
             touchRatio: 1,
           },
-          1150: {
-            slidesPerView: 4,
-            spaceBetween: 30,
-            touchRatio: 1,
+          991: {
+            slidesPerView: 2.5,
           },
-          1150: {
+          1200: {
             slidesPerView: 2.8,
             spaceBetween: 30,
             touchRatio: 1,
@@ -69,6 +65,25 @@ export default {
         },
       },
     };
+  },
+  computed: {
+    ...mapGetters({
+      tournaments: "tournaments/getTournaments",
+    }),
+    swiper() {
+      return this.$refs.mySwiper.$swiper;
+    },
+    currentTournaments() {
+      let tour = [];
+      if (this.tournaments) {
+        this.tournaments.map((item) => {
+          if (!item.finished) {
+            tour.push(item);
+          }
+        });
+        return tour;
+      }
+    },
   },
 };
 </script>

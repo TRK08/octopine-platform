@@ -13,6 +13,7 @@
       <div class="cabinet-body">
         <Tabs :tabs="tabs" @selectTab="selectTab">
           <CabinetProfile slot="tabs__body" v-if="activeTab === 0" />
+          <CabinetSettings slot="tabs__body" v-if="activeTab === 1" />
         </Tabs>
       </div>
     </div>
@@ -21,12 +22,14 @@
 
 <script>
 import CabinetProfile from "../components/cabinet/CabinetProfile.vue";
+import CabinetSettings from "../components/cabinet/CabinetSettings.vue";
 import Tabs from "../components/ui/Tabs.vue";
 export default {
   name: "Cabinet",
   components: {
     Tabs,
     CabinetProfile,
+    CabinetSettings,
   },
   data() {
     return {

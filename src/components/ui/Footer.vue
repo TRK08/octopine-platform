@@ -29,8 +29,8 @@
               >{{ contacts.email }}
             </a>
             <div class="footer__contacts-social">
-              <a href=""><img src="../../assets/img/instagram.svg" alt="" /></a>
-              <a href=""><img src="../../assets/img/vk.svg" alt="" /></a>
+              <a href=""><img src="../../assets/img/whatsapp.svg" alt="" /></a>
+              <a href=""><img src="../../assets/img/telegram.svg" alt="" /></a>
               <a href=""><img src="../../assets/img/instagram.svg" alt="" /></a>
               <a href=""><img src="../../assets/img/vk.svg" alt="" /></a>
             </div>
@@ -70,10 +70,10 @@ export default {
           title: "Новости",
           link: "/news",
         },
-        {
-          title: "Рейтинг",
-          link: "/rating",
-        },
+        // {
+        //   title: "Рейтинг",
+        //   link: "/rating",
+        // },
         {
           title: "Форум",
           link: "/forum",
@@ -154,6 +154,7 @@ export default {
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
+  cursor: pointer;
 }
 
 .footer__navigation-item:not(:last-child) {
@@ -178,6 +179,16 @@ export default {
 
 .footer__contacts-social {
   margin-top: 15px;
+}
+
+.footer__contacts-social a {
+  opacity: 0.5;
+  transition: all 0.5s ease;
+}
+
+.footer__contacts-social a:hover {
+  opacity: 1;
+  transition: all 0.5s ease;
 }
 
 .footer__contacts-social a:not(:last-child) {
@@ -221,5 +232,74 @@ export default {
 
 .footer__bottom-policy a:first-child {
   margin-right: 30px;
+}
+
+@media (max-width: 991px) {
+  .footer {
+    width: 100%;
+    background-image: -webkit-linear-gradient(
+      155deg,
+      var(--dark) 51%,
+      var(--blue) 49%
+    );
+  }
+
+  .footer__body {
+    height: 300px;
+  }
+
+  .footer-logo {
+    width: 200px;
+    height: 200px;
+  }
+
+  .footer-logo img {
+    width: 80%;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer {
+    background-image: -webkit-linear-gradient(
+      180deg,
+      var(--dark) 50%,
+      var(--blue) 50%
+    );
+  }
+
+  .footer__body {
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-logo {
+    position: initial;
+    transform: none;
+  }
+
+  .footer__navigation {
+    margin: 30px 0;
+  }
+
+  .footer__navigation,
+  .footer__contacts {
+    text-align: center;
+  }
+
+  .footer__contacts-block {
+    align-items: center;
+  }
+
+  .footer__bottom-wrap {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .footer__bottom-policy a {
+    display: block;
+    margin: 0 0 10px 0 !important;
+  }
 }
 </style>

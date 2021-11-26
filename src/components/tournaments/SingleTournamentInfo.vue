@@ -1,15 +1,44 @@
 <template>
   <section class="tournaments-info" v-if="tournament">
+    <router-link class="tournaments-info__back" tag="div" to="/tournaments"
+      >Назад</router-link
+    >
     <div class="container">
       <div class="tournaments-info__wrap">
         <div class="tournament-info__header">
           <h2>{{ tournament.name }}</h2>
-          <button class="custom-btn">
+          <button
+            class="custom-btn"
+            @click="setPopup({ mode: 'registrTournament', data: tournament })"
+            v-if="
+              myProfile &&
+              !tournament.finished &&
+              tournament.teams.length != tournament.max_players
+            "
+          >
             Участвовать
             <svg class="white-arrow arrow">
               <use xlink:href="../../assets/img/sprite.svg#arrow"></use>
             </svg>
           </button>
+          <div
+            class="tournaments-info__not-log"
+            v-else-if="!myProfile && !tournament.finished"
+          >
+            Для участия нужно
+            <router-link tag="span" to="/auth">войти</router-link> или
+            <router-link tag="span" to="/auth">зарегистрироваться</router-link>
+          </div>
+
+          <div
+            class="tournamets-info__closed"
+            v-else-if="
+              tournament.teams.length == tournament.max_players &&
+              !tournament.finished
+            "
+          >
+            Регистрация закрыта
+          </div>
         </div>
         <div class="tournament-info__body">
           <Tabs :tabs="tabs" @selectTab="selectTab">
@@ -23,7 +52,7 @@
               slot="tabs__body"
               v-if="activeTab === 1"
             />
-            <TournamentMatches slot="tabs__body" v-if="activeTab === 2" />
+            <!-- <TournamentMatches slot="tabs__body" v-if="activeTab === 2" /> -->
             <TournamentRules slot="tabs__body" v-if="activeTab === 4" />
           </Tabs>
         </div>
@@ -33,6 +62,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import Tabs from "../ui/Tabs.vue";
 import TournamentAbout from "./TournamentAbout.vue";
 import TournamentBracket from "./TournamentBracket.vue";
@@ -66,14 +96,6 @@ export default {
           active: false,
         },
         {
-          title: "Матчи",
-          active: false,
-        },
-        {
-          title: "Результаты",
-          active: false,
-        },
-        {
           title: "Правила",
           active: false,
         },
@@ -81,12 +103,20 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      setPopup: "popup/GET_POPUP_MODE",
+    }),
     selectTab(i) {
       this.tabs.forEach((tab) => {
         tab.active = tab === this.tabs[i];
         this.activeTab = i;
       });
     },
+  },
+  computed: {
+    ...mapGetters({
+      myProfile: "auth/getUserInfo",
+    }),
   },
 };
 </script>
@@ -97,6 +127,16 @@ export default {
   z-index: 3;
   position: relative;
   margin-bottom: 100px;
+}
+
+.tournaments-info__back {
+  text-align: center;
+  background-color: var(--blue);
+  width: 200px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  padding: 10px 15px;
+  border-radius: 30px;
 }
 
 .tournaments-info__wrap {
@@ -123,5 +163,27 @@ export default {
 
 .tournament-info__header button .arrow {
   transform: scale(-1);
+}
+
+.tournaments-info__not-log {
+  max-width: 400px;
+  text-align: center;
+  font-weight: 400;
+  background-color: var(--blue);
+  padding: 10px;
+  border-radius: 30px;
+  color: #c7c6c6;
+}
+
+.tournaments-info__not-log span {
+  font-weight: 500;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.tournamets-info__closed {
+  background-color: var(--blue);
+  padding: 10px 15px;
+  border-radius: 30px;
 }
 </style>

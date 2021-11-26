@@ -1,12 +1,12 @@
 <template>
   <div class="tournaments">
     <Banner :bannerInfo="bannerInfo" />
-    <div class="container">
+    <!-- <div class="container">
       <div class="tournaments-matches">
         <h2>Предстоящие матчи</h2>
         <SingleMatch />
       </div>
-    </div>
+    </div> -->
     <TournamentList />
   </div>
 </template>

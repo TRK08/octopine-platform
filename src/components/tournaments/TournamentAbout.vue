@@ -5,21 +5,23 @@
       <div class="tournament-about__format-items">
         <div class="tournament-about__format-item">
           <img src="../../assets/img/peoples.svg" alt="" />
-          <span> {{ tournament.type }} </span>
-        </div>
-        <div class="tournament-about__format-item">
-          <img src="../../assets/img/peoples.svg" alt="" />
-          <span>{{ tournament.prize_sum }}Р</span>
-        </div>
-        <div class="tournament-about__format-item">
-          <img src="../../assets/img/peoples.svg" alt="" />
           <span>
             {{ tournament.teams.length }} / {{ tournament.max_players }}
           </span>
         </div>
         <div class="tournament-about__format-item">
-          <img src="../../assets/img/peoples.svg" alt="" />
-          <span>5 vs 5</span>
+          <img src="../../assets/img/cup.svg" alt="" />
+          <span>{{ tournament.prize_sum }}Р</span>
+        </div>
+        <div class="tournament-about__format-item">
+          <img src="../../assets/img/grid-tournament.svg" alt="" />
+          <span>
+            {{ tournament.teams.length }} / {{ tournament.max_players }}
+          </span>
+        </div>
+        <div class="tournament-about__format-item">
+          <img src="../../assets/img/money.svg" alt="" />
+          <span>1000P</span>
         </div>
       </div>
     </div>

@@ -75,4 +75,22 @@ export default {
 .tabs__item:last-child button {
   border-radius: 0 30px 30px 0;
 }
+
+@media (max-width: 991px) {
+  .tabs__items {
+    flex-direction: column;
+  }
+
+  .tabs__item:first-child button {
+    border-radius: 30px 30px 0 0;
+  }
+
+  .tabs__item:last-child button {
+    border-radius: 0 0 30px 30px;
+  }
+
+  .tabs__item {
+    margin: 2px 0;
+  }
+}
 </style>
