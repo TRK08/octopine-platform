@@ -216,4 +216,11 @@ export default {
   padding: 0;
   width: auto;
 }
+
+@media (max-width: 767px) {
+  .create-team {
+    min-width: unset;
+    width: 100%;
+  }
+}
 </style>

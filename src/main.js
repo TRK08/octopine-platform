@@ -39,15 +39,15 @@ const user = JSON.parse(localStorage.getItem("user"))
 store.dispatch("auth/VALIDATE", user);
 
 
-router.beforeEach((to, from, next) => {
-  store.dispatch('auth/SET_PRELOAD')
-  setTimeout(function () {
-    next()
-  }, 200);
-  setTimeout(function () {
-    store.dispatch('auth/SET_PRELOAD')
-  }, 2000);
-})
+// router.beforeEach((to, from, next) => {
+//   store.dispatch('auth/SET_PRELOAD')
+//   setTimeout(function () {
+//     next()
+//   }, 200);
+//   setTimeout(function () {
+//     store.dispatch('auth/SET_PRELOAD')
+//   }, 2000);
+// })
 
 
 

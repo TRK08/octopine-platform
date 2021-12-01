@@ -57,6 +57,7 @@ export default {
   background-color: var(--dark);
   border-radius: 30px;
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .change-descr h2 {

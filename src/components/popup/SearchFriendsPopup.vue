@@ -3,7 +3,10 @@
     <h3>Поиск друзей</h3>
     <div class="search-friends__block">
       <input placeholder="Ник" type="text" v-model="search" />
-      <button @click="sendSearch(search)">Поиск</button>
+      <button @click="searchLive">
+        <span class="load-spinner" v-if="isLoading"></span>
+        <span v-else>Поиск</span>
+      </button>
     </div>
     <div class="search-friends-result">
       <router-link
@@ -41,6 +44,7 @@ export default {
   data() {
     return {
       search: "",
+      isLoading: false,
     };
   },
   methods: {
@@ -50,6 +54,12 @@ export default {
     }),
     addFriend(id) {
       this.addFriends({ myID: this.user.user_id, userID: id });
+    },
+    searchLive() {
+      this.isLoading = true;
+      this.sendSearch(this.search).then(() => {
+        this.isLoading = false;
+      });
     },
   },
   computed: {
@@ -95,10 +105,14 @@ export default {
 .search-friends__avatar {
   width: 75px;
   height: 75px;
+  min-width: 75px;
+  min-height: 75px;
+  border-radius: 100%;
+  background-position: center center !important;
+  background-size: cover !important;
 }
 
 .search-friends__avatar.empty {
-  border-radius: 100%;
   background-color: var(--grey);
 }
 
@@ -122,5 +136,11 @@ export default {
 .search-friends__add-icon:hover {
   fill: var(--red);
   transition: all 0.5s ease;
+}
+
+@media (max-width: 512px) {
+  .search-friends {
+    min-width: 100%;
+  }
 }
 </style>

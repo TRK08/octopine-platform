@@ -4,6 +4,7 @@
       <ChangeAvatar />
       <ChangePassword />
       <ChangeDescr />
+      <ChangeSocial />
     </masonry>
   </div>
 </template>
@@ -12,9 +13,10 @@
 import ChangeAvatar from "./ChangeAvatar.vue";
 import ChangeDescr from "./ChangeDescr.vue";
 import ChangePassword from "./ChangePassword.vue";
+import ChangeSocial from "./ChangeSocial.vue";
 
 export default {
-  components: { ChangePassword, ChangeDescr, ChangeAvatar },
+  components: { ChangePassword, ChangeDescr, ChangeAvatar, ChangeSocial },
   name: "CabinetSettings",
   data() {
     return {};

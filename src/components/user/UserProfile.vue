@@ -13,10 +13,25 @@
       <span class="user-profile__status-text">Онлайн</span>
       <span class="user-profile__status-circle"></span>
     </div> -->
-    <div class="user-profile__nickname">{{ user.nickname }}</div>
-    <!-- <div class="user-profile__info">Санкт-Петербург, 25 лет</div> -->
+    <div class="profile-info">
+      <h3>{{ user.nickname }}</h3>
+      <span> {{ user.description }} </span>
+      <div
+        class="profile-info__socials"
+        v-if="user.contacts && user.contacts.is_shown"
+      >
+        <span
+          ><img src="../../assets/img/telegram.svg" alt="" />
+          {{ user.contacts.telegram }}
+        </span>
+        <span
+          ><img src="../../assets/img/whatsapp.svg" alt="" />
+          {{ user.contacts.whatsapp }}
+        </span>
+      </div>
+    </div>
     <button
-      v-if="myProfile"
+      v-if="myProfile && !friendAddBtn"
       @click="addFriend(user.ID)"
       class="custom-btn user-profile__add-friend"
     >
@@ -42,6 +57,18 @@ export default {
     ...mapGetters({
       myProfile: "auth/getUserInfo",
     }),
+    friendAddBtn() {
+      let inFriends = false;
+      this.myProfile.friends.accepted.map((item) => {
+        console.log(item);
+        if (item.nickname === this.user.nickname) {
+          inFriends = true;
+        } else {
+          inFriends = false;
+        }
+      });
+      return inFriends;
+    },
   },
   methods: {
     ...mapActions({
@@ -72,12 +99,13 @@ export default {
   width: 150px;
   height: 150px;
   margin-bottom: 30px;
-  background-size: contain !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  border-radius: 100%;
 }
 
 .user-profile-avatar.empty {
   background-color: var(--grey);
-  border-radius: 100%;
 }
 
 .user-profile__status {
@@ -110,7 +138,7 @@ export default {
 
 .user-profile__add-friend {
   background-color: var(--red);
-  margin-bottom: 15px;
+  margin: 15px 0;
 }
 
 .user-profile__new-message {
@@ -119,5 +147,46 @@ export default {
 
 .user-profile button {
   max-width: 360px;
+}
+
+.profile-info {
+  text-align: center;
+}
+
+.profile-info h3 {
+  font-size: 28px;
+  line-height: 32px;
+  margin-bottom: 15px;
+}
+
+.profile-info span {
+  color: var(--grey);
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
+}
+
+.profile-info__socials {
+  margin-top: 15px;
+}
+
+.profile-info__socials span:first-child {
+  margin-right: 20px;
+}
+
+.profile-info__socials span img {
+  margin-right: 5px;
+}
+
+@media (max-width: 672px) {
+  .profile-info__socials {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-info__socials span {
+    margin: 10px 0 0 !important;
+  }
 }
 </style>

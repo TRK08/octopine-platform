@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div class="single-forum__comment">
+      <div class="single-forum__comment" v-if="user">
         <h3>Новый коментарий</h3>
         <textarea
           v-model="commentText"
@@ -109,6 +109,7 @@ export default {
 
 .single-forum__theme h2 {
   margin-bottom: 15px;
+  text-align: center;
 }
 
 .single-forum__theme span {
@@ -164,6 +165,7 @@ export default {
   padding: 15px 30px;
   font-size: 16px;
   font-weight: 400;
+  word-break: break-all;
 }
 
 .single-forum__comment {
@@ -196,5 +198,21 @@ export default {
   background-color: var(--blue);
   display: block;
   margin: 15px auto 0;
+}
+
+@media (max-width: 672px) {
+  .single-forum__answer {
+    flex-direction: column;
+  }
+
+  .single-forum__answers h2 {
+    text-align: center;
+  }
+
+  .single-forum__answer-info {
+    width: 100%;
+    border-right: none;
+    border-bottom: 3px solid var(--bg);
+  }
 }
 </style>

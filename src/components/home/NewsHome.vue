@@ -37,4 +37,21 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 991px) {
+  .news-home__grid {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .news-home__grid {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .news-block__wrap {
+    height: 300px;
+  }
+}
 </style>

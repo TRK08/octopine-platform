@@ -21,7 +21,7 @@
       </div>
     </div>
     <div
-      v-if="teams.length > 2"
+      v-if="teams.length > 3"
       class="user-teams__show-all"
       @click="setPopup({ mode: 'teams', data: teams })"
     >
@@ -101,12 +101,15 @@ export default {
 .user-teams__avatar {
   width: 75px;
   height: 75px;
-  margin-right: 50px;
+  min-width: 75px;
+  min-height: 75px;
+  margin-right: 10%;
   background-position: center center !important;
+  background-size: cover !important;
+  border-radius: 100%;
 }
 
 .user-teams__avatar.empty {
-  border-radius: 100%;
   background-color: var(--grey);
 }
 

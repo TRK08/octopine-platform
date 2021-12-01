@@ -43,7 +43,7 @@
       >
         <div
           class="tournament-item"
-          v-for="item in currentTournaments.slice(0, showedTournaments)"
+          v-for="item in currentTournaments.slice(0, showedOldTournaments)"
           :key="item.id"
         >
           <TournamentItem :tournament="item" :grid="grid" />
@@ -51,7 +51,19 @@
       </transition-group>
       <LoadMore
         @click="loadMore"
-        v-if="showedTournaments <= tournaments.length"
+        v-if="
+          showedTournaments <
+            tournaments.filter((item) => !item.finished).length &&
+          activeTab === 0
+        "
+      />
+      <LoadMore
+        @click="loadMore('old')"
+        v-if="
+          showedOldTournaments <
+            tournaments.filter((item) => item.finished).length &&
+          activeTab === 1
+        "
       />
     </div>
   </section>
@@ -68,6 +80,7 @@ export default {
   data() {
     return {
       showedTournaments: 3,
+      showedOldTournaments: 3,
       activeTab: 0,
       grid: true,
       tabs: [
@@ -89,8 +102,12 @@ export default {
         this.activeTab = i;
       });
     },
-    loadMore() {
-      this.showedTournaments += 3;
+    loadMore(tag) {
+      if (tag === "old") {
+        this.showedOldTournaments += 3;
+      } else {
+        this.showedTournaments += 3;
+      }
     },
   },
   computed: {
@@ -177,5 +194,21 @@ export default {
   grid-template-columns: 1fr;
   gap: 20px;
   margin-bottom: 50px;
+}
+
+@media (max-width: 991px) {
+  .tournament-items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 672px) {
+  .tournament-items {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .tournament-item {
+    margin: 0 auto;
+  }
 }
 </style>

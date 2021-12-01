@@ -113,11 +113,15 @@ export default {
 .user-friends__avatar {
   width: 75px;
   height: 75px;
-  margin-right: 50px;
+  margin-right: 10%;
+  min-width: 75px;
+  min-height: 75px;
+  border-radius: 100%;
+  background-position: center center !important;
+  background-size: cover !important;
 }
 
 .user-friends__avatar.empty {
-  border-radius: 100%;
   background-color: var(--grey);
 }
 

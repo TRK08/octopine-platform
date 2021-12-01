@@ -1,6 +1,6 @@
 <template>
-  <div class="user" v-if="user">
-    <div class="container">
+  <div class="user">
+    <div class="container" v-if="user">
       <masonry :gutter="30" :cols="{ default: 2, 991: 1 }">
         <UserProfile :user="user.user" />
         <UserFriends :friends="user.friends" />

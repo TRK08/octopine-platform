@@ -61,4 +61,11 @@ export default {
   font-weight: 400;
   text-align: center;
 }
+
+@media (max-width: 672px) {
+  .banner-text {
+    font-size: 25px;
+    line-height: 32px;
+  }
+}
 </style>

@@ -138,4 +138,14 @@ export default {
 .choose {
   background-color: var(--blue);
 }
+
+@media (max-width: 768px) {
+  .custom-select {
+    font-size: 14px;
+  }
+
+  .custom-select .selected:after {
+    content: none;
+  }
+}
 </style>

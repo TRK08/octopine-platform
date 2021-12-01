@@ -1,5 +1,5 @@
 <template>
-  <div class="registr-tournament">
+  <div class="registr-tournament" v-if="userTeams">
     <h2>Регистрация на турнир</h2>
     <div class="registr-tournament__select-team">
       <h3>Выберите команду для участия в турнире</h3>
@@ -23,7 +23,8 @@
         <div class="registr-tournament__selected"></div>
       </div>
       <button @click="registr" :disabled="!selectedTeam">
-        <span>Зарегистрироваться</span>
+        <span class="load-spinner" v-if="isLoading"></span>
+        <span v-else>Зарегистрироваться</span>
       </button>
     </div>
   </div>
@@ -35,6 +36,7 @@ export default {
   name: "RegistrTournament",
   data() {
     return {
+      isLoading: false,
       selectedTeam: null,
       userTeams: [],
     };
@@ -55,14 +57,20 @@ export default {
       });
     },
     registr() {
+      this.isLoading = true;
+      const returnUrl = window.location.origin + "/payment";
       let data = {
         team_id: this.selectedTeam,
         match_id: this.info.id,
         total: this.info.cost,
-        return_url: document.URL,
+        return_url: returnUrl,
       };
 
-      this.registrTournament(data);
+      localStorage.setItem("tournamentName", this.info.name);
+
+      this.registrTournament(data).then(() => {
+        this.isLoading = false;
+      });
     },
   },
   computed: {
@@ -73,10 +81,10 @@ export default {
     }),
   },
   created() {
-    this.userTeams = this.userInfo.teams.map((item) => {
+    this.userInfo.teams.map((item) => {
       if (this.userInfo.user.ID == item.admin_id) {
         item.active = false;
-        return item;
+        this.userTeams.push(item);
       }
     });
   },
@@ -145,11 +153,14 @@ export default {
 .registr-tournament__avatar {
   width: 75px;
   height: 75px;
-  background-position: center center;
+  min-width: 75px;
+  min-height: 75px;
+  border-radius: 100%;
+  background-position: center center !important;
+  background-size: cover !important;
 }
 
 .registr-tournament__avatar.empty {
-  border-radius: 100%;
   background-color: var(--grey);
 }
 

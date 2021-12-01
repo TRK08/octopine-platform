@@ -8,10 +8,11 @@
         <div class="tournament-info__header">
           <h2>{{ tournament.name }}</h2>
           <button
+            :disabled="!isLogInfo"
             class="custom-btn"
             @click="setPopup({ mode: 'registrTournament', data: tournament })"
             v-if="
-              myProfile &&
+              isLog &&
               !tournament.finished &&
               tournament.teams.length != tournament.max_players
             "
@@ -23,7 +24,7 @@
           </button>
           <div
             class="tournaments-info__not-log"
-            v-else-if="!myProfile && !tournament.finished"
+            v-else-if="!isLog && !tournament.finished"
           >
             Для участия нужно
             <router-link tag="span" to="/auth">войти</router-link> или
@@ -53,7 +54,7 @@
               v-if="activeTab === 1"
             />
             <!-- <TournamentMatches slot="tabs__body" v-if="activeTab === 2" /> -->
-            <TournamentRules slot="tabs__body" v-if="activeTab === 4" />
+            <TournamentRules slot="tabs__body" v-if="activeTab === 2" />
           </Tabs>
         </div>
       </div>
@@ -115,6 +116,8 @@ export default {
   },
   computed: {
     ...mapGetters({
+      isLog: "auth/getUser",
+      isLogInfo: "auth/getUserInfo",
       myProfile: "auth/getUserInfo",
     }),
   },
@@ -159,6 +162,12 @@ export default {
   justify-content: space-between;
   align-items: center;
   height: 45px;
+  transition: all 0.5s ease;
+}
+
+.tournament-info__header button:disabled {
+  opacity: 0.7;
+  transition: all 0.5s ease;
 }
 
 .tournament-info__header button .arrow {
@@ -185,5 +194,16 @@ export default {
   background-color: var(--blue);
   padding: 10px 15px;
   border-radius: 30px;
+}
+
+@media (max-width: 991px) {
+  .tournament-info__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tournament-info__header h2 {
+    margin-bottom: 30px;
+  }
 }
 </style>

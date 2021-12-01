@@ -5,10 +5,18 @@
         <div class="contacts-social">
           <h3>Социальные сети</h3>
           <div class="contacts-social__block">
-            <a href=""><img src="../../assets/img/whatsapp.svg" alt="" /></a>
-            <a href=""><img src="../../assets/img/telegram.svg" alt="" /></a>
-            <a href=""><img src="../../assets/img/instagram.svg" alt="" /></a>
-            <a href=""><img src="../../assets/img/vk.svg" alt="" /></a>
+            <a :href="contacts.whatsapp" target="_blank"
+              ><img src="../../assets/img/whatsapp.svg" alt=""
+            /></a>
+            <a :href="contacts.telegram" target="_blank"
+              ><img src="../../assets/img/telegram.svg" alt=""
+            /></a>
+            <a :href="contacts.instagram" target="_blank"
+              ><img src="../../assets/img/instagram.svg" alt=""
+            /></a>
+            <a :href="contacts.discord" target="_blank"
+              ><img src="../../assets/img/discord.svg" alt=""
+            /></a>
           </div>
         </div>
         <div class="contacts-info">

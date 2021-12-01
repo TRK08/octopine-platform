@@ -29,10 +29,18 @@
               >{{ contacts.email }}
             </a>
             <div class="footer__contacts-social">
-              <a href=""><img src="../../assets/img/whatsapp.svg" alt="" /></a>
-              <a href=""><img src="../../assets/img/telegram.svg" alt="" /></a>
-              <a href=""><img src="../../assets/img/instagram.svg" alt="" /></a>
-              <a href=""><img src="../../assets/img/vk.svg" alt="" /></a>
+              <a :href="contacts.whatsapp" target="_blank"
+                ><img src="../../assets/img/whatsapp.svg" alt=""
+              /></a>
+              <a :href="contacts.telegram" target="_blank"
+                ><img src="../../assets/img/telegram.svg" alt=""
+              /></a>
+              <a :href="contacts.instagram" target="_blank"
+                ><img src="../../assets/img/instagram.svg" alt=""
+              /></a>
+              <a :href="contacts.discord" target="_blank"
+                ><img src="../../assets/img/discord.svg" alt=""
+              /></a>
             </div>
           </div>
         </div>
@@ -41,13 +49,32 @@
     <div class="footer__bottom">
       <div class="container">
         <div class="footer__bottom-wrap">
-          <div class="footer__bottom-policy">
-            <a href="">Пользовательское соглашение</a>
-            <a href="">Конфиденциальность</a>
+          <div class="footer__bottom-info">
+            <span>ИП Самодаев Андрей Николаевич.</span>
+            <span>ИНН 773579911217.</span>
+            <span
+              >Юридический адрес: 14482, Москва, Зеленоград, корп. 118.</span
+            >
+            <a href="tel:8-916-691-0384">Тел: 8-916-691-0384</a>
           </div>
-          <div class="footer__bottom-rights">
-            <img src="../../assets/img/copyright.svg" alt="" />2021 Все права
-            защищены
+          <div class="footer__bottom-links">
+            <router-link tag="a" to="/payment-return"
+              >Оплата и возврат</router-link
+            >
+            <a
+              href="https://octopine.pro/wp-content/themes/octopine-pro/assets/pdf/%D0%A3%D0%A1%D0%9B%D0%9E%D0%92%D0%98%D0%AF.pdf"
+              target="_blank"
+              >Пользовательское соглашение</a
+            >
+            <a
+              href="https://octopine.pro/wp-content/themes/octopine-pro/assets/pdf/%D0%9F%D0%9E%D0%9B%D0%98%D0%A2%D0%98%D0%9A%D0%90%20%D0%9A%D0%9E%D0%9D%D0%A4%D0%98%D0%94%D0%95%D0%9D%D0%A6%D0%98%D0%90%D0%9B%D0%AC%D0%9D%D0%9E%D0%A1%D0%A2%D0%98.pdf"
+              target="_blank"
+              >Политика конфиденциальности</a
+            >
+            <div class="footer__bottom-rights">
+              <img src="../../assets/img/copyright.svg" alt="" />2021 Все права
+              защищены
+            </div>
           </div>
         </div>
       </div>
@@ -211,27 +238,38 @@ export default {
   width: 100%;
 }
 
+.footer__bottom-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__bottom-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: right;
+}
+
 .footer__bottom-rights {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 }
 
-.footer__bottom-rights img {
+.footer__bottom-links img {
   margin-right: 5px;
 }
 
-.footer__bottom-policy a {
-  color: var(--grey);
-  transition: all 0.5s ease;
-}
-
-.footer__bottom-policy a:hover {
+.footer__bottom-links a,
+.footer__bottom-info a {
   color: var(--white);
   transition: all 0.5s ease;
 }
 
-.footer__bottom-policy a:first-child {
-  margin-right: 30px;
+.footer__bottom-links a:hover,
+.footer__bottom-info a:hover {
+  color: var(--white);
+  transition: all 0.5s ease;
 }
 
 @media (max-width: 991px) {
@@ -295,6 +333,11 @@ export default {
     flex-direction: column;
     justify-content: center;
     text-align: center;
+  }
+
+  .footer__bottom-links {
+    margin-top: 15px;
+    align-items: center;
   }
 
   .footer__bottom-policy a {

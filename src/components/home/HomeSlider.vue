@@ -25,12 +25,27 @@
               >
                 <h2 data-swiper-parallax="-700" v-html="slide.title"></h2>
                 <p v-html="slide.text"></p>
-                <router-link tag="button" :to="slide.button.link">
+                <router-link
+                  tag="button"
+                  :to="routerLink(slide.button.link)"
+                  v-if="routerLink(slide.button.link)"
+                >
                   {{ slide.button.text }}
                   <svg class="white-arrow arrow">
                     <use xlink:href="../../assets/img/sprite.svg#arrow"></use>
                   </svg>
                 </router-link>
+                <a
+                  class="slider-link"
+                  v-else-if="hrefLink(slide.button.link)"
+                  target="_blank"
+                  :href="hrefLink(slide.button.link)"
+                  >{{ slide.button.text }}
+                  <svg class="white-arrow arrow">
+                    <use
+                      xlink:href="../../assets/img/sprite.svg#arrow"
+                    ></use></svg
+                ></a>
               </div>
             </swiper-slide>
           </swiper>
@@ -65,10 +80,18 @@
         </div>
       </div>
       <div class="slider__social-block">
-        <a href=""><img src="../../assets/img/whatsapp.svg" alt="" /></a>
-        <a href=""><img src="../../assets/img/telegram.svg" alt="" /></a>
-        <a href=""><img src="../../assets/img/instagram.svg" alt="" /></a>
-        <a href=""><img src="../../assets/img/vk.svg" alt="" /></a>
+        <a :href="contacts.whatsapp" target="_blank"
+          ><img src="../../assets/img/whatsapp.svg" alt=""
+        /></a>
+        <a :href="contacts.telegram" target="_blank"
+          ><img src="../../assets/img/telegram.svg" alt=""
+        /></a>
+        <a :href="contacts.instagram" target="_blank"
+          ><img src="../../assets/img/instagram.svg" alt=""
+        /></a>
+        <a :href="contacts.discord" target="_blank"
+          ><img src="../../assets/img/discord.svg" alt=""
+        /></a>
       </div>
     </div>
   </section>
@@ -112,9 +135,22 @@ export default {
       },
     };
   },
+  methods: {
+    routerLink(item) {
+      if (item.includes("octopine.pro")) {
+        return "/" + item.split("/")[3];
+      }
+    },
+    hrefLink(item) {
+      if (!item.includes("octopine.pro")) {
+        return item;
+      }
+    },
+  },
   computed: {
     ...mapGetters({
       slides: "info/getMainSlides",
+      contacts: "info/getContacts",
     }),
   },
   mounted() {
@@ -146,6 +182,23 @@ export default {
 
 .home-slider .container-fluid {
   padding: 0;
+}
+
+.slider-link .arrow {
+  transform: scale(-1);
+  margin-left: 30px;
+}
+
+.slider-link {
+  width: fit-content;
+  background-color: var(--dark);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 10px 30px;
+  border-radius: 30px;
+  color: var(--white);
 }
 
 .swiper-slider-right {
@@ -266,6 +319,18 @@ export default {
 
   .slider-nav {
     display: none;
+  }
+
+  .slide-box {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 512px) {
+  .home-slider,
+  .slide-box,
+  .gallery-top {
+    height: 450px !important;
   }
 }
 </style>

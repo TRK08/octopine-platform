@@ -13,6 +13,8 @@ import User from '../pages/User'
 import Contacts from '../pages/Contacts'
 import Search from '../pages/Search'
 import LostPassword from '../pages/LostPassword'
+import PaymentStatus from '../pages/PaymentStatus'
+import ReturnPayment from '../pages/ReturnPayment'
 
 import store from '../store'
 
@@ -99,6 +101,14 @@ const routes = [
 		path: '/lost-password/*',
 		component: LostPassword,
 		props: true,
+	},
+	{
+		path: '/payment',
+		component: PaymentStatus,
+	},
+	{
+		path: '/payment-return',
+		component: ReturnPayment,
 	},
 ]
 

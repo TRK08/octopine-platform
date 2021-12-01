@@ -26,6 +26,13 @@
           <li class="spacer">&nbsp;</li>
         </div>
       </ul>
+      <ul class="round winner" v-if="tournament.finished">
+        <div class="round-item__winner">
+          <li class="game" :class="{ winner: winner }">
+            {{ winner.name }}
+          </li>
+        </div>
+      </ul>
     </main>
   </section>
 </template>
@@ -71,7 +78,19 @@ export default {
     },
   },
   computed: {
-    team_1() {},
+    winner() {
+      if (this.tournament) {
+        let winnerId =
+          this.tournament.rounds[this.tournament.rounds.length - 1].round[0]
+            .teams.win;
+        let winner = this.tournament.teams.find((team) => {
+          if (winnerId === team.id) {
+            return team;
+          }
+        });
+        return winner;
+      }
+    },
   },
 };
 </script>

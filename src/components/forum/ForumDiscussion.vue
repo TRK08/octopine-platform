@@ -131,4 +131,28 @@ export default {
 .discussion-answers {
   margin-left: 30px;
 }
+
+@media (max-width: 672px) {
+  .discussion-create {
+    flex-direction: column;
+  }
+
+  .discussion-create input {
+    margin: 0 0 15px 0;
+  }
+
+  .discussion__wrap {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .discussion-answers {
+    margin: 15px 0 0;
+  }
+
+  .discussion-img {
+    display: none;
+  }
+}
 </style>

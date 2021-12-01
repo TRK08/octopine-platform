@@ -232,7 +232,9 @@ polyline, path {
 
 .tournament-block {
   width: 100%;
-  max-width: 380px;
+  min-width: 370px;
+  max-width: 370px;
+  min-height: 320px;
   height: 100%;
   background-color: var(--dark);
   border-radius: 30px;
@@ -304,6 +306,7 @@ polyline, path {
 
 .tournament-block__body {
   padding: 15px 30px;
+  min-height: 100px;
 }
 
 .tournament-block__body h3 {

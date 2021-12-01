@@ -97,16 +97,24 @@ export default {
   .news__wrap {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
-@media (max-width: 991px) {
   .news__wrap {
     gap: 15px;
   }
+
+  .news .tools {
+    margin: 50px auto;
+  }
 }
+
 @media (max-width: 672px) {
   .news__wrap {
     grid-template-columns: 1fr;
+    height: 100%;
+  }
+
+  .news__wrap::v-deep .news-block {
+    height: 250px;
   }
 }
 </style>

@@ -223,10 +223,12 @@ export default {
   width: 75px;
   height: 75px;
   margin-right: 30px;
+  border-radius: 100%;
+  background-position: center center !important;
+  background-size: cover !important;
 }
 
 .search__avatar.empty {
-  border-radius: 100%;
   background-color: var(--grey);
 }
 

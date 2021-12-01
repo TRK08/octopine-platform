@@ -16,20 +16,18 @@
         <div class="tournament-about__format-item">
           <img src="../../assets/img/grid-tournament.svg" alt="" />
           <span>
-            {{ tournament.teams.length }} / {{ tournament.max_players }}
+            {{ tournament.type }}
           </span>
         </div>
         <div class="tournament-about__format-item">
           <img src="../../assets/img/money.svg" alt="" />
-          <span>1000P</span>
+          <span>{{ tournament.cost }}Р</span>
         </div>
       </div>
     </div>
     <div class="tournament-about__block descr">
       <h3>Описание</h3>
-      <p>
-        {{ tournament.description }}
-      </p>
+      <div v-html="tournament.description"></div>
     </div>
   </div>
 </template>
@@ -81,5 +79,34 @@ export default {
 
 .tournament-about__format-item span {
   margin-left: 30px;
+}
+
+@media (max-width: 1199px) {
+  .tournament-about__format-item {
+    padding: 15px;
+    max-width: 210px;
+  }
+}
+
+@media (max-width: 991px) {
+  .tournament-about__format-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .tournament-about__format-item {
+    margin: 0 auto;
+    max-width: unset;
+    width: 100%;
+  }
+}
+
+@media (max-width: 512px) {
+  .tournament-about__format-items {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
 }
 </style>

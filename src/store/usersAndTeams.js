@@ -26,8 +26,8 @@ const usersAndTeams = {
         commit('SET_USER_INFO', res.data)
       })
     },
-    ADD_FRIEND({ commit, dispatch }, payload) {
-      axios.post('https://octopine.pro/wp-json/oc/v1/add/friend', {
+    async ADD_FRIEND({ commit, dispatch }, payload) {
+      await axios.post('https://octopine.pro/wp-json/oc/v1/add/friend', {
         "user_from": payload.myID,
         "user_to": payload.userID
       }).then(res => {
@@ -42,8 +42,8 @@ const usersAndTeams = {
         dispatch('notify/ADD_NOTIFICATIONS', { text: "Заявка не отправлена" }, { root: true })
       })
     },
-    LOAD_SEARCH_RESULT({ commit }, nickname) {
-      axios.get(`https://octopine.pro/wp-json/oc/v1/friend/search?nickname=${nickname}`).then(res => {
+    async LOAD_SEARCH_RESULT({ commit }, nickname) {
+      await axios.get(`https://octopine.pro/wp-json/oc/v1/friend/search?nickname=${nickname}`).then(res => {
         commit('SET_SEARCH_RESULT', res.data.data)
       })
     },

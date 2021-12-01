@@ -35,23 +35,28 @@
       </div>
       <div class="tournament-block__body">
         <h3>{{ tournament.name }}</h3>
-        <div class="tournament-block__body-item">
+        <div class="tournament-block__body-item" v-if="time">
           <img src="../../assets/img/clock.svg" alt="" />
           <span> {{ time }} </span>
         </div>
-        <div class="tournament-block__body-item">
+        <div class="tournament-block__body-item" v-if="date">
           <img src="../../assets/img/calendar.svg" alt="" />
           <span> {{ date }} </span>
         </div>
       </div>
     </div>
-    <div class="tournament-block grid" v-show="!grid">
+    <router-link
+      tag="div"
+      :to="`/tournaments/${tournament.slug}`"
+      class="tournament-block grid"
+      v-show="!grid"
+    >
       <div
         class="tournament-block__img"
         :style="{
           background:
             'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(' +
-            tournament.img +
+            tournament.image +
             ') no-repeat ',
           'background-size': 'cover',
         }"
@@ -88,7 +93,7 @@
           <use xlink:href="../../assets/img/sprite.svg#arrow"></use>
         </svg>
       </router-link>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -137,6 +142,7 @@ export default {
   align-items: center;
   display: grid;
   grid-template-columns: 2fr 3fr 1fr;
+  min-height: unset;
 }
 
 .tournament-block.grid .tournament-block__img {
@@ -170,5 +176,28 @@ export default {
 
 .tournament-block.grid button:hover .blue-arrow {
   transform: translateX(10px) scale(-1);
+}
+
+@media (max-width: 672px) {
+  .tournament-block.grid {
+    min-width: 100%;
+    width: calc(100vw - 30px);
+    grid-template-columns: 5fr 1fr;
+  }
+
+  .tournament-block.grid .tournament-block__img {
+    display: none;
+  }
+}
+
+@media (max-width: 512px) {
+  .tournament-block.list {
+    min-width: 345px;
+    max-width: 345px;
+  }
+
+  .tournament-block.grid button {
+    display: none;
+  }
 }
 </style>

@@ -157,6 +157,14 @@ const auth = {
         console.log(err, 'SET NEW PASSWORD ERROR');
         dispatch('notify/ADD_NOTIFICATIONS', { text: 'Произошла ошибка' }, { root: true })
       })
+    },
+    async CHANGE_SOCIALS({ dispatch }, data) {
+      await axios.post('https://octopine.pro/wp-json/oc/v1/post/social', data).then(res => {
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Данные успешно изменены' }, { root: true })
+      }).catch(err => {
+        console.log(err, 'CHANGE SOCIALS ERROR');
+        dispatch('notify/ADD_NOTIFICATIONS', { text: 'Произошла ошибка' }, { root: true })
+      })
     }
   },
   getters: {

@@ -6,7 +6,7 @@
         {{ file.name }}
       </label>
       <label v-else class="custom-load-avatar" for="load-logo-img"
-        >Выберите логотип</label
+        >Выберите аватар</label
       >
 
       <input

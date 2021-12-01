@@ -94,4 +94,13 @@ export default {
 .popup__content::-webkit-scrollbar {
   display: none;
 }
+
+@media (max-width: 672px) {
+  .popup__wrap {
+    max-width: unset;
+    min-width: unset;
+    width: calc(100vw - 30px);
+    padding: 30px 15px;
+  }
+}
 </style>

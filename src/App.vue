@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-    <Preloader :activate="preload" />
+    <!-- <Preloader :activate="preload" /> -->
     <PushNotify />
 
     <Header />
 
-    <router-view />
+    <vue-page-transition name="overlay-right-full">
+      <router-view />
+    </vue-page-transition>
 
     <Footer />
 
@@ -24,7 +26,13 @@ import Preloader from "./components/ui/Preloader.vue";
 import { mapState } from "vuex";
 
 export default {
-  components: { Header, Footer, PushNotify, MainPopup, Preloader },
+  components: {
+    Header,
+    Footer,
+    PushNotify,
+    MainPopup,
+    Preloader,
+  },
   watch: {
     $route(to, from) {
       this.$store.dispatch("popup/GET_POPUP_MODE", { mode: null });
@@ -43,4 +51,15 @@ export default {
 
 
 <style>
+:root {
+  --overlay-bg: var(--dark) !important;
+  --transition-duration: 0.5s;
+}
+
+.overlay-top,
+.overlay-right,
+.overlay-bottom,
+.overlay-left {
+  z-index: 1000 !important;
+}
 </style>

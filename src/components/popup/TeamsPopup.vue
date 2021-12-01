@@ -76,12 +76,15 @@ export default {
 .user-teams__avatar {
   width: 75px;
   height: 75px;
-  margin-right: 50px;
-  background-position: center center;
+  min-width: 75px;
+  min-height: 75px;
+  margin-right: 10%;
+  border-radius: 100%;
+  background-position: center center !important;
+  background-size: cover !important;
 }
 
 .user-teams__avatar.empty {
-  border-radius: 100%;
   background-color: var(--grey);
 }
 
@@ -98,5 +101,12 @@ export default {
 .user-teams__show-all:hover {
   color: var(--blue);
   transition: all 0.5s ease;
+}
+
+@media (max-width: 672px) {
+  .teams-popup {
+    min-width: unset;
+    width: 100%;
+  }
 }
 </style>

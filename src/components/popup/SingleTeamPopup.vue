@@ -99,6 +99,18 @@
           <span v-else>Сохранить</span>
         </button>
       </div>
+      <div class="single-team-tournaments" v-if="lastTournaments.length">
+        <h3>Участие в турнирах</h3>
+        <router-link
+          tag="div"
+          :to="`/tournaments/${item.slug}`"
+          class="single-team-tournament"
+          v-for="item in lastTournaments"
+          :key="item.id"
+        >
+          <span>{{ item.name }}</span>
+        </router-link>
+      </div>
     </masonry>
   </div>
 </template>
@@ -186,11 +198,23 @@ export default {
       mode: "popup/getPopupMode",
       user: "auth/getUser",
       userInfo: "auth/getUserInfo",
+      tournaments: "tournaments/getTournaments",
     }),
     allPlayers() {
       if (this.team.users && this.team.admin) {
         return [this.team.admin, ...this.team.users];
       }
+    },
+    lastTournaments() {
+      let res = [];
+      this.tournaments.map((item) => {
+        item.teams.forEach((i) => {
+          if (i.id == this.team.id) {
+            res.push(item);
+          }
+        });
+      });
+      return res;
     },
   },
   created() {},
@@ -206,7 +230,8 @@ export default {
 
 .single-team-info,
 .single-team-users,
-.single-team-settings {
+.single-team-settings,
+.single-team-tournaments {
   padding: 30px;
   background-color: var(--bg);
   border-radius: 30px;
@@ -240,12 +265,13 @@ export default {
   width: 100px;
   height: 100px;
   margin-bottom: 30px;
+  border-radius: 100%;
   background-position: center center !important;
+  background-size: cover !important;
 }
 
 .single-team__logo.empty {
   background-color: var(--grey);
-  border-radius: 100%;
 }
 
 .user-friends__item {
@@ -267,10 +293,14 @@ export default {
 .user-friends__avatar {
   width: 75px;
   height: 75px;
+  min-width: 75px;
+  min-height: 75px;
+  border-radius: 100%;
+  background-position: center center !important;
+  background-size: cover !important;
 }
 
 .user-friends__avatar.empty {
-  border-radius: 100%;
   background-color: var(--grey);
 }
 
@@ -356,5 +386,32 @@ export default {
   margin: 0;
   padding: 0;
   width: auto;
+}
+
+.single-team-tournaments h3 {
+  margin-bottom: 30px;
+}
+
+.single-team-tournament {
+  background-color: var(--dark);
+  cursor: pointer;
+  padding: 30px;
+  border-radius: 30px;
+  transition: all 0.5s ease;
+}
+
+.single-team-tournament:hover {
+  background-color: var(--blue);
+  transition: all 0.5s ease;
+}
+
+@media (max-width: 672px) {
+  .single-team-info,
+  .single-team-users,
+  .single-team-settings,
+  .single-team-tournaments {
+    width: 100%;
+    padding: 30px 15px;
+  }
 }
 </style>
