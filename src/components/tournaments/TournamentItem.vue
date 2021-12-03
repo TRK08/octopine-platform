@@ -41,7 +41,7 @@
         </div>
         <div class="tournament-block__body-item" v-if="date">
           <img src="../../assets/img/calendar.svg" alt="" />
-          <span> {{ date }} </span>
+          <span> {{ new Date(date).toLocaleDateString() }} </span>
         </div>
       </div>
     </div>
@@ -65,12 +65,12 @@
         <h3>{{ tournament.name }}</h3>
         <div class="tournament-block__body-date">
           <div class="tournament-block__body-item">
-            <img src="../../assets/img/clock.svg" alt="" />
+            <img src="../../assets/img/clock.svg" alt="" v-if="time" />
             <span> {{ time }} </span>
           </div>
-          <div class="tournament-block__body-item">
+          <div class="tournament-block__body-item" v-if="date">
             <img src="../../assets/img/calendar.svg" alt="" />
-            <span> {{ date }} </span>
+            <span> {{ new Date(date).toLocaleDateString() }} </span>
           </div>
         </div>
         <div class="tournaments-block__body-info">
@@ -148,6 +148,7 @@ export default {
 .tournament-block.grid .tournament-block__img {
   width: 100%;
   height: 160px;
+  background-position: center center !important;
 }
 
 .tournament-block.grid

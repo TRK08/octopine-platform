@@ -3,7 +3,13 @@
     <h2 v-if="mode === 'friends'">Друзья</h2>
     <h2 v-if="mode === 'new-friends'">Заявки в друзья</h2>
     <div class="friends-popup__wrap">
-      <div class="user-friends__item" v-for="item in info" :key="item.nickname">
+      <router-link
+        tag="div"
+        :to="`/user/${item.nickname}`"
+        class="user-friends__item"
+        v-for="item in info"
+        :key="item.nickname"
+      >
         <div
           v-if="item.avatar"
           class="user-friends__avatar"
@@ -14,6 +20,7 @@
         ></div>
         <div v-else class="user-friends__avatar empty"></div>
         <div class="user-friends__nickname">{{ item.nickname }}</div>
+        <div></div>
         <div class="new-friends__add" v-if="mode === 'new-friends'">
           <svg
             @click.stop="acceptFriend(item.user_id, true)"
@@ -34,7 +41,7 @@
             ></use>
           </svg>
         </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -46,6 +53,7 @@ export default {
   methods: {
     ...mapActions({
       acceptedFriend: "usersAndTeams/ACCEPTED_FRIEND",
+      setPopup: "popup/GET_POPUP_MODE",
     }),
     acceptFriend(id, status) {
       let data = {
@@ -53,7 +61,16 @@ export default {
         user_to_add: id,
         result: status,
       };
-      this.acceptedFriend(data);
+      this.acceptedFriend(data).then(() => {
+        this.info.forEach((item, i) => {
+          if (item.user_id === id) {
+            this.info.splice(i, 1);
+          }
+        });
+        if (!this.info.length) {
+          this.setPopup({ mode: null });
+        }
+      });
     },
   },
   computed: {

@@ -40,7 +40,6 @@ const auth = {
         await axios
           .post(`https://octopine.pro/wp-json/oc/v1/registration`, user, { params: requestParams })
           .then(res => {
-            console.log(res);
             if (res.data.code == 500) {
               dispatch('notify/ADD_NOTIFICATIONS', { text: res.data.msg }, { root: true })
             } else {
@@ -126,9 +125,9 @@ const auth = {
         dispatch('notify/ADD_NOTIFICATIONS', { text: 'При отправке произошла ошибка' }, { root: true })
       })
     },
-    async CHANGE_AVATAR({ dispatch }, data) {
+    async CHANGE_AVATAR({ commit, dispatch }, data) {
       await axios.post("https://octopine.pro/wp-json/oc/v1/set/avatar", data).then(res => {
-        console.log(res.data);
+        commit('SET_USER_INFO', res.data)
         dispatch('notify/ADD_NOTIFICATIONS', { text: 'Аватар успешно изменен' }, { root: true })
       }).catch(err => {
         console.log(err, 'CHANGE AVATAR ERROR');
@@ -136,9 +135,7 @@ const auth = {
       })
     },
     async RESET_PASSWORD({ dispatch }, mail) {
-      console.log(mail);
       await axios.post(`https://octopine.pro/wp-json/oc/v1/user/resetp?login=${mail}`).then(res => {
-        console.log(res.data);
         if (res.data.code === '404') {
           dispatch('notify/ADD_NOTIFICATIONS', { text: 'Такой пользователь не найден' }, { root: true })
         } else {
@@ -158,8 +155,9 @@ const auth = {
         dispatch('notify/ADD_NOTIFICATIONS', { text: 'Произошла ошибка' }, { root: true })
       })
     },
-    async CHANGE_SOCIALS({ dispatch }, data) {
+    async CHANGE_SOCIALS({ commit, dispatch }, data) {
       await axios.post('https://octopine.pro/wp-json/oc/v1/post/social', data).then(res => {
+        commit('SET_USER_INFO', res.data)
         dispatch('notify/ADD_NOTIFICATIONS', { text: 'Данные успешно изменены' }, { root: true })
       }).catch(err => {
         console.log(err, 'CHANGE SOCIALS ERROR');

@@ -54,7 +54,10 @@
         </ul>
       </div>
       <div class="create-team-item">
-        <button :disabled="!file || !teamName.length" @click="createTeam">
+        <button
+          :disabled="!file || !teamName.length || isLoading"
+          @click="createTeam"
+        >
           <span class="load-spinner" v-if="isLoading"></span>
           <span v-else>Создать команду</span>
         </button>

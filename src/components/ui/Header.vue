@@ -20,7 +20,9 @@
         </div>
         <div class="header-buttons">
           <router-link tag="div" to="/search" class="header-search">
-            <img src="../../assets/img/search.svg" alt="" />
+            <svg class="header-search-icon">
+              <use xlink:href="../../assets/img/search.svg#search"></use>
+            </svg>
           </router-link>
           <router-link tag="button" to="/auth" class="header-login">
             <img src="../../assets/img/cabinet.svg" alt="" />
@@ -139,6 +141,20 @@ export default {
 
 .header-menu-item.router-link-active {
   background-color: var(--blue);
+}
+
+.header-search {
+  cursor: pointer;
+}
+
+.header-search-icon {
+  fill: var(--red);
+  transition: all 0.5s ease;
+}
+
+.header-search-icon:hover {
+  fill: var(--white);
+  transition: all 0.5s ease;
 }
 
 .header-burger {

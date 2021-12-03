@@ -1,6 +1,6 @@
 <template>
-  <section class="bracket" v-if="tournament">
-    <main id="tournament">
+  <section class="bracket">
+    <main id="tournament" v-if="tournament && tournament.rounds">
       <ul class="round" v-for="(round, i) in tournament.rounds" :key="i">
         <div
           class="round-item"
@@ -34,6 +34,7 @@
         </div>
       </ul>
     </main>
+    <h2 class="bracket-empty" v-else>Турнир еще не начался</h2>
   </section>
 </template>
 
@@ -102,8 +103,13 @@ main {
   width: fit-content;
 }
 
+.bracket-empty {
+  text-align: center;
+}
+
 .bracket {
-  overflow-x: scroll;
+  overflow-x: auto;
+  min-height: 50px;
 }
 
 .round {

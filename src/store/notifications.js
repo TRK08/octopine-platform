@@ -23,7 +23,7 @@ const notify = {
         commit('SET_NOTIFICATIONS', payload)
         setTimeout(() => {
           commit('DELETE_NOTIFICATION')
-        }, 3000)
+        }, 2500)
       }
     },
   },

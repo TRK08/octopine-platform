@@ -14,7 +14,8 @@
             v-if="
               isLog &&
               !tournament.finished &&
-              tournament.teams.length != tournament.max_players
+              tournament.teams.length != tournament.max_players &&
+              !checkPaymentTeam
             "
           >
             Участвовать
@@ -39,6 +40,12 @@
             "
           >
             Регистрация закрыта
+          </div>
+          <div
+            class="tournamets-info__closed"
+            v-else-if="isLog && checkPaymentTeam && !tournament.finished"
+          >
+            Вы участвуете
           </div>
         </div>
         <div class="tournament-info__body">
@@ -120,6 +127,18 @@ export default {
       isLogInfo: "auth/getUserInfo",
       myProfile: "auth/getUserInfo",
     }),
+    checkPaymentTeam() {
+      if (this.isLogInfo) {
+        let test = this.isLogInfo.matches.find(
+          (item) => item.id === this.tournament.id
+        );
+        if (test) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
   },
 };
 </script>

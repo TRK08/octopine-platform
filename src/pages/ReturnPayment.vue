@@ -11,11 +11,13 @@
           <span>Оплата заказа банковской картой</span>. Оплата происходит через
           ПАО СБЕРБАНК с использованием банковских карт следующих платёжных
           систем: <br />
-          · МИР (разместить логотип МИР); <br />
-          · VISA International (разместить логотип VISA International); <br />
-          · Mastercard Worldwide (разместить логотип Mastercard Worldwide);
+          · МИР <img src="../assets/img/mir.svg" alt="" /> <br />
+          · VISA International <img src="../assets/img/visa.svg" alt="" />
           <br />
-          · JCB (разместить логотип JCB). <br />
+          · Mastercard Worldwide
+          <img src="../assets/img/mastercard.svg" alt="" />
+          <br />
+          · JCB <img src="../assets/img/jcb.svg" alt="" />. <br />
           Для оплаты (ввода реквизитов Вашей карты) Вы будете перенаправлены на
           платёжный шлюз ПАО СБЕРБАНК. Соединение с платёжным шлюзом и передача
           информации осуществляется в защищённом режиме с использованием
@@ -74,6 +76,10 @@ export default {
 .return-payment__wrap p {
   margin-bottom: 10px;
   font-weight: 400;
+}
+
+.return-payment__wrap p img {
+  height: 20px;
 }
 
 .return-payment__wrap p span {

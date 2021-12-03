@@ -4,11 +4,15 @@ import axios from 'axios'
 const tournaments = {
 	namespaced: true,
 	state: {
-		tournaments: null
+		tournaments: null,
+		paymentStatus: false,
 	},
 	mutations: {
 		SET_TOURNAMENTS(state, payload) {
 			state.tournaments = payload
+		},
+		SET_PAYMENT_STATUS(state, payload) {
+			state.paymentStatus = payload
 		}
 	},
 	actions: {
@@ -17,15 +21,20 @@ const tournaments = {
 				commit('SET_TOURNAMENTS', res.data)
 			})
 		},
-		async REGISTR_TOURNAMENTS({ }, data) {
+		async REGISTR_TOURNAMENTS({ dispatch }, data) {
+			dispatch('notify/ADD_NOTIFICATIONS', { text: 'Сейчас вы будете перенаправлены на страницу банка' }, { root: true })
 			await axios.post('https://octopine.pro/wp-json/oc/v1/payments/register', data).then(res => {
 				window.location.assign(res.data.redirect)
 				localStorage.setItem('order_id', res.data.order)
 			})
 		},
-		async CHECK_PAYMENT({ dispatch }, id) {
+		async CHECK_PAYMENT({ commit, dispatch }, id) {
 			await axios.get(`https://octopine.pro/wp-json/oc/v1/payments/info?order=${id}`).then(res => {
-				// dispatch('notify/ADD_NOTIFICATIONS', { text: 'Вы успешно зарегистрировались' }, { root: true })
+				if (res.data.code === 200) {
+					commit('SET_PAYMENT_STATUS', 'pay')
+				} else {
+					commit('SET_PAYMENT_STATUS', 'error')
+				}
 			})
 		}
 	},
@@ -42,6 +51,9 @@ const tournaments = {
 		getCurrentTournaments(state) {
 			return state.tournaments.filter(item => item.finished === true)
 		},
+		getPaymentStatus(state) {
+			return state.paymentStatus
+		}
 	}
 }
 

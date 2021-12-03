@@ -21,6 +21,7 @@
       </div>
       <div class="single-team-users" v-if="team.users">
         <h3>Игроки</h3>
+        <pre>{{ team.admin }}</pre>
         <router-link
           tag="div"
           :to="`/user/${item.nickname}`"
@@ -38,6 +39,10 @@
           ></div>
           <div v-else class="user-friends__avatar empty"></div>
           <div class="user-friends__nickname">{{ item.nickname }}</div>
+          <div class="user-admin" v-if="item.id == team.admin.id">
+            <img src="../../assets/img/crown.svg" alt="" />
+          </div>
+          <div v-else></div>
         </router-link>
       </div>
       <div class="single-team-settings" v-if="team.admin.id == user.user_id">
@@ -182,7 +187,6 @@ export default {
         allUsers = [...val.users, ...this.userInfo.friends.accepted];
 
         allUsers.filter((item) => {
-          console.log(item, "ITEM");
           let i = this.allUsers.findIndex((x) => x.id == item.user_id);
           if (i <= -1) {
             this.allUsers.push(item);
@@ -281,6 +285,7 @@ export default {
   border-radius: 30px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   cursor: pointer;
   transition: all 0.5s ease;
 }
@@ -403,6 +408,12 @@ export default {
 .single-team-tournament:hover {
   background-color: var(--blue);
   transition: all 0.5s ease;
+}
+
+.user-admin,
+.user-admin img {
+  width: 30px;
+  height: 30px;
 }
 
 @media (max-width: 672px) {

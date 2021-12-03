@@ -2,9 +2,9 @@
   <footer class="footer">
     <div class="container">
       <div class="footer__body">
-        <div class="footer-logo">
+        <router-link tag="div" to="/" class="footer-logo">
           <img src="../../assets/img/octopus.png" alt="" />
-        </div>
+        </router-link>
         <div class="footer__navigation">
           <h2>Навигация</h2>
           <ul class="footer__navigation-list">
@@ -146,6 +146,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .footer-logo img {

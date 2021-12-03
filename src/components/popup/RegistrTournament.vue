@@ -1,7 +1,7 @@
 <template>
   <div class="registr-tournament" v-if="userTeams">
     <h2>Регистрация на турнир</h2>
-    <div class="registr-tournament__select-team">
+    <div class="registr-tournament__select-team" v-if="userTeams.length">
       <h3>Выберите команду для участия в турнире</h3>
       <div
         v-for="item in userTeams"
@@ -26,6 +26,13 @@
         <span class="load-spinner" v-if="isLoading"></span>
         <span v-else>Зарегистрироваться</span>
       </button>
+    </div>
+    <div class="registr-tournament__empty">
+      <h3>
+        Для участия в турнире у вас нет своей команды, создайте ее в личном
+        кабинете
+      </h3>
+      <router-link tag="button" to="/cabinet">В личный кабинет</router-link>
     </div>
   </div>
 </template>
@@ -166,5 +173,15 @@ export default {
 
 .registr-tournament__item:not(:last-child) {
   margin-bottom: 30px;
+}
+
+.registr-tournament__empty {
+  max-width: 600px;
+  text-align: center;
+}
+
+.registr-tournament__empty button {
+  margin-top: 30px;
+  background-color: var(--blue);
 }
 </style>

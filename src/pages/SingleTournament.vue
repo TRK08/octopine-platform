@@ -16,16 +16,7 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    ...mapActions({
-      checkPaymentAction: "tournaments/CHECK_PAYMENT",
-    }),
-    checkPayment() {
-      const id = localStorage.getItem("order_id");
-      this.checkPaymentAction(id);
-      console.log(123);
-    },
-  },
+  methods: {},
   computed: {
     ...mapGetters({
       singleTournament: "tournaments/getSingleTournament",
@@ -41,9 +32,6 @@ export default {
         return this.singleTournament(this.id);
       }
     },
-  },
-  created() {
-    this.checkPayment();
   },
 };
 </script>

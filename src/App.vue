@@ -53,7 +53,7 @@ export default {
 <style>
 :root {
   --overlay-bg: var(--dark) !important;
-  --transition-duration: 0.5s;
+  --transition-duration: 0.7s;
 }
 
 .overlay-top,

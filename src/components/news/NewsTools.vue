@@ -37,9 +37,6 @@ export default {
       let cat = this.categories.find((item) => item.title === e);
       this.$store.dispatch("news/setCategoryId", cat.id);
     },
-    test() {
-      console.log(123);
-    },
   },
   computed: {
     ...mapGetters({

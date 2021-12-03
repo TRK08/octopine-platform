@@ -59,14 +59,13 @@ export default {
     }),
     friendAddBtn() {
       let inFriends = false;
-      this.myProfile.friends.accepted.map((item) => {
-        console.log(item);
-        if (item.nickname === this.user.nickname) {
-          inFriends = true;
-        } else {
-          inFriends = false;
-        }
-      });
+      if (this.myProfile) {
+        this.myProfile.friends.accepted.map((item) => {
+          if (item.nickname === this.user.nickname) {
+            inFriends = true;
+          }
+        });
+      }
       return inFriends;
     },
   },

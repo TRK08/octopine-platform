@@ -43,6 +43,7 @@ export default {
 .notify__wrap {
   background-color: var(--blue);
   width: fit-content;
+  height: fit-content;
   max-width: 400px;
   min-height: 50px;
   border-radius: 30px;
@@ -61,7 +62,7 @@ export default {
   opacity: 0;
 }
 .notify-transition-enter-active {
-  transition: all 0.6s ease;
+  transition: all 0.4s ease;
 }
 .notify-transition-enter-to {
   opacity: 1;
@@ -71,7 +72,7 @@ export default {
   opacity: 1;
 }
 .notify-transition-leave-active {
-  transition: transform 0.6s ease, opacity 0.6s, height 0.6s 0.2s;
+  transition: transform 0.4s ease, opacity 0.4s, height 0.8s;
 }
 .notify-transition-leave-to {
   height: 0;
@@ -79,6 +80,6 @@ export default {
   opacity: 0;
 }
 .notify-transition-move {
-  transition: transform 0.6s ease;
+  transition: transform 0.4s ease;
 }
 </style>

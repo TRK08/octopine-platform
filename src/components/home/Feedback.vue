@@ -51,5 +51,9 @@ export default {
   .feedback {
     margin-bottom: 200px;
   }
+
+  .feedback-form {
+    padding: 40px 35px;
+  }
 }
 </style>

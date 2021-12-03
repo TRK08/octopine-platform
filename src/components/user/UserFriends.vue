@@ -6,7 +6,7 @@
         tag="div"
         :to="`/user/${item.nickname}`"
         class="user-friends__item"
-        v-for="item in friends.accepted"
+        v-for="item in friends.accepted.slice(0, 3)"
         :key="item.nickname"
       >
         <div
@@ -23,7 +23,7 @@
       </router-link>
     </div>
     <div
-      v-if="friends.length > 3"
+      v-if="friends.accepted.length > 3"
       class="user-friends__show-all"
       @click="setPopup({ mode: 'friends', data: friends.accepted })"
     >

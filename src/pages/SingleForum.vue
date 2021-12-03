@@ -3,25 +3,34 @@
     <div class="container">
       <div class="single-forum__theme">
         <h2>{{ singleTheme.name }}</h2>
-        <span> {{ singleTheme.date }} </span>
+        <span> {{ new Date(singleTheme.date).toLocaleString() }} </span>
+        <router-link tag="button" to="/forum">Назад</router-link>
       </div>
 
       <div class="single-forum__answers" v-if="comments">
-        <h2>Ответы: {{ singleTheme.answers }}</h2>
+        <h2>Ответы: {{ reversedComments.length }}</h2>
         <div
           class="single-forum__answer"
           v-for="item in reversedComments"
           :key="item.date"
         >
           <div class="single-forum__answer-info">
-            <div class="single-forum__answer-avatar">
+            <router-link
+              tag="div"
+              :to="`/user/${item.user_name}`"
+              class="single-forum__answer-avatar"
+            >
               <img :src="item.user_avatar" alt="" />
-            </div>
-            <span class="single-forum__answer-nickname">
+            </router-link>
+            <router-link
+              tag="span"
+              :to="`/user/${item.user_name}`"
+              class="single-forum__answer-nickname"
+            >
               {{ item.user_name }}
-            </span>
+            </router-link>
             <span class="single-forum__answer-date">
-              {{ item.date }}
+              {{ new Date(item.date).toLocaleString() }}
             </span>
           </div>
           <div class="single-forum__answer-text">
@@ -37,7 +46,7 @@
         ></textarea>
         <button
           @click="sendNewComment"
-          :disabled="!commentText"
+          :disabled="!commentText || isLoading || isDisabled"
           class="custom-btn"
         >
           <span class="load-spinner" v-if="isLoading"></span>
@@ -57,6 +66,7 @@ export default {
     return {
       commentText: "",
       isLoading: "",
+      isDisabled: false,
     };
   },
   methods: {
@@ -74,6 +84,10 @@ export default {
       this.newComment(data).then(() => {
         this.commentText = "";
         this.isLoading = false;
+        this.isDisabled = true;
+        setTimeout(() => {
+          this.isDisabled = false;
+        }, 10000);
       });
     },
   },
@@ -117,6 +131,12 @@ export default {
   font-weight: 400;
 }
 
+.single-forum__theme button {
+  margin-top: 30px;
+  background-color: var(--blue);
+  max-width: fit-content;
+}
+
 .single-forum__answers h2 {
   margin-bottom: 30px;
 }
@@ -142,6 +162,10 @@ export default {
   /* max-width: 190px; */
   min-width: 190px;
   text-align: center;
+}
+
+.single-forum__answer-nickname {
+  cursor: pointer;
 }
 
 .single-forum__answer-avatar {
@@ -198,6 +222,10 @@ export default {
   background-color: var(--blue);
   display: block;
   margin: 15px auto 0;
+}
+
+.single-forum__comment button:disabled {
+  opacity: 0.7;
 }
 
 @media (max-width: 672px) {
