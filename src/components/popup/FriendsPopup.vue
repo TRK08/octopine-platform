@@ -147,4 +147,10 @@ export default {
 .new-friends__add-icon:hover {
   fill: var(--red);
 }
+
+@media (max-width: 672px) {
+  .friends-popup {
+    min-width: 100%;
+  }
+}
 </style>

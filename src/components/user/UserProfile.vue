@@ -31,11 +31,20 @@
       </div>
     </div>
     <button
-      v-if="myProfile && !friendAddBtn"
-      @click="addFriend(user.ID)"
+      v-if="myProfile && friendAddBtn"
+      @click="removeFriend(user.ID)"
       class="custom-btn user-profile__add-friend"
     >
-      Добавить в друзья
+      Удалить из друзей
+    </button>
+    <button
+      v-else-if="myProfile && !friendAddBtn"
+      @click="addFriend(user.ID)"
+      class="custom-btn user-profile__add-friend"
+      :disabled="sendFriendRequest"
+    >
+      <span v-if="!sendFriendRequest">Добавить в друзья</span>
+      <span v-else>Заявка отправлена</span>
     </button>
     <!-- <button class="custom-btn user-profile__new-message">
       Отправить сообщение
@@ -49,6 +58,10 @@ export default {
   name: "UserProfile",
   props: {
     user: {
+      type: Object,
+      required: true,
+    },
+    userFriends: {
       type: Object,
       required: true,
     },
@@ -68,6 +81,17 @@ export default {
       }
       return inFriends;
     },
+    sendFriendRequest() {
+      let send = false;
+      if (this.myProfile) {
+        this.userFriends.not_accepted.map((item) => {
+          if (item.nickname === this.myProfile.user.nickname) {
+            send = true;
+          }
+        });
+      }
+      return send;
+    },
   },
   methods: {
     ...mapActions({
@@ -77,6 +101,12 @@ export default {
       this.$store.dispatch("usersAndTeams/ADD_FRIEND", {
         myID: this.myProfile.user.ID,
         userID: id,
+      });
+    },
+    removeFriend(id) {
+      this.$store.dispatch("usersAndTeams/REMOVE_FRIEND", {
+        user: this.myProfile.user.ID,
+        friend: id,
       });
     },
   },

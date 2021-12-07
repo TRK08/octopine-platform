@@ -41,7 +41,6 @@ store.dispatch("auth/VALIDATE", user);
 
 router.beforeEach((to, from, next) => {
   if (user) {
-    console.log(user);
     if (to.params.id === user.user_nicename) {
       next('/cabinet')
     } else {

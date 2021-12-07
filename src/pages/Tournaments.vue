@@ -23,7 +23,7 @@ export default {
       bannerInfo: {
         title: "Турниры",
         descr:
-          "Учавствуй и побеждай в регулярных состязаниях на нашей платформе",
+          "Участвуй и побеждай в регулярных состязаниях на нашей платформе",
         img: require("../assets/img/tournaments-banner.png"),
       },
     };

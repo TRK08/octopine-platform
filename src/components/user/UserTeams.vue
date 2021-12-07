@@ -6,7 +6,7 @@
         class="user-teams__item"
         v-for="item in teams.slice(0, 3)"
         :key="item.nickname"
-        @click="loadTeam(item.id)"
+        @click="openTeam(item.id)"
       >
         <div
           v-if="item.logo"
@@ -55,6 +55,10 @@ export default {
       setPopup: "popup/GET_POPUP_MODE",
       loadTeam: "usersAndTeams/LOAD_TEAM_INFO",
     }),
+    openTeam(id) {
+      this.loadTeam(id);
+      this.$store.dispatch("popup/GET_POPUP_MODE", { mode: "singleTeam" });
+    },
   },
 };
 </script>

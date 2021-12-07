@@ -21,7 +21,6 @@
       </div>
       <div class="single-team-users" v-if="team.users">
         <h3>Игроки</h3>
-        <pre>{{ team.admin }}</pre>
         <router-link
           tag="div"
           :to="`/user/${item.nickname}`"
@@ -103,6 +102,16 @@
           <span class="load-spinner" v-if="isLoading"></span>
           <span v-else>Сохранить</span>
         </button>
+        <button class="single-team__remove" @click="isDelete = !isDelete">
+          Удалить команду
+        </button>
+        <div class="single-team__remove-accepted" v-show="isDelete">
+          <span>Вы уверены?</span>
+          <div class="rmv-btns">
+            <button @click="removeTeam">Да</button>
+            <button @click="isDelete = !isDelete">Нет</button>
+          </div>
+        </div>
       </div>
       <div class="single-team-tournaments" v-if="lastTournaments.length">
         <h3>Участие в турнирах</h3>
@@ -132,11 +141,13 @@ export default {
       usersInTeamId: [],
       allUsers: [],
       isLoading: false,
+      isDelete: false,
     };
   },
   methods: {
     ...mapActions({
       updateTeamInfo: "usersAndTeams/UPDATE_TEAM_INFO",
+      deleteTeam: "usersAndTeams/DELETE_TEAM",
     }),
     setLogo() {
       this.newLogo = this.$refs.file.files[0];
@@ -161,9 +172,13 @@ export default {
         form2.append(field, teamData[field]);
       }
 
-      this.updateTeamInfo(form2).then(() => {
+      this.updateTeamInfo({ data: form2, id: this.team.id }).then(() => {
         this.isLoading = false;
+        (this.newName = ""), (this.newLogo = null);
       });
+    },
+    removeTeam() {
+      this.deleteTeam(this.team.id);
     },
   },
   watch: {
@@ -172,27 +187,40 @@ export default {
         let usersInTeamId = [];
         let usersInTeam = [];
         let allUsers = [];
+        this.allUsers = [];
 
-        val.users.map((item) => {
-          usersInTeamId.push(+item.id);
-        });
+        if (val.users) {
+          val.users.map((item) => {
+            if (item.id) {
+              usersInTeamId.push(+item.id);
+            }
+          });
 
-        usersInTeam = val.users.map((item) => {
-          item.user_id = item.id;
-          return item;
-        });
+          val.users.map((item) => {
+            item.user_id = item.id;
+            if (item.user_id) {
+              usersInTeam.push(item);
+            }
+          });
+
+          allUsers = [...val.users, ...this.userInfo.friends.accepted];
+        } else {
+          if (this.userInfo.friends) {
+            allUsers = [...this.userInfo.friends.accepted];
+          }
+        }
 
         this.usersInTeamId = usersInTeamId;
 
-        allUsers = [...val.users, ...this.userInfo.friends.accepted];
-
         allUsers.filter((item) => {
-          let i = this.allUsers.findIndex((x) => x.id == item.user_id);
-          if (i <= -1) {
-            this.allUsers.push(item);
+          if (item.user_id) {
+            let i = this.allUsers.findIndex((x) => x.id == item.user_id);
+            if (i <= -1) {
+              this.allUsers.push(item);
+            }
           }
-          return null;
         });
+        console.log(this.allUsers, "all users");
       }
     },
   },
@@ -205,7 +233,9 @@ export default {
       tournaments: "tournaments/getTournaments",
     }),
     allPlayers() {
-      if (this.team.users && this.team.admin) {
+      if (this.team.admin && !this.team.users) {
+        return [this.team.admin];
+      } else if (this.team.users) {
         return [this.team.admin, ...this.team.users];
       }
     },
@@ -414,6 +444,32 @@ export default {
 .user-admin img {
   width: 30px;
   height: 30px;
+}
+
+.single-team__remove {
+  margin-top: 15px;
+  background-color: var(--red) !important;
+}
+
+.single-team__remove-accepted {
+  margin-top: 15px;
+}
+
+.single-team__remove-accepted span {
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: 400;
+}
+
+.rmv-btns {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.rmv-btns button:first-child {
+  background-color: var(--red);
+  margin-right: 15px;
 }
 
 @media (max-width: 672px) {

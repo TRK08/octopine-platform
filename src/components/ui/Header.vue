@@ -54,9 +54,11 @@
           </router-link>
         </ul>
         <div class="mobile-header-buttons">
-          <router-link tag="div" to="/search" class="header-search">
+          <router-link tag="div" to="/search" class="mobile-header-search">
             <span>Поиск</span>
-            <img src="../../assets/img/search.svg" alt="" />
+            <svg class="mobile-header-search-icon">
+              <use xlink:href="../../assets/img/search.svg#search"></use>
+            </svg>
           </router-link>
           <router-link tag="button" to="/cabinet" class="header-login">
             <img src="../../assets/img/cabinet.svg" alt="" />
@@ -148,6 +150,8 @@ export default {
 }
 
 .header-search-icon {
+  width: 30px;
+  height: 30px;
   fill: var(--red);
   transition: all 0.5s ease;
 }
@@ -228,6 +232,19 @@ export default {
   width: fit-content;
 }
 
+.mobile-header-search-icon {
+  width: 30px;
+  height: 30px;
+  fill: var(--red);
+  transition: all 0.5s ease;
+  margin-left: 10px;
+}
+
+.mobile-header-search-icon:hover {
+  fill: var(--white);
+  transition: all 0.5s ease;
+}
+
 @media (max-width: 991px) {
   .header-menu,
   .header-buttons {
@@ -236,6 +253,14 @@ export default {
 
   .header-burger {
     display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-header-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

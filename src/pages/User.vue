@@ -2,7 +2,7 @@
   <div class="user">
     <div class="container" v-if="user">
       <masonry :gutter="30" :cols="{ default: 2, 991: 1 }">
-        <UserProfile :user="user.user" />
+        <UserProfile :user="user.user" :userFriends="user.friends" />
         <UserFriends :friends="user.friends" />
         <UserTeams :teams="user.teams" />
       </masonry>

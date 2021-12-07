@@ -1,6 +1,6 @@
 <template>
-  <div class="single-forum" v-if="singleTheme">
-    <div class="container">
+  <div class="single-forum">
+    <div class="container" v-if="singleTheme">
       <div class="single-forum__theme">
         <h2>{{ singleTheme.name }}</h2>
         <span> {{ new Date(singleTheme.date).toLocaleString() }} </span>

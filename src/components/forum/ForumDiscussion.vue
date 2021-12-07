@@ -1,6 +1,9 @@
 <template>
   <div class="discussion" v-if="themes">
-    <div class="discussion-create" v-if="user">
+    <button class="discussion-new" v-if="user" @click="isOpen = !isOpen">
+      Создать свою тему
+    </button>
+    <div class="discussion-create" v-if="isOpen">
       <input type="text" placeholder="Название темы" v-model="themeName" />
       <button :disabled="!themeName.length" @click="createNewTheme">
         <span class="load-spinner" v-if="isLoading"></span>
@@ -43,6 +46,7 @@ export default {
     return {
       themeName: "",
       isLoading: false,
+      isOpen: false,
     };
   },
   methods: {
@@ -66,6 +70,10 @@ export default {
 </script>
 
 <style scoped>
+.discussion-new {
+  margin-bottom: 30px;
+  background-color: var(--blue);
+}
 .discussion-create {
   display: flex;
   align-items: center;

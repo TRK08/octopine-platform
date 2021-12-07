@@ -27,7 +27,7 @@
         <span v-else>Зарегистрироваться</span>
       </button>
     </div>
-    <div class="registr-tournament__empty">
+    <div class="registr-tournament__empty" v-else>
       <h3>
         Для участия в турнире у вас нет своей команды, создайте ее в личном
         кабинете

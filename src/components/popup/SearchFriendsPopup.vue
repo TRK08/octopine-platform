@@ -13,7 +13,7 @@
         tag="div"
         :to="`user/${item.nickname}`"
         class="search-friends__item"
-        v-for="item in searchResult"
+        v-for="item in result"
         :key="item.ID"
       >
         <div
@@ -45,6 +45,7 @@ export default {
     return {
       search: "",
       isLoading: false,
+      result: [],
     };
   },
   methods: {
@@ -62,10 +63,33 @@ export default {
       });
     },
   },
+  watch: {
+    searchResult() {
+      let res = [];
+      if (this.searchResult) {
+        this.searchResult.map((item) => {
+          if (this.user.user_id != item.ID) {
+            res.push(item);
+          }
+        });
+      }
+
+      this.userInfo.friends.not_accepted.forEach((item) => {
+        res.map((user, index) => {
+          if (user.ID == item.user_id) {
+            res.splice(index, 1);
+          }
+        });
+      });
+
+      this.result = res;
+    },
+  },
   computed: {
     ...mapGetters({
       searchResult: "usersAndTeams/getSearchResult",
       user: "auth/getUser",
+      userInfo: "auth/getUserInfo",
     }),
   },
 };
