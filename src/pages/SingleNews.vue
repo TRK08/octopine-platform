@@ -1,6 +1,6 @@
 <template>
   <div class="single-news" v-if="news(id)">
-    <Banner :bannerInfo="{ img: news(id).image, title: news(id).title }" />
+    <Banner :bannerInfo="{ img: news(id).head_img, title: news(id).title }" />
     <div class="container">
       <div class="single-news__wrap">
         <div class="single-news-text" v-html="news(id).text"></div>

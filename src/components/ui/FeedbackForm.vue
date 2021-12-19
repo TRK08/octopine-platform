@@ -6,19 +6,19 @@
         placeholder="Имя"
         type="text"
         class="input feedback-form__input"
-        v-model="emailBody.name"
+        v-model="emailBody.cname"
       />
       <input
         placeholder="Email"
         type="text"
         class="input feedback-form__input"
-        v-model="emailBody.email"
+        v-model="emailBody.cemail"
       />
       <input
         placeholder="Сообщение"
         type="text"
         class="input feedback-form__input"
-        v-model="emailBody.message"
+        v-model="emailBody.cmessage"
       />
       <button type="submit">
         <span class="load-spinner" v-if="isLoading"></span>
@@ -41,9 +41,9 @@ export default {
     return {
       isLoading: false,
       emailBody: {
-        name: "",
-        email: "",
-        message: "",
+        cname: "",
+        cemail: "",
+        cmessage: "",
       },
     };
   },
@@ -61,9 +61,9 @@ export default {
 
       this.send(form1).then(() => {
         this.isLoading = false;
-        this.emailBody.name = "";
-        this.emailBody.email = "";
-        this.emailBody.message = "";
+        this.emailBody.cname = "";
+        this.emailBody.cemail = "";
+        this.emailBody.cmessage = "";
       });
     },
   },

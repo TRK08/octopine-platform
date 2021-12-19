@@ -24,7 +24,7 @@ export default {
     }),
     bannerInfo() {
       return {
-        img: this.tournament.image,
+        img: this.tournament.head_img,
       };
     },
     tournament() {

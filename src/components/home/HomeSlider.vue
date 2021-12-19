@@ -225,8 +225,9 @@ export default {
 
 .slide-box {
   height: 400px;
-  background-position: center;
-  padding: 30px 30% 0 30px;
+  background-position: center center !important;
+  background-size: cover !important;
+  padding: 30px 30% 0 30px !important;
 }
 
 .slide-box h2 {
@@ -322,7 +323,7 @@ export default {
   }
 
   .slide-box {
-    padding: 30px;
+    padding: 30px !important;
   }
 }
 
